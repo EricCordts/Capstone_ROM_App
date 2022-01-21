@@ -1,0 +1,708 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3BFA89EC279A396C008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89EB279A396C008FB82C /* Tests_iOS.swift */; };
+		3BFA89EE279A396C008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89ED279A396C008FB82C /* Tests_iOSLaunchTests.swift */; };
+		3BFA89F8279A396C008FB82C /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89F7279A396C008FB82C /* Tests_macOS.swift */; };
+		3BFA89FA279A396C008FB82C /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89F9279A396C008FB82C /* Tests_macOSLaunchTests.swift */; };
+		3BFA89FB279A396C008FB82C /* Capstone_ROM_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89D3279A396B008FB82C /* Capstone_ROM_AppApp.swift */; };
+		3BFA89FC279A396C008FB82C /* Capstone_ROM_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89D3279A396B008FB82C /* Capstone_ROM_AppApp.swift */; };
+		3BFA89FD279A396C008FB82C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89D4279A396B008FB82C /* ContentView.swift */; };
+		3BFA89FE279A396C008FB82C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA89D4279A396B008FB82C /* ContentView.swift */; };
+		3BFA89FF279A396C008FB82C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BFA89D5279A396C008FB82C /* Assets.xcassets */; };
+		3BFA8A00279A396C008FB82C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BFA89D5279A396C008FB82C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3BFA89E8279A396C008FB82C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BFA89CE279A396B008FB82C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3BFA89D9279A396C008FB82C;
+			remoteInfo = "Capstone ROM App (iOS)";
+		};
+		3BFA89F4279A396C008FB82C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BFA89CE279A396B008FB82C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3BFA89DF279A396C008FB82C;
+			remoteInfo = "Capstone ROM App (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3BFA89D3279A396B008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
+		3BFA89D4279A396B008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3BFA89D5279A396C008FB82C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3BFA89DA279A396C008FB82C /* Capstone ROM App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Capstone ROM App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFA89E0279A396C008FB82C /* Capstone ROM App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Capstone ROM App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFA89E2279A396C008FB82C /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		3BFA89E7279A396C008FB82C /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFA89EB279A396C008FB82C /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
+		3BFA89ED279A396C008FB82C /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		3BFA89F3279A396C008FB82C /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFA89F7279A396C008FB82C /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
+		3BFA89F9279A396C008FB82C /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3BFA89D7279A396C008FB82C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89DD279A396C008FB82C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89E4279A396C008FB82C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89F0279A396C008FB82C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3BFA89CD279A396B008FB82C = {
+			isa = PBXGroup;
+			children = (
+				3BFA89D2279A396B008FB82C /* Shared */,
+				3BFA89E1279A396C008FB82C /* macOS */,
+				3BFA89EA279A396C008FB82C /* Tests iOS */,
+				3BFA89F6279A396C008FB82C /* Tests macOS */,
+				3BFA89DB279A396C008FB82C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3BFA89D2279A396B008FB82C /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA89D3279A396B008FB82C /* Capstone_ROM_AppApp.swift */,
+				3BFA89D4279A396B008FB82C /* ContentView.swift */,
+				3BFA89D5279A396C008FB82C /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		3BFA89DB279A396C008FB82C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA89DA279A396C008FB82C /* Capstone ROM App.app */,
+				3BFA89E0279A396C008FB82C /* Capstone ROM App.app */,
+				3BFA89E7279A396C008FB82C /* Tests iOS.xctest */,
+				3BFA89F3279A396C008FB82C /* Tests macOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3BFA89E1279A396C008FB82C /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA89E2279A396C008FB82C /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		3BFA89EA279A396C008FB82C /* Tests iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA89EB279A396C008FB82C /* Tests_iOS.swift */,
+				3BFA89ED279A396C008FB82C /* Tests_iOSLaunchTests.swift */,
+			);
+			path = "Tests iOS";
+			sourceTree = "<group>";
+		};
+		3BFA89F6279A396C008FB82C /* Tests macOS */ = {
+			isa = PBXGroup;
+			children = (
+				3BFA89F7279A396C008FB82C /* Tests_macOS.swift */,
+				3BFA89F9279A396C008FB82C /* Tests_macOSLaunchTests.swift */,
+			);
+			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3BFA89D9279A396C008FB82C /* Capstone ROM App (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BFA8A03279A396C008FB82C /* Build configuration list for PBXNativeTarget "Capstone ROM App (iOS)" */;
+			buildPhases = (
+				3BFA89D6279A396C008FB82C /* Sources */,
+				3BFA89D7279A396C008FB82C /* Frameworks */,
+				3BFA89D8279A396C008FB82C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Capstone ROM App (iOS)";
+			productName = "Capstone ROM App (iOS)";
+			productReference = 3BFA89DA279A396C008FB82C /* Capstone ROM App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3BFA89DF279A396C008FB82C /* Capstone ROM App (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BFA8A06279A396C008FB82C /* Build configuration list for PBXNativeTarget "Capstone ROM App (macOS)" */;
+			buildPhases = (
+				3BFA89DC279A396C008FB82C /* Sources */,
+				3BFA89DD279A396C008FB82C /* Frameworks */,
+				3BFA89DE279A396C008FB82C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Capstone ROM App (macOS)";
+			productName = "Capstone ROM App (macOS)";
+			productReference = 3BFA89E0279A396C008FB82C /* Capstone ROM App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3BFA89E6279A396C008FB82C /* Tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BFA8A09279A396C008FB82C /* Build configuration list for PBXNativeTarget "Tests iOS" */;
+			buildPhases = (
+				3BFA89E3279A396C008FB82C /* Sources */,
+				3BFA89E4279A396C008FB82C /* Frameworks */,
+				3BFA89E5279A396C008FB82C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BFA89E9279A396C008FB82C /* PBXTargetDependency */,
+			);
+			name = "Tests iOS";
+			productName = "Tests iOS";
+			productReference = 3BFA89E7279A396C008FB82C /* Tests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		3BFA89F2279A396C008FB82C /* Tests macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3BFA8A0C279A396C008FB82C /* Build configuration list for PBXNativeTarget "Tests macOS" */;
+			buildPhases = (
+				3BFA89EF279A396C008FB82C /* Sources */,
+				3BFA89F0279A396C008FB82C /* Frameworks */,
+				3BFA89F1279A396C008FB82C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3BFA89F5279A396C008FB82C /* PBXTargetDependency */,
+			);
+			name = "Tests macOS";
+			productName = "Tests macOS";
+			productReference = 3BFA89F3279A396C008FB82C /* Tests macOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3BFA89CE279A396B008FB82C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					3BFA89D9279A396C008FB82C = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					3BFA89DF279A396C008FB82C = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					3BFA89E6279A396C008FB82C = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 3BFA89D9279A396C008FB82C;
+					};
+					3BFA89F2279A396C008FB82C = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 3BFA89DF279A396C008FB82C;
+					};
+				};
+			};
+			buildConfigurationList = 3BFA89D1279A396B008FB82C /* Build configuration list for PBXProject "Capstone ROM App" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3BFA89CD279A396B008FB82C;
+			productRefGroup = 3BFA89DB279A396C008FB82C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3BFA89D9279A396C008FB82C /* Capstone ROM App (iOS) */,
+				3BFA89DF279A396C008FB82C /* Capstone ROM App (macOS) */,
+				3BFA89E6279A396C008FB82C /* Tests iOS */,
+				3BFA89F2279A396C008FB82C /* Tests macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3BFA89D8279A396C008FB82C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA89FF279A396C008FB82C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89DE279A396C008FB82C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA8A00279A396C008FB82C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89E5279A396C008FB82C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89F1279A396C008FB82C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3BFA89D6279A396C008FB82C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA89FD279A396C008FB82C /* ContentView.swift in Sources */,
+				3BFA89FB279A396C008FB82C /* Capstone_ROM_AppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89DC279A396C008FB82C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA89FE279A396C008FB82C /* ContentView.swift in Sources */,
+				3BFA89FC279A396C008FB82C /* Capstone_ROM_AppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89E3279A396C008FB82C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA89EE279A396C008FB82C /* Tests_iOSLaunchTests.swift in Sources */,
+				3BFA89EC279A396C008FB82C /* Tests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BFA89EF279A396C008FB82C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3BFA89FA279A396C008FB82C /* Tests_macOSLaunchTests.swift in Sources */,
+				3BFA89F8279A396C008FB82C /* Tests_macOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3BFA89E9279A396C008FB82C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3BFA89D9279A396C008FB82C /* Capstone ROM App (iOS) */;
+			targetProxy = 3BFA89E8279A396C008FB82C /* PBXContainerItemProxy */;
+		};
+		3BFA89F5279A396C008FB82C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3BFA89DF279A396C008FB82C /* Capstone ROM App (macOS) */;
+			targetProxy = 3BFA89F4279A396C008FB82C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3BFA8A01279A396C008FB82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3BFA8A02279A396C008FB82C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		3BFA8A04279A396C008FB82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
+				PRODUCT_NAME = "Capstone ROM App";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3BFA8A05279A396C008FB82C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
+				PRODUCT_NAME = "Capstone ROM App";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3BFA8A07279A396C008FB82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
+				PRODUCT_NAME = "Capstone ROM App";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3BFA8A08279A396C008FB82C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
+				PRODUCT_NAME = "Capstone ROM App";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		3BFA8A0A279A396C008FB82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Capstone ROM App (iOS)";
+			};
+			name = Debug;
+		};
+		3BFA8A0B279A396C008FB82C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Capstone ROM App (iOS)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3BFA8A0D279A396C008FB82C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Capstone ROM App (macOS)";
+			};
+			name = Debug;
+		};
+		3BFA8A0E279A396C008FB82C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZS5AWC462;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Capstone ROM App (macOS)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3BFA89D1279A396B008FB82C /* Build configuration list for PBXProject "Capstone ROM App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BFA8A01279A396C008FB82C /* Debug */,
+				3BFA8A02279A396C008FB82C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BFA8A03279A396C008FB82C /* Build configuration list for PBXNativeTarget "Capstone ROM App (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BFA8A04279A396C008FB82C /* Debug */,
+				3BFA8A05279A396C008FB82C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BFA8A06279A396C008FB82C /* Build configuration list for PBXNativeTarget "Capstone ROM App (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BFA8A07279A396C008FB82C /* Debug */,
+				3BFA8A08279A396C008FB82C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BFA8A09279A396C008FB82C /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BFA8A0A279A396C008FB82C /* Debug */,
+				3BFA8A0B279A396C008FB82C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3BFA8A0C279A396C008FB82C /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3BFA8A0D279A396C008FB82C /* Debug */,
+				3BFA8A0E279A396C008FB82C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3BFA89CE279A396B008FB82C /* Project object */;
+}
