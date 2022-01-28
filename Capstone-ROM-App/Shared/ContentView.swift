@@ -11,6 +11,8 @@ struct ContentView: View {
     var body: some View {
         TitlePage()
     }
+    
+    @ObservedObject var bleManager = BLEManager()
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B9D9F3127A37B9E0084310B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9D9F3027A37B9E0084310B /* BLEManager.swift */; };
+		3B9D9F3227A37B9E0084310B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9D9F3027A37B9E0084310B /* BLEManager.swift */; };
 		3BFA8A2E279A4463008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2D279A4463008FB82C /* Tests_iOS.swift */; };
 		3BFA8A30279A4463008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2F279A4463008FB82C /* Tests_iOSLaunchTests.swift */; };
 		3BFA8A3A279A4463008FB82C /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A39279A4463008FB82C /* Tests_macOS.swift */; };
@@ -37,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B9D9F3027A37B9E0084310B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 		3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
 		3BFA8A16279A4462008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3BFA8A17279A4463008FB82C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 			children = (
 				3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */,
 				3BFA8A16279A4462008FB82C /* ContentView.swift */,
+				3B9D9F3027A37B9E0084310B /* BLEManager.swift */,
 				3BFA8A17279A4463008FB82C /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -300,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFA8A3F279A4463008FB82C /* ContentView.swift in Sources */,
+				3B9D9F3127A37B9E0084310B /* BLEManager.swift in Sources */,
 				3BFA8A3D279A4463008FB82C /* Capstone_ROM_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFA8A40279A4463008FB82C /* ContentView.swift in Sources */,
+				3B9D9F3227A37B9E0084310B /* BLEManager.swift in Sources */,
 				3BFA8A3E279A4463008FB82C /* Capstone_ROM_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
