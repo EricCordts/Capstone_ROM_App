@@ -20,6 +20,8 @@ struct ContentView: View {
             .navigationBarHidden(true);
         }
     }
+    
+    @ObservedObject var bleManager = BLEManager()
 }
 
 struct ContentView_Previews: PreviewProvider {
