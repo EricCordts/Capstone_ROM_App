@@ -9,35 +9,18 @@ import SwiftUI
 
 struct ExerciseMenuPage : View {
     var body : some View {
-        let spacerHeight : CGFloat = 40
         ZStack{
             // create a background with a linear gradient
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-                
-            VStack(spacing: spacerHeight){
+            VStack(){
                 Text("Please choose a body part to exercise from the list below")
                     .font(.system(size: 20))
-                List{
-                // first navigation link
-                NavigationLink(destination: EmptyView()) {
-                                Text("Left Arm")
-                    }.buttonStyle(ExerciseMenuPageButtonStyle())
-                                                
-                NavigationLink(destination: EmptyView()) {
-                                Text("Right Arm")
-                    }.buttonStyle(ExerciseMenuPageButtonStyle())
-                                                
-                NavigationLink(destination: EmptyView()) {
-                                Text("Torso/Back")
-                    }.buttonStyle(ExerciseMenuPageButtonStyle())
-                                                
-                NavigationLink(destination: EmptyView()) {
-                                Text("Right Leg")
-                    }.buttonStyle(ExerciseMenuPageButtonStyle())
-                                                
-                NavigationLink(destination: EmptyView()) {
-                                Text("Left Leg")
-                    }.buttonStyle(ExerciseMenuPageButtonStyle())
+                
+                List(exercises)
+                { exercise in
+                    NavigationLink {
+                            EmptyView()
+                    } label:{ExerciseRow(exercise: exercise)}
                 }
             }
         }
