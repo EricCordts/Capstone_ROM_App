@@ -13,11 +13,19 @@ struct Exercise : Identifiable{
     var exerciseName: String
     var description: String
 
-    var imageName: String
-    //var image: Image {
+    var exerciseImageName: String
+    //var exerciseImage: Image {
+    //    Image(imageName)
+    //}
+    
+    var wearablePlacementImageName: String
+    //var wearablePlacementImage: Image {
     //    Image(imageName)
     //}
     
     var numberOfSets: Int
     var numberOfReps: Int
+    
+    var numberOfWearablesRequired: Int
+    var wearableIDs: [Int]
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct OpeningPage : View {
-    @State private var isShowingBodyView = false
     var body : some View {
         
         ZStack{
