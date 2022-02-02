@@ -13,13 +13,13 @@ struct ExerciseMenuPage : View {
             // create a background with a linear gradient
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             VStack(){
-                Text("Please choose a body part to exercise from the list below")
+                Text("Please choose an exercise prescribed by your therapist from the list below:")
                     .font(.system(size: 20))
                 
                 List(exercises)
                 { exercise in
                     NavigationLink {
-                            EmptyView()
+                        PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
                     } label:{ExerciseRow(exercise: exercise)}
                 }
             }

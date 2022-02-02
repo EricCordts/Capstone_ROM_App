@@ -12,15 +12,18 @@ struct ExerciseRow: View {
 
     var body: some View {
         HStack {
+            
+            // commented out until we get actual images
+            //exercise.exerciseImage.resizeable().frame(width: 60, height: 60)
+            // use ROMSymbol as a temporary image
             Image("ROMSymbol").resizable().frame(width: 75.0, height: 75.0)
-            //Text(bodyPart.imageName).font(.title2)
             Text(exercise.exerciseName).font(.largeTitle)
             Spacer()
         }
     }
 }
 
-struct BodyPartRow_Previews: PreviewProvider {
+struct ExerciseRow_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseRow(exercise: exercises[3])
     }
