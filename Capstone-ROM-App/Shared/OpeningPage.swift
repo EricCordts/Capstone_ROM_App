@@ -47,6 +47,7 @@ struct OpeningPage : View {
                 NavigationLink(destination: ExerciseMenuPage().navigationBarTitle("Home", displayMode: .large)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
                                     
                 Spacer()
+                BluetoothView()
             }
         }
     }
