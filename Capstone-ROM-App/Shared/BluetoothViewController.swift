@@ -86,4 +86,3 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
 }
 
 
-

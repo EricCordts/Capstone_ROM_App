@@ -20,7 +20,7 @@ struct ContentView: View {
         }
     }
     
-    @ObservedObject var bleManager = BLEManager()
+    @ObservedObject var bleManager = BluetoothViewController()
 }
 
 struct ContentView_Previews: PreviewProvider {
