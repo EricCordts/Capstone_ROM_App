@@ -14,7 +14,7 @@ struct ExerciseMenuPage : View {
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             VStack(){
                 Text("Please choose an exercise prescribed by your therapist from the list below:")
-                    .font(.system(size: 20))
+                    .font(.system(size: 20)).padding()
                 
                 List(exercises)
                 { exercise in

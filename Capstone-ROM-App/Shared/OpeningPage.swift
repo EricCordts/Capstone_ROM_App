@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OpeningPage : View {
+    @State var isActive:Bool = false
     var body : some View {
         
         ZStack{
@@ -15,7 +16,7 @@ struct OpeningPage : View {
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
             
             VStack{
-                Spacer()
+                if !self.isActive{
                 //create a vertical stack
                 Text("Rehab-O-Meter")
                     .font(.system(size: 45))
@@ -38,14 +39,21 @@ struct OpeningPage : View {
                 Spacer()
                 
                 Text("Welcome to your home rehabilitation program. Your physical therapist thanks you!")
-                    .font(.system(size: 18))
+                    .font(.title2)
                     .multilineTextAlignment(.center).padding()
-                
-                Spacer()
-                    
-                NavigationLink(destination: ExerciseMenuPage().navigationBarTitle("Home", displayMode: .large)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
                                     
                 Spacer()
+                }
+                else
+                {
+                    ExerciseMenuPage().navigationBarTitle("Home", displayMode: .large)
+                }
+            }.onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    withAnimation {
+                        self.isActive = true
+                    }
+                }
             }
         }
     }

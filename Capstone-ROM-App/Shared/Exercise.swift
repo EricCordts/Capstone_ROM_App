@@ -12,6 +12,7 @@ struct Exercise : Identifiable{
     var id: Int
     var exerciseName: String
     var description: String
+    var exerciseTip: String
 
     var exerciseImageName: String
     //var exerciseImage: Image {
