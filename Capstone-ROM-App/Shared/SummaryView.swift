@@ -16,7 +16,10 @@ struct SummaryView : View {
             
             VStack{
                 Text("Summary filler text")
-                
+                Spacer()
+                Button(
+                    "Return to home", action: {NavigationUtil.popToRootView()}
+                ).buttonStyle(RoundedRectangleButtonStyle())
             }
         }
     }
@@ -28,3 +31,31 @@ struct SummaryView_Previews: PreviewProvider {
     }
 }
 
+import UIKit
+
+struct NavigationUtil {
+    
+    static func popToRootView() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        findNavigationController(viewController: window?.rootViewController)?
+            .popToRootViewController(animated: true)
+    }
+
+    static func findNavigationController(viewController: UIViewController?) -> UINavigationController? {
+        guard let viewController = viewController else {
+            return nil
+        }
+
+        if let navigationController = viewController as? UINavigationController {
+            return navigationController
+        }
+
+        for childViewController in viewController.children {
+            return findNavigationController(viewController: childViewController)
+        }
+
+        return nil
+    }
+}

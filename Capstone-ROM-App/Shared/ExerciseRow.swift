@@ -19,6 +19,16 @@ struct ExerciseRow: View {
             Image("ROMSymbol").resizable().frame(width: 75.0, height: 75.0)
             Text(exercise.exerciseName).font(.largeTitle)
             Spacer()
+            if exercise.exerciseCompleted
+            {
+                Image(systemName: "checkmark").resizable().frame(width: 50.0, height: 50.0)
+                .foregroundColor(Color.green)
+            }
+            else{
+                Image(systemName: "xmark").resizable().frame(width: 50.0, height: 50.0)
+                    .foregroundColor(Color.red)
+            }
+            Spacer()
         }
     }
 }

@@ -29,4 +29,5 @@ struct Exercise : Identifiable{
     
     var numberOfWearablesRequired: Int
     var wearableIDs: [Int]
+    var exerciseCompleted: Bool
 }
