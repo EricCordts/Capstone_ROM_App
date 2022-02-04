@@ -39,7 +39,7 @@ struct PowerOnWearableView : View {
                 
                 Spacer()
                     
-                NavigationLink(destination: ExerciseDetailView(exercise: exercise).navigationBarTitle(exercise.exerciseName + " Details", displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
+                NavigationLink(destination: ExerciseDetailView(exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
                                     
                 Spacer()
             }
