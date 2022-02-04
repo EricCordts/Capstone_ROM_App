@@ -54,6 +54,7 @@ struct OpeningPage : View {
                         self.isActive = true
                     }
                 }
+                BluetoothView()
             }
         }
     }
