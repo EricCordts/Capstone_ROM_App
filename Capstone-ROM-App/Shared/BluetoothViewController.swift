@@ -16,7 +16,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.centralManager = CBCentralManager(delegate: self, queue: nil)
         centralManager.delegate = self
-        //arduinos.append(CBUUID.init(string: "180A"))
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,14 +29,21 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     @Published var isSwitchedOn = false
     var centralManager: CBCentralManager!
     var discoveredPeripherals = [CBPeripheral]()
-    var arduinos: [CBUUID] = []
-    let test = CBUUID().uuidString.lowercased()
+    var arduinos = [
+        CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196")
+    ]
+    var options = [
+        "2a675dfb-a1b0-4c11-9ad1-031a84594196": 1
+    ]
+    var uuids: [CBService] = []
     
-
+    var identified = false
+        
     // DELEGATE EXTENSION
     // ------------------
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.discoveredPeripherals.append(peripheral)
+        //self.uuids.append(contentsOf: peripheral.services)
     }
     
     // FUNCTIONS
@@ -45,6 +52,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     // ...
     func startScan() {
         centralManager.scanForPeripherals(withServices: arduinos, options: nil)
+        // centralManager.scanForPeripherals(withServices: nil, options: nil)
     }
     // centralManagerDidUpdateState - Called by Core Bluetooth when the state of bluetooth on the phona and in the app is changed
     // 1. _ central: CBCentral Manager - Core Bluetooth central manager for all BLE interactions
@@ -54,7 +62,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         switch central.state {
             case .poweredOn:
                 isSwitchedOn = true
-                //startScan()
+                startScan()
             case .poweredOff:
                 isSwitchedOn = false
                 // Alert user to turn on Bluetooh
