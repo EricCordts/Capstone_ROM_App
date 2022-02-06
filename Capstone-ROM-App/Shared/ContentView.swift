@@ -35,6 +35,10 @@ struct BluetoothView : View {
         if bleManager.isSwitchedOn {
             Text("Bluetooth is switched on")
                 .foregroundColor(.green)
+            if bleManager.isConnected {
+                Text("Connected to yo mama")
+                    .foregroundColor(.green)
+            }
         } else {
             Text("Bluetooth is NOT switched on")
                 .foregroundColor(.red)
