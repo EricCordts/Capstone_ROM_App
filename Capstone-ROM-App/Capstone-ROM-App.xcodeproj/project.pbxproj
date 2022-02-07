@@ -31,8 +31,7 @@
 		36445C4727ACAFB800C2872F /* CompletedWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C4527ACAFB800C2872F /* CompletedWorkoutView.swift */; };
 		368E74EE27ADB3B30069186D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74ED27ADB3B20069186D /* SummaryView.swift */; };
 		368E74EF27ADB3B30069186D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74ED27ADB3B20069186D /* SummaryView.swift */; };
-		3B9D9F3127A37B9E0084310B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9D9F3027A37B9E0084310B /* BLEManager.swift */; };
-		3B9D9F3227A37B9E0084310B /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9D9F3027A37B9E0084310B /* BLEManager.swift */; };
+		368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368E74F027B1D3FA0069186D /* Launch Screen.storyboard */; };
 		3B4DF4B627AA14F40079A17C /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */; };
 		3BFA8A2E279A4463008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2D279A4463008FB82C /* Tests_iOS.swift */; };
 		3BFA8A30279A4463008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2F279A4463008FB82C /* Tests_iOSLaunchTests.swift */; };
@@ -76,7 +75,8 @@
 		36445C4227AA12D300C2872F /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		36445C4527ACAFB800C2872F /* CompletedWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedWorkoutView.swift; sourceTree = "<group>"; };
 		368E74ED27ADB3B20069186D /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
-		3B9D9F3027A37B9E0084310B /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		368E74F027B1D3FA0069186D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		368E74F227B1D5B70069186D /* Capstone-ROM-App--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-ROM-App--iOS--Info.plist"; sourceTree = "<group>"; };
 		3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
 		3BFA8A16279A4462008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -127,6 +127,7 @@
 		3BFA8A0F279A4462008FB82C = {
 			isa = PBXGroup;
 			children = (
+				368E74F227B1D5B70069186D /* Capstone-ROM-App--iOS--Info.plist */,
 				3BFA8A14279A4462008FB82C /* Shared */,
 				3BFA8A23279A4463008FB82C /* macOS */,
 				3BFA8A2C279A4463008FB82C /* Tests iOS */,
@@ -154,6 +155,7 @@
 				36445C4527ACAFB800C2872F /* CompletedWorkoutView.swift */,
 				368E74ED27ADB3B20069186D /* SummaryView.swift */,
 				3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */,
+				368E74F027B1D3FA0069186D /* Launch Screen.storyboard */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -320,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */,
 				3BFA8A41279A4463008FB82C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -547,9 +550,10 @@
 				DEVELOPMENT_TEAM = RZS5AWC462;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Capstone-ROM-App--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -577,9 +581,10 @@
 				DEVELOPMENT_TEAM = RZS5AWC462;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Capstone-ROM-App--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;

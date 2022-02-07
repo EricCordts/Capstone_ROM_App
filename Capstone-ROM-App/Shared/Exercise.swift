@@ -20,7 +20,6 @@ class Exercise : ObservableObject, Identifiable{
 
     @Published var exerciseImageName: String = ""
 
-    
     @Published var wearablePlacementImageName: String = ""
     
     @Published var numberOfSets: Int = 0

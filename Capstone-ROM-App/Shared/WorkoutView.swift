@@ -22,11 +22,14 @@ struct WorkoutView : View {
                 if exercisesCompleted
                 {
                     CompletedWorkoutView()
-                        .transition(.slide).onAppear{
-                            self.exercise.exerciseCompleted.toggle()
+                        .onAppear{
+                            withAnimation(.easeIn){
+                                self.exercise.exerciseCompleted = true
+                            }
                         }
                 }
-                else{
+                else
+                {
                     Text(exercise.exerciseTip)
                         .font(.title2)
                         .multilineTextAlignment(.center)
@@ -55,16 +58,17 @@ struct WorkoutView : View {
                         }
                     ).buttonStyle(RoundedRectangleButtonStyle())
                 }
-            }
+            }.transition(.slide).animation(.easeIn(duration: 1), value: exercisesCompleted)
+              
         }
     }
 }
 
-//struct WorkoutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WorkoutView(exercise: exercises[0])
-//    }
-//}
+struct WorkoutView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorkoutView(exercise: exercisesData[0])
+    }
+}
 
 func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSetsCompleted: inout Int, targetSets: Int)->(repsCompleted: Int, setsCompleted: Int, exercisesCompleted: Bool)
 {
