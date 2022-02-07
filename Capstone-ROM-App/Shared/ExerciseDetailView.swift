@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ExerciseDetailView: View {
-    var exercise: Exercise
+    @ObservedObject var exercise: Exercise
 
     var body: some View {
         ZStack{
@@ -66,7 +66,7 @@ struct ExerciseDetailView: View {
 
 struct ExerciseDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseDetailView(exercise: exercises[0])
+        ExerciseDetailView(exercise: exercisesData[0])
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OpeningPage : View {
     @State var isActive:Bool = false
+    @ObservedObject var exercises: Exercises
     var body : some View {
         
         ZStack{
@@ -46,7 +47,7 @@ struct OpeningPage : View {
                 }
                 else
                 {
-                    ExerciseMenuPage().navigationBarTitle("Home", displayMode: .large)
+                    ExerciseMenuPage(exercises: exercises).navigationBarTitle("Home", displayMode: .large)
                 }
             }.onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
@@ -62,6 +63,6 @@ struct OpeningPage : View {
 
 struct OpeningPageView_Previews: PreviewProvider {
     static var previews: some View {
-        OpeningPage()
+        OpeningPage(exercises: Exercises())
     }
 }

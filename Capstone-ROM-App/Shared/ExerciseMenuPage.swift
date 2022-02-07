@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ExerciseMenuPage : View {
+    @ObservedObject var exercises: Exercises
     var body : some View {
         ZStack{
             // create a background with a linear gradient
@@ -16,7 +17,7 @@ struct ExerciseMenuPage : View {
                 Text("Please choose an exercise prescribed by your therapist from the list below:")
                     .font(.system(size: 20)).padding()
                 
-                List(exercises)
+                List(exercises.exerciseArray)
                 { exercise in
                     NavigationLink {
                         PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
@@ -29,6 +30,6 @@ struct ExerciseMenuPage : View {
 
 struct ExerciseMenuPageView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseMenuPage()
+        ExerciseMenuPage(exercises: Exercises())
     }
 }

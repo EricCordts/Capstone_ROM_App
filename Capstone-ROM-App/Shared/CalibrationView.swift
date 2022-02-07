@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalibrationView : View {
-    var exercise: Exercise
+    @ObservedObject var exercise: Exercise
     @Environment(\.presentationMode) var presentationMode
     var body : some View {
         
@@ -42,6 +42,6 @@ struct CalibrationView : View {
 
 struct CalibrationView_Previews: PreviewProvider {
     static var previews: some View {
-        CalibrationView(exercise: exercises[0])
+        CalibrationView(exercise: exercisesData[0])
     }
 }

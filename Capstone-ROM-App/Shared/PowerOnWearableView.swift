@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct PowerOnWearableView : View {
-    var exercise: Exercise
+    @ObservedObject var exercise: Exercise
     var body : some View {
         
         ZStack{
@@ -49,6 +49,6 @@ struct PowerOnWearableView : View {
 
 struct PowerOnWearableView_Previews: PreviewProvider {
     static var previews: some View {
-        PowerOnWearableView(exercise: exercises[0])
+        PowerOnWearableView(exercise: exercisesData[0])
     }
 }
