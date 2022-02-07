@@ -11,7 +11,7 @@ struct WorkoutView : View {
     @State var exercisesCompleted:Bool = false
     @State var setsCompleted = 0
     @State var repsCompleted = 0
-    var exercise: Exercise
+    @ObservedObject var exercise: Exercise
     var body : some View {
         
         ZStack{
@@ -21,8 +21,10 @@ struct WorkoutView : View {
             VStack{
                 if exercisesCompleted
                 {
-                    CompletedWorkoutView(exercise: exercise)
-                        .transition(.slide)
+                    CompletedWorkoutView()
+                        .transition(.slide).onAppear{
+                            self.exercise.exerciseCompleted.toggle()
+                        }
                 }
                 else{
                     Text(exercise.exerciseTip)
@@ -58,11 +60,11 @@ struct WorkoutView : View {
     }
 }
 
-struct WorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutView(exercise: exercises[0])
-    }
-}
+//struct WorkoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WorkoutView(exercise: exercises[0])
+//    }
+//}
 
 func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSetsCompleted: inout Int, targetSets: Int)->(repsCompleted: Int, setsCompleted: Int, exercisesCompleted: Bool)
 {
@@ -85,4 +87,3 @@ func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSet
 
     return (currentRepsCompleted, currentSetsCompleted, exercisesCompleted)
 }
-

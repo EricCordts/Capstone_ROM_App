@@ -12,10 +12,10 @@ struct ContentView: View {
         UITableView.appearance().backgroundColor = UIColor.clear
         UITableViewCell.appearance().backgroundColor = .clear
     }
-    
+    @ObservedObject var exercises = Exercises()
     var body: some View {
         NavigationView{
-            OpeningPage()
+            OpeningPage(exercises: exercises)
         }
     }
     

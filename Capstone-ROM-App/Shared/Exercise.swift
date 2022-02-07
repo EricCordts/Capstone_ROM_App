@@ -8,26 +8,40 @@
 import Foundation
 import SwiftUI
 
-struct Exercise : Identifiable{
-    var id: Int
-    var exerciseName: String
-    var description: String
-    var exerciseTip: String
+class Exercises: ObservableObject, Identifiable{
+    @Published var exerciseArray : [Exercise] = exercisesData
+}
 
-    var exerciseImageName: String
-    //var exerciseImage: Image {
-    //    Image(imageName)
-    //}
+class Exercise : ObservableObject, Identifiable{
+    var id = UUID()
+    @Published var exerciseName: String = ""
+    @Published var description: String = ""
+    @Published var exerciseTip: String = ""
+
+    @Published var exerciseImageName: String = ""
+
     
-    var wearablePlacementImageName: String
-    //var wearablePlacementImage: Image {
-    //    Image(imageName)
-    //}
+    @Published var wearablePlacementImageName: String = ""
     
-    var numberOfSets: Int
-    var numberOfReps: Int
+    @Published var numberOfSets: Int = 0
+    @Published var numberOfReps: Int = 0
     
-    var numberOfWearablesRequired: Int
-    var wearableIDs: [Int]
-    var exerciseCompleted: Bool
+    @Published var numberOfWearablesRequired: Int = 0
+    @Published var wearableIDs = [Int]()
+    @Published var exerciseCompleted: Bool = false
+    
+    init(exerciseName: String, description: String, exerciseTip: String,
+exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool)
+    {
+        self.exerciseName = exerciseName
+        self.description = description
+        self.exerciseTip = exerciseTip
+        self.exerciseImageName = exerciseImageName
+        self.wearablePlacementImageName = wearablePlacementImageName
+        self.numberOfSets = numberOfSets
+        self.numberOfReps = numberOfReps
+        self.numberOfWearablesRequired = numberOfWearablesRequired
+        self.wearableIDs = wearableIDs
+        self.exerciseCompleted = exerciseCompleted
+    }
 }

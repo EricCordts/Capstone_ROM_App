@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CompletedWorkoutView : View {
-    var exercise: Exercise
     var body : some View {
         
         ZStack{
@@ -27,7 +26,7 @@ struct CompletedWorkoutView : View {
 
 struct CompletedWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        CompletedWorkoutView(exercise: exercises[9])
+        CompletedWorkoutView()
     }
 }
 
