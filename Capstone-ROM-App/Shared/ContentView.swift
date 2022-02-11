@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import CoreBluetooth
+import UIKit
 
 struct ContentView: View {
+    @ObservedObject var bleManager = BluetoothViewController()
+
     init() {
         UITableView.appearance().backgroundColor = UIColor.clear
         UITableViewCell.appearance().backgroundColor = .clear
@@ -19,8 +23,6 @@ struct ContentView: View {
             .navigationBarHidden(true);
         }
     }
-    
-    @ObservedObject var bleManager = BluetoothViewController()
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -38,10 +40,18 @@ struct BluetoothView : View {
             if bleManager.isConnected {
                 Text("Connected to yo mama")
                     .foregroundColor(.green)
+                if !bleManager.characteristicInfo.isEmpty && bleManager.characteristicInfo[0].isNotifying {
+                    Text("notifying")
+                        .foregroundColor(.green)
+                } else {
+                    Text("not notifying")
+                        .foregroundColor(.red)
+                }
             }
         } else {
             Text("Bluetooth is NOT switched on")
                 .foregroundColor(.red)
         }
+        
     }
 }
