@@ -17,6 +17,7 @@ struct SummaryView : View {
             VStack{
                 Text("Summary filler text")
                 Spacer()
+                
                 Button(
                     "Return to home", action: {NavigationUtil.popToRootView()}
                 ).buttonStyle(RoundedRectangleButtonStyle())
