@@ -9,133 +9,136 @@ import SwiftUI
 import Accelerate
 import simd
 
-let g1 : [simd_double3] = [[6, 6, 3], [4, 8, 4], [6, 0, 7], [7, 9, 5], [2, 4, 8]]
-let g2 : [simd_double3] = [[1, 9, 8], [3, 9, 9], [4, 6, 1], [9, 0, 7], [3, 4, 6]]
-let thph1 : simd_double2 = [1.1, 2.9]
-let thph2 : simd_double2 = [2.1, 0.5]
-let thph : simd_double4 = [1.1, 2.9, 2.1, 0.5]
-var ang : simd_double4 = thph
-// polar unit vector: [sin(theta)cos(phi), sin(theta)sin(phi), cos(theta)]
-func polarUnitVector(pArgs: simd_double2) -> simd_double3 {
+let gq1 : [[Double]] = [[8,7,3],[6,8,1],[6,4,6],[0,7,3],[8,1,6]]
+let gq2 : [[Double]] = [[4,6,5],[4,7,4],[9,1,5],[8,4,6],[3,6,3]]
+let gq12 = [gq1,gq2]
+let gl1 : [[Double]] = [[9,6,8],[9,5,2],[7,5,0],[3,9,0],[6,0,8]]
+let gl2 : [[Double]] = [[2,4,3],[9,9,2],[9,6,3],[0,4,2],[4,8,2]]
+let gl12 = [gl1,gl2]
+let thph1 : [Double] = [1.1, 2.9]
+let thph2 : [Double] = [2.1, 0.5]
+let thph12 = [thph1, thph2]
+
+// returns a polar unit vector when given Double([zenith angle, azimuthal angle]) in radians
+// [sin(theta)cos(phi), sin(theta)sin(phi), cos(theta)]
+func puVec(_ pArgs: [Double]) -> [Double] {
     return [sin(pArgs[0])*cos(pArgs[1]), sin(pArgs[0])*sin(pArgs[1]), cos(pArgs[0])]
 }
+// returns 2 puVec
+func puVecs(_ pArgs: [[Double]]) -> [[Double]] { return [puVec(pArgs[0]), puVec(pArgs[1])] }
 
-func polarUnitVectors(pArgs: simd_double4) -> [simd_double3] {
-    return [polarUnitVector(pArgs: pArgs.lowHalf), polarUnitVector(pArgs: pArgs.highHalf)]
-}
-
-// d/dtheta (polar unit vector): [cos(theta)cos(phi), cos(theta)sin(phi), -sin(theta)]
-func polarUnitVectorDtheta(pArgs: simd_double2) -> simd_double3 {
+// derivative of polar unit vector with respect to zenith angle
+// [cos(theta)cos(phi), cos(theta)sin(phi), -sin(theta)]
+func puVecDzen(_ pArgs: [Double]) -> [Double] {
     return [cos(pArgs[0])*cos(pArgs[1]), cos(pArgs[0])*sin(pArgs[1]), -sin(pArgs[0])]
 }
+// returns 2 puVecDzen
+func puVecsDzen(_ pArgs: [[Double]]) -> [[Double]] { return [puVecDzen(pArgs[0]), puVecDzen(pArgs[1])] }
 
-func polarUnitVectorsDtheta(pArgs: simd_double4) -> [simd_double3] {
-    return [polarUnitVectorDtheta(pArgs: pArgs.lowHalf), polarUnitVectorDtheta(pArgs: pArgs.highHalf)]
-}
-
-// d/dphi (polar unit vector): [-sin(theta)sin(phi), sin(theta)cos(phi), 0]
-func polarUnitVectorDphi(pArgs: simd_double2) -> simd_double3 {
+// derivative of polar unit vector with respect to azimuthal angle
+// [-sin(theta)sin(phi), sin(theta)cos(phi), 0]
+func puVecDazi(_ pArgs: [Double]) -> [Double] {
     return [-sin(pArgs[0])*sin(pArgs[1]), sin(pArgs[0])*cos(pArgs[1]), 0]
 }
-
-func polarUnitVectorsDphi(pArgs: simd_double4) -> [simd_double3] {
-    return [polarUnitVectorDphi(pArgs: pArgs.lowHalf), polarUnitVectorDphi(pArgs: pArgs.highHalf)]
-}
+// returns 2 puVecDazi
+func puVecsDazi(_ pArgs: [[Double]]) -> [[Double]] { return [puVecDazi(pArgs[0]), puVecDazi(pArgs[1])] }
 
 // returns a list of local joint axis errors
-func localJointAxisErrorList(g: [[simd_double3]], pArgs: simd_double4) -> [Double] {
-    let pVecs : [simd_double3] = polarUnitVectors(pArgs: pArgs)
+func localJointAxisErrorList(_ g: [[[Double]]], _ pArgs: [[Double]]) -> [Double] {
+    let pvecs : [[Double]] = puVecs(pArgs)
     var errorList = [Double]()
     for row in 0..<min(g[0].count, g[1].count) {
-        errorList.append(simd_length(simd_cross(g[0][row],pVecs[0])) - simd_length(simd_cross(g[1][row],pVecs[1])))
+        errorList.append(norm(vcross(g[0][row],pvecs[0])) - norm(vcross(g[1][row],pvecs[1])))
     }
     return errorList
 }
 
-func localJointAxisErrorJacobian(g: [[simd_double3]], pArgs: simd_double4) -> [[Double]] {
-    let pVecs : [simd_double3] = polarUnitVectors(pArgs: pArgs)
-    let pVecsDtheta : [simd_double3] = polarUnitVectorsDtheta(pArgs: pArgs)
-    let pVecsDphi : [simd_double3] = polarUnitVectorsDphi(pArgs: pArgs)
+func localJointAxisErrorJacobian(_ g: [[[Double]]], _ pArgs: [[Double]]) -> [[Double]] {
+    let pvecs : [[Double]] = puVecs(pArgs)
+    let pvecsDzen : [[Double]] = puVecsDzen(pArgs)
+    let pvecsDazi : [[Double]] = puVecsDazi(pArgs)
     
-    var dTermG1 = simd_double3()
-    var dTermG2 = simd_double3()
     var jacobian = [[Double]]()
     
     for row in 0..<min(g[0].count, g[1].count) {
-        dTermG1 = -g[0][row]*simd_dot(g[0][row],pVecs[0])/simd_length(simd_cross(g[0][row],pVecs[0]))
-        dTermG2 = g[1][row]*simd_dot(g[1][row],pVecs[1])/simd_length(simd_cross(g[1][row],pVecs[1]))
-        jacobian.append([simd_dot(dTermG1,pVecsDtheta[0]), simd_dot(dTermG1,pVecsDphi[0]), simd_dot(dTermG2,pVecsDtheta[1]), simd_dot(dTermG2,pVecsDphi[1])])
+        let dTermG0 = -vdot(g[0][row],pvecs[0]) / norm(vcross(g[0][row],pvecs[0]))
+        let dTermG1 = vdot(g[1][row],pvecs[1]) / norm(vcross(g[1][row],pvecs[1]))
+        jacobian.append([dTermG0*vdot(g[0][row],pvecsDzen[0]), dTermG0*vdot(g[0][row],pvecsDazi[0]), dTermG1*vdot(g[1][row],pvecsDzen[1]), dTermG1*vdot(g[1][row],pvecsDazi[1])])
     }
     return jacobian
 }
 
-func nextGaussNewtonJointAxis(g: [[simd_double3]], pArgs: simd_double4) -> simd_double4 {
-    var returnVal = simd_double4()
-    let JJ : [[Double]] = localJointAxisErrorJacobian(g: [g1, g2], pArgs: pArgs)
-    returnVal = pArgs - simd_double4(mmult(mat1: mmult(mat1: gaussJordanInverse(mmult(mat1: JJ.transpose(),mat2: JJ)),mat2: JJ.transpose()),mat2: localJointAxisErrorList(g: g, pArgs: pArgs)))
+func nextGaussNewtonJointAxis(_ g: [[[Double]]], _ pArgs: [[Double]]) -> [[Double]] {
+    return modpAngs(msub(pArgs,svmult(mmult(localJointAxisErrorJacobian(g, pArgs).pseudoinv(),localJointAxisErrorList(g, pArgs)),0.65).chunked(2)))
+}
 
-    if abs(returnVal[0]) > Double.pi
-    {
-        returnVal[0] = returnVal[0].truncatingRemainder(dividingBy: Double.pi)
-    }
-    
-    if returnVal[0] < 0
-    {
-        returnVal[0] += Double.pi
-    }
-    
-    if abs(returnVal[1]) > 2*Double.pi
-    {
-        returnVal[1] = returnVal[1].truncatingRemainder(dividingBy: 2*Double.pi)
-    }
-    
-    if returnVal[1] < 0
-    {
-        returnVal[1] += 2*Double.pi
-    }
-    
-    if abs(returnVal[2]) > Double.pi
-    {
-        returnVal[2] = returnVal[2].truncatingRemainder(dividingBy: Double.pi)
-    }
-    
-    if returnVal[2] < 0
-    {
-        returnVal[2] += Double.pi
-    }
-    
-    if abs(returnVal[3]) > 2*Double.pi
-    {
-        returnVal[3] = returnVal[3].truncatingRemainder(dividingBy: 2*Double.pi)
-    }
-    
-    if returnVal[3] < 0
-    {
-        returnVal[3] += 2*Double.pi
-    }
+func nthJointAxis(_ g: [[[Double]]], _ pArgs: [[Double]], _ n: Int) -> [[Double]] {
+    var pargs = pArgs
+    for _ in 1...n { pargs = nextGaussNewtonJointAxis(g, pargs) }
+    return pargs
+}
 
-    return returnVal
+let lst4l : [Double] = (1...16).map{_ in .random(in: 0...100)}
+let lst4 = lst4l.chunked(4)
+let id4 : [[Double]] = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
+
+func mod(_ x: Double, _ m: Double) -> Double {
+    let r = fmod(x, m)
+    return r >= 0 ? r : r+m
+}
+
+func modpAngs(_ x: [[Double]]) -> [[Double]] {
+    var xm = x
+    for i in 0..<xm.count {
+        xm[i][0] = mod(xm[i][0],Double.pi)
+        xm[i][1] = mod(xm[i][1],2*Double.pi)
+    }
+    return xm
 }
 
 extension Array {
-    func chunked(into size: Int) -> [[Element]] {
+    func chunked(_ size: Int) -> [[Element]] {
         return stride(from: 0, to: count, by: size).map {
             Array(self[$0..<Swift.min($0+size, count)])
         }
     }
 }
 
-extension Collection where Self.Iterator.Element: RandomAccessCollection {
-    // PRECONDITION: `self` must be rectangular, i.e. every row has equal size.
-    func transpose() -> [[Self.Iterator.Element.Iterator.Element]] {
-        guard let firstRow = self.first else { return [] }
-        return firstRow.indices.map { index in
-            self.map{ $0[index] }
+extension Array where Self.Iterator.Element == [Double] {
+    func inverse() -> [[Double]] {
+        // returns the inverse of an nxn matrix
+        var inMatrix = self.flatMap() {$0}
+        var N = __CLPK_integer(sqrt(Double(inMatrix.count)))
+        let n = Int(N)
+        var pivots = [__CLPK_integer](repeating: 0, count: n)
+        var workspace = [Double](repeating: 0.0, count: n)
+        var error : __CLPK_integer = 0
+        
+        withUnsafeMutablePointer(to: &N) {
+            dgetrf_($0, $0, &inMatrix, $0, &pivots, &error)
+            dgetri_($0, &inMatrix, $0, &pivots, &workspace, $0, &error)
         }
+        return inMatrix.chunked(n)
     }
 }
 
-func mmult(mat1: [[Double]], mat2: [[Double]]) -> [[Double]] {
+extension Array where Self.Iterator.Element == [Double] {
+    func pseudoinv() -> [[Double]] {
+        // returns the left Moore-Penrose pseudoinverse of an nxm matrix
+        let selft = self.transpose()
+        return mmult(mmult(selft,self).inverse(),selft)
+    }
+}
+
+extension Collection where Self.Iterator.Element: RandomAccessCollection {
+    func transpose() -> [[Self.Iterator.Element.Iterator.Element]] {
+        // returns the transpose of a rectangular matrix
+        guard let firstRow = self.first else { return [] }
+        return firstRow.indices.map { index in self.map{ $0[index] } }
+    }
+}
+
+func mmult(_ mat1: [[Double]], _ mat2: [[Double]]) -> [[Double]] {
     let mat2t = mat2.transpose()
     let m = mat1.count
     let n = mat2[0].count
@@ -150,123 +153,39 @@ func mmult(mat1: [[Double]], mat2: [[Double]]) -> [[Double]] {
     return result
 }
 
-func mmult(mat1: [[Double]], mat2: [Double]) -> [Double] {
+func mmult(_ mat1: [[Double]], _ mat2: [Double]) -> [Double] {
     let m = mat1.count
     var result : [Double] = Array(repeating: 0, count: m)
     for i in 0..<m { result[i] = zip(mat1[i],mat2).map(*).reduce(0,+) }
     return result
 }
-/*
-func TwoDimensionalDoubleMatrixToSimd_Double4x4(TwoDMatrix: [[Double]]) -> simd_double4x4
-{
-    return simd_double4x4(simd_double4(TwoDMatrix[0]), simd_double4(TwoDMatrix[1]), simd_double4(TwoDMatrix[2]), simd_double4(TwoDMatrix[3]))
+
+func svmult(_ v: [Double], _ s: Double) -> [Double] { return v.map(){ $0*s } }
+
+func smmult(_ mat: [[Double]], _ s: Double) -> [[Double]] { return mat.map(){ $0.map(){ $0*s } } }
+
+func vdot(_ v1: [Double], _ v2: [Double]) -> Double { return zip(v1,v2).map(*).reduce(0,+) }
+
+func vcross(_ a: [Double], _ b: [Double]) -> [Double] {
+    return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]
 }
 
-func Simd_Double4x4ToTwoDimensionalDoubleMatrix(Simd_Double4x4: simd_double4x4) -> [[Double]]
-{
-    return [
-        [ Simd_Double4x4[0][0], Simd_Double4x4[0][1], Simd_Double4x4[0][2], Simd_Double4x4[0][3]  ],
-        
-        [ Simd_Double4x4[1][0], Simd_Double4x4[1][1], Simd_Double4x4[1][2], Simd_Double4x4[1][3]  ],
-        
-        [ Simd_Double4x4[2][0], Simd_Double4x4[2][1], Simd_Double4x4[2][2], Simd_Double4x4[2][3]  ],
-        
-        [ Simd_Double4x4[3][0], Simd_Double4x4[3][1], Simd_Double4x4[3][2], Simd_Double4x4[3][3]  ]
-    ]
-}*/
+func norm(_ v: [Double]) -> Double { return sqrt(zip(v,v).map(*).reduce(0,+)) }
 
-/*
- USED FOR MANUALLY INVERTING A MATRIX
- */
-func augment(_ matrix: [[Double]]) -> [[Double]] {
-    var augmented = matrix
-    var idrow = Array(repeating: 0.0, count: matrix.count)
-    idrow[0] = 1.0
-    for row in 0..<matrix.count {
-        augmented[row] += idrow
-        idrow.insert(0.0, at:0)
-        idrow.removeLast()
-    }
-    return augmented
+func madd(_ mat1: [[Double]], _ mat2: [[Double]]) -> [[Double]] {
+    return zip(mat1,mat2).map {zip($0,$1).map(+)}
 }
- 
-func deaugment(_ matrix: [[Double]]) -> [[Double]] {
-    var deaugmented = matrix
-    
-    for row in 0..<matrix.count {
-        for _ in 0..<matrix.count {
-            deaugmented[row].remove(at:0)
-        }
-    }
-    return deaugmented
-}
- 
-func partialPivot(_ matrix: inout [[Double]]) {
-    for row1 in 0..<matrix.count {
-        for row2 in row1..<matrix.count {
-            if abs(matrix[row1][row1]) < abs(matrix[row2][row2]) {
-                (matrix[row1],matrix[row2]) = (matrix[row2],matrix[row1])
-            }
-        }
-    }
-}
- 
-func scaleRow(_ matrix: inout [[Double]], row: Int, scale: Double) {
-    for col in 0..<matrix[row].count {
-        matrix[row][col] *= scale
-    }
-}
- 
-func addRow(_ matrix: inout [[Double]], row: Int, scaledBy: Double, toRow: Int) {
-    for col in 0..<matrix[row].count {
-        matrix[toRow][col] += scaledBy * matrix[row][col]
-    }
-}
- 
-func pivot(_ matrix: inout [[Double]], row pivotRow: Int, col pivotCol: Int, forward: Bool) {
-    let scale = 1.0 / matrix[pivotRow][pivotCol]
-    scaleRow(&matrix, row: pivotRow, scale: scale)
-    
-    if forward {
-        for toRow in (pivotRow+1)..<matrix.count {
-            let scaleBy = -1.0 * matrix[toRow][pivotCol]
-            addRow(&matrix, row: pivotRow, scaledBy: scaleBy, toRow: toRow)
-        }
-    } else {
-        for toRow in (0..<pivotRow).reversed() {
-            let scaleBy = -1.0 * matrix[toRow][pivotCol]
-            addRow(&matrix, row: pivotRow, scaledBy: scaleBy, toRow: toRow)
-        }
-    }
-}
- 
-func gaussJordanInverse(_ matrix: [[Double]]) -> [[Double]] {
-    var matrix = augment(matrix)
-    partialPivot(&matrix)
-    
-    for p in 0..<matrix.count {
-        pivot(&matrix, row: p, col: p, forward: true)
-    }
-    
-    for p in (0..<matrix.count).reversed() {
-        pivot(&matrix, row: p, col: p, forward: false)
-    }
- 
-    matrix = deaugment(matrix)
-    
-    return matrix
-}
-/*
- USED FOR MANUALLY INVERTING A MATRIX
- */
 
-let lst : [simd_float2] = [[1,2],[3,4]]
-let lst2 : [simd_float2] = [[0,1],[1,0]]
-let lst3 : [[Double]] = [[1,2,3],[4,5,6],[7,8,9]]
-let lst4 : [[Double]] = [[1,3,0.5,2],[6,-4,3,1],[2,2.5,4,3]]
-let lst5 : [Double] = [3,4,5,6]
-//print(mmult(mat1: lst4,mat2: lst5))
-//print(mmult(mat1: lst3, mat2: lst4))
+func msub(_ mat1: [[Double]], _ mat2: [[Double]]) -> [[Double]] {
+    return zip(mat1,mat2).map {zip($0,$1).map(-)}
+}
+
+func matSumSq(_ mat: [[Double]]) -> Double {
+    let mtm = mmult(mat.transpose(),mat)
+    var retVal : Double = 0
+    for i in 0..<mat[0].count { retVal += mtm[i][i] }
+    return retVal
+}
 
 struct CalibrationTest : View {
     var body : some View {
@@ -280,13 +199,7 @@ struct CalibrationTest : View {
                 Spacer()
                 Button(
                     "Return to home", action: {
-                       
-                       
-                        ang = nextGaussNewtonJointAxis(g: [g1, g2], pArgs: ang)
-                        
-                        print(ang)
-                        
-                        print()
+                        print( nthJointAxis(gl12, thph12, 500))
                     }
                 ).buttonStyle(RoundedRectangleButtonStyle())
             }
@@ -299,6 +212,3 @@ struct CalibrationTest_Previews: PreviewProvider {
         CalibrationTest()
     }
 }
-
-
-
