@@ -11,7 +11,7 @@ import Foundation
 let exercise1Name = "Exercise1"
 let exercise1Description = "Exercise1 Description"
 let exercise1Tip = "Exercise1 Tip"
-let exercise1ImageName = "Exercise1 ImageName"
+let exercise1ImageName = "ArmImage"
 let exercise1WearablePlacementImageName = "Exercise 1 WearablePlacementImage"
 let exercise1NumberOfSets = 3
 let exercise1NumberOfReps = 6
@@ -25,7 +25,7 @@ let exercise1 = Exercise(exerciseName: exercise1Name, description: exercise1Desc
 // exercise 2 information
 let exercise2Name = "Exercise2"
 let exercise2Description = "Exercise2 Description"
-let exercise2ImageName = "Exercise2 ImageName"
+let exercise2ImageName = "ROMSymbol"
 let exercise2WearablePlacementImageName = "Exercise 2 WearablePlacementImage"
 let exercise2NumberOfSets = 12
 let exercise2NumberOfReps = 12
@@ -40,7 +40,7 @@ let exercise2 = Exercise(exerciseName: exercise2Name, description: exercise2Desc
 // exercise 3 information
 let exercise3Name = "Exercise3"
 let exercise3Description = "Exercise3 Description"
-let exercise3ImageName = "Exercise3 ImageName"
+let exercise3ImageName = "ROMSymbol"
 let exercise3WearablePlacementImageName = "Exercise 3 WearablePlacementImage"
 let exercise3NumberOfSets = 12
 let exercise3NumberOfReps = 12
@@ -55,7 +55,7 @@ let exercise3 = Exercise(exerciseName: exercise3Name, description: exercise3Desc
 // exercise 4 information
 let exercise4Name = "Exercise4"
 let exercise4Description = "Exercise4 Description"
-let exercise4ImageName = "Exercise4 ImageName"
+let exercise4ImageName = "ROMSymbol"
 let exercise4WearablePlacementImageName = "Exercise 4 WearablePlacementImage"
 let exercise4NumberOfSets = 12
 let exercise4NumberOfReps = 12
@@ -70,7 +70,7 @@ let exercise4 = Exercise(exerciseName: exercise4Name, description: exercise4Desc
 // exercise 5 information
 let exercise5Name = "Exercise5"
 let exercise5Description = "Exercise5 Description"
-let exercise5ImageName = "Exercise5 ImageName"
+let exercise5ImageName = "ROMSymbol"
 let exercise5WearablePlacementImageName = "Exercise 5 WearablePlacementImage"
 let exercise5NumberOfSets = 12
 let exercise5NumberOfReps = 12
@@ -85,7 +85,7 @@ let exercise5 = Exercise(exerciseName: exercise5Name, description: exercise5Desc
 // exercise 6 information
 let exercise6Name = "Exercise6"
 let exercise6Description = "Exercise6 Description"
-let exercise6ImageName = "Exercise6 ImageName"
+let exercise6ImageName = "ROMSymbol"
 let exercise6WearablePlacementImageName = "Exercise 6 WearablePlacementImage"
 let exercise6NumberOfSets = 12
 let exercise6NumberOfReps = 12
@@ -100,7 +100,7 @@ let exercise6 = Exercise(exerciseName: exercise6Name, description: exercise6Desc
 // exercise 7 information
 let exercise7Name = "Exercise7"
 let exercise7Description = "Exercise7 Description"
-let exercise7ImageName = "Exercise7 ImageName"
+let exercise7ImageName = "ROMSymbol"
 let exercise7WearablePlacementImageName = "Exercise 7 WearablePlacementImage"
 let exercise7NumberOfSets = 12
 let exercise7NumberOfReps = 12
@@ -115,7 +115,7 @@ let exercise7 = Exercise(exerciseName: exercise7Name, description: exercise7Desc
 // exercise 8 information
 let exercise8Name = "Exercise8"
 let exercise8Description = "Exercise8 Description"
-let exercise8ImageName = "Exercise8 ImageName"
+let exercise8ImageName = "ROMSymbol"
 let exercise8WearablePlacementImageName = "Exercise 8 WearablePlacementImage"
 let exercise8NumberOfSets = 12
 let exercise8NumberOfReps = 12
@@ -130,7 +130,7 @@ let exercise8 = Exercise(exerciseName: exercise8Name, description: exercise8Desc
 // exercise 9 information
 let exercise9Name = "Exercise9"
 let exercise9Description = "Exercise9 Description"
-let exercise9ImageName = "Exercise9 ImageName"
+let exercise9ImageName = "ROMSymbol"
 let exercise9WearablePlacementImageName = "Exercise 9 WearablePlacementImage"
 let exercise9NumberOfSets = 12
 let exercise9NumberOfReps = 12
@@ -145,7 +145,7 @@ let exercise9 = Exercise(exerciseName: exercise9Name, description: exercise9Desc
 // exercise 10 information
 let exercise10Name = "Exercise10"
 let exercise10Description = "Exercise10 Description"
-let exercise10ImageName = "Exercise10 ImageName"
+let exercise10ImageName = "ROMSymbol"
 let exercise10WearablePlacementImageName = "Exercise 10 WearablePlacementImage"
 let exercise10NumberOfSets = 12
 let exercise10NumberOfReps = 12

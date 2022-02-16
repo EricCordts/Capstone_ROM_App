@@ -32,6 +32,7 @@
 		368E74EE27ADB3B30069186D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74ED27ADB3B20069186D /* SummaryView.swift */; };
 		368E74EF27ADB3B30069186D /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74ED27ADB3B20069186D /* SummaryView.swift */; };
 		368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368E74F027B1D3FA0069186D /* Launch Screen.storyboard */; };
+		368E74F427B341B70069186D /* CalibrationCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74F327B341B70069186D /* CalibrationCalculations.swift */; };
 		3B4DF4B627AA14F40079A17C /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */; };
 		3BFA8A2E279A4463008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2D279A4463008FB82C /* Tests_iOS.swift */; };
 		3BFA8A30279A4463008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2F279A4463008FB82C /* Tests_iOSLaunchTests.swift */; };
@@ -77,6 +78,7 @@
 		368E74ED27ADB3B20069186D /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		368E74F027B1D3FA0069186D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		368E74F227B1D5B70069186D /* Capstone-ROM-App--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-ROM-App--iOS--Info.plist"; sourceTree = "<group>"; };
+		368E74F327B341B70069186D /* CalibrationCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCalculations.swift; sourceTree = "<group>"; };
 		3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
 		3BFA8A16279A4462008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				368E74ED27ADB3B20069186D /* SummaryView.swift */,
 				3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */,
 				368E74F027B1D3FA0069186D /* Launch Screen.storyboard */,
+				368E74F327B341B70069186D /* CalibrationCalculations.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 			files = (
 				36445C1927A0CA9000C2872F /* ExerciseMenuPage.swift in Sources */,
 				36445C3A27A5D07A00C2872F /* ExerciseDetailView.swift in Sources */,
+				368E74F427B341B70069186D /* CalibrationCalculations.swift in Sources */,
 				368E74EE27ADB3B30069186D /* SummaryView.swift in Sources */,
 				36445C4627ACAFB800C2872F /* CompletedWorkoutView.swift in Sources */,
 				36445C4327AA12D400C2872F /* WorkoutView.swift in Sources */,

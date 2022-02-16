@@ -12,11 +12,7 @@ struct ExerciseRow: View {
 
     var body: some View {
         HStack {
-            
-            // commented out until we get actual images
-            //exercise.exerciseImage.resizeable().frame(width: 60, height: 60)
-            // use ROMSymbol as a temporary image
-            Image("ROMSymbol").resizable().frame(width: 60.0, height: 60.0)
+            Image(exercise.exerciseImageName).resizable().frame(width: 60.0, height: 60.0)
             Text(exercise.exerciseName).font(.largeTitle)
             Spacer()
             if exercise.exerciseCompleted
@@ -35,6 +31,6 @@ struct ExerciseRow: View {
 
 struct ExerciseRow_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseRow(exercise: exercisesData[3])
+        ExerciseRow(exercise: exercisesData[0])
     }
 }
