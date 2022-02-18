@@ -48,6 +48,8 @@ struct BluetoothView : View {
                         .foregroundColor(.red)
                 }
             }
+            Text("\(bleManager.Xvalue) : \(bleManager.Yvalue) : \(bleManager.Zvalue)")
+                .foregroundColor(.blue)
         } else {
             Text("Bluetooth is NOT switched on")
                 .foregroundColor(.red)

@@ -23,6 +23,7 @@
 		36445C3B27A5D07A00C2872F /* ExerciseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C3927A5D07A00C2872F /* ExerciseDetailView.swift */; };
 		36445C3D27A89ABC00C2872F /* PowerOnWearableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */; };
 		36445C3E27A89ABC00C2872F /* PowerOnWearableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */; };
+		3B3A663A27B7125E007898F3 /* ArduinoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3A663927B7125E007898F3 /* ArduinoData.swift */; };
 		3B4DF4B627AA14F40079A17C /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */; };
 		3BFA8A2E279A4463008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2D279A4463008FB82C /* Tests_iOS.swift */; };
 		3BFA8A30279A4463008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2F279A4463008FB82C /* Tests_iOSLaunchTests.swift */; };
@@ -63,6 +64,7 @@
 		36445C3927A5D07A00C2872F /* ExerciseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetailView.swift; sourceTree = "<group>"; };
 		36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerOnWearableView.swift; sourceTree = "<group>"; };
 		3B3A663827ADC35D007898F3 /* Capstone-ROM-App--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-ROM-App--iOS--Info.plist"; sourceTree = "<group>"; };
+		3B3A663927B7125E007898F3 /* ArduinoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArduinoData.swift; sourceTree = "<group>"; };
 		3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
 		3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
 		3BFA8A16279A4462008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				36445C3927A5D07A00C2872F /* ExerciseDetailView.swift */,
 				36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */,
 				3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */,
+				3B3A663927B7125E007898F3 /* ArduinoData.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				36445C1F27A0CD7500C2872F /* Utilities.swift in Sources */,
 				36445C3D27A89ABC00C2872F /* PowerOnWearableView.swift in Sources */,
 				3BFA8A3D279A4463008FB82C /* Capstone_ROM_AppApp.swift in Sources */,
+				3B3A663A27B7125E007898F3 /* ArduinoData.swift in Sources */,
 				3B4DF4B627AA14F40079A17C /* BluetoothViewController.swift in Sources */,
 				36445C3727A5A85E00C2872F /* ExerciseData.swift in Sources */,
 				36445C3127A5A7DD00C2872F /* Exercise.swift in Sources */,

@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 import CoreBluetooth
 import SwiftUI
+let start = CFAbsoluteTimeGetCurrent()
+
+typealias Finished = () -> ()
 
 class BluetoothViewController: UIViewController, CBCentralManagerDelegate, ObservableObject, CBPeripheralDelegate {
     
@@ -29,6 +32,9 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     @Published var isSwitchedOn = false
     @Published var isConnected = false
     @Published var characteristicInfo: [CBCharacteristic] = []
+    @Published var Xvalue = UInt16.init(0)
+    @Published var Yvalue = UInt16.init(0)
+    @Published var Zvalue = UInt16.init(0)
 
     // Normal Variables
     var centralManager: CBCentralManager!
@@ -130,6 +136,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     
     // Callback: Updated the value held by a characteristics
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+
         if let error = error {
             print("ERROR didUpdateValue message:\(error)")
             return
@@ -144,10 +151,37 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
             let data16 = bytes.map { UInt16($0) }
             wavelength = 256 * data16[1] + data16[0]
         }
-
-        print("\(characteristic.uuid) \(String(describing: wavelength))")
+        
+        if let wavelength = wavelength {
+            processXyz(uuid: characteristic.uuid, posn: wavelength, start: start)
+            print("\(characteristic.uuid) \(String(describing: wavelength))")
+            // TODO: Add handling to distinguish from gryo data
+            //processGyro()
+        }
     }
     
+    
+    // Process the Position Data that has been updated.
+    func processXyz(uuid: CBUUID, posn: UInt16, start: CFAbsoluteTime) {
+        let diff = CFAbsoluteTimeGetCurrent() - start
+        print("Took \(diff) seconds: ")
+        switch uuid {
+            case CBUUID.init(string: "2101"):
+                Xvalue = posn
+                print("X: ", terminator: "")
+                break
+            case CBUUID.init(string: "2102"):
+                Yvalue = posn
+                print("Y: ", terminator: "")
+                break
+            case CBUUID.init(string: "2103"):
+                Zvalue = posn
+                print("Z: ", terminator: "")
+                break
+            default:
+                break
+            }
+    }
     /* --- FUNCTIONS --- */
     
     // Start Scanning for peripherals
