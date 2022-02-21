@@ -23,9 +23,7 @@ struct WorkoutView : View {
                 {
                     CompletedWorkoutView()
                         .onAppear{
-                            withAnimation(.easeIn){
-                                self.exercise.exerciseCompleted = true
-                            }
+                            self.exercise.exerciseCompleted = true
                         }
                 }
                 else
@@ -41,7 +39,7 @@ struct WorkoutView : View {
                         Text("Sets left: " + String(exercise.numberOfSets - setsCompleted) + "  |  Reps left: " + String(exercise.numberOfReps - repsCompleted))
                     }.padding()
                     
-                    Text("Filler text for where moving bar would go").padding()
+                    Image("ColorBar").resizable().scaledToFit().overlay( Image(systemName: "square").resizable().frame(width: 50.0, height: 50.0).foregroundColor(Color.gray))
                     
                     Text("Instruction filler")
                     Text("Instruction 1 filler")

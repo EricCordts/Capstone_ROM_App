@@ -25,18 +25,3 @@ struct RoundedRectangleButtonStyle: ButtonStyle {
     .scaleEffect(configuration.isPressed ? 0.90 : 1)
   }
 }
-
-
-struct ExerciseMenuPageButtonStyle: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    let maximumWidth : CGFloat = 300
-    let maximumHeight : CGFloat = 300
-    configuration.label.foregroundColor(.black).font(.system(size: 30, weight: .bold))
-    .padding(20)
-    .frame(maxWidth: maximumWidth, maxHeight: maximumHeight)
-    .background(CustomColors.BackgroundColorBlue.cornerRadius(10))
-    .shadow(color: Color.white, radius: 20)
-    .scaleEffect(configuration.isPressed ? 0.90 : 1)
-  }
-}
-

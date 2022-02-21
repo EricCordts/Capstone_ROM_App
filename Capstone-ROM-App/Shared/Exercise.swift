@@ -28,9 +28,11 @@ class Exercise : ObservableObject, Identifiable{
     @Published var numberOfWearablesRequired: Int = 0
     @Published var wearableIDs = [Int]()
     @Published var exerciseCompleted: Bool = false
+    @Published var wearablesPowerOn = [Bool]()
+    @Published var wearablesCalibrated = [Bool]()
     
     init(exerciseName: String, description: String, exerciseTip: String,
-exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool)
+         exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool, wearablesPowerOn: [Bool], wearablesCalibrated: [Bool])
     {
         self.exerciseName = exerciseName
         self.description = description
@@ -42,5 +44,7 @@ exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int
         self.numberOfWearablesRequired = numberOfWearablesRequired
         self.wearableIDs = wearableIDs
         self.exerciseCompleted = exerciseCompleted
+        self.wearablesPowerOn = wearablesPowerOn
+        self.wearablesCalibrated = wearablesCalibrated
     }
 }
