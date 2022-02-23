@@ -13,6 +13,7 @@ struct ExerciseMenuPage : View {
         ZStack{
             // create a background with a linear gradient
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            
             VStack(){
                 Text("Please choose an exercise prescribed by your therapist from the list below:")
                     .font(.system(size: 20)).padding()
@@ -23,6 +24,7 @@ struct ExerciseMenuPage : View {
                         PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
                     } label:{ExerciseRow(exercise: exercise)}
                 }
+                
             }
         }
     }

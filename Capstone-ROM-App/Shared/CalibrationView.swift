@@ -21,19 +21,33 @@ struct CalibrationView : View {
                     .font(.title)
                     .fontWeight(.bold).multilineTextAlignment(.center).padding()
                 // have some sort of status next to each wearable that says it is calibrated
-                ForEach(exercise.wearableIDs, id: \.self){
-                    wearableID in
-                    Text("WearableID: " + String(wearableID)).font(.title2)
+                ForEach(Array(zip(exercise.wearableIDs, exercise.wearablesCalibrated)), id: \.0) { exerciseItem in
+                    HStack{
+                        Text("WearableID: " + String(exerciseItem.0)).font(.title2)
+                        if exerciseItem.1
+                        {
+                            Image(systemName: "checkmark.square").resizable().frame(width: 40.0, height: 40.0)
+                            .foregroundColor(Color.green)
+                        }
+                        else
+                        {
+                            Image(systemName: "square").resizable().frame(width: 40.0, height: 40.0)
+                                .foregroundColor(Color.gray)
+                        }
+                    }
                     Spacer().frame(height: 10)
                 }
+                
+                Spacer()
                 
                 Button(
                     "Cancel Calibration", action: {self.presentationMode.wrappedValue.dismiss()}
                 ).buttonStyle(RoundedRectangleButtonStyle())
-                
+                Spacer()
                 // temp button to navigate to next page
                 // will be replaced by automatically going to next page after all devices are calibrated
                 NavigationLink(destination: WorkoutView(exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
+                Spacer()
 
             }
         }

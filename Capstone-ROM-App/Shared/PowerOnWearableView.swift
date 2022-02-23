@@ -21,9 +21,21 @@ struct PowerOnWearableView : View {
                 Text("Please power on the following " + String(exercise.numberOfWearablesRequired) + " wearables:")
                     .font(.title)
                     .fontWeight(.bold).multilineTextAlignment(.center).padding()
-                ForEach(exercise.wearableIDs, id: \.self){
-                    wearableID in
-                    Text("WearableID: " + String(wearableID)).font(.title2)
+                
+                ForEach(Array(zip(exercise.wearableIDs, exercise.wearablesPowerOn)), id: \.0) { exerciseItem in
+                    HStack{
+                        Text("WearableID: " + String(exerciseItem.0)).font(.title2)
+                        if exerciseItem.1
+                        {
+                            Image(systemName: "checkmark.square").resizable().frame(width: 40.0, height: 40.0)
+                            .foregroundColor(Color.green)
+                        }
+                        else
+                        {
+                            Image(systemName: "square").resizable().frame(width: 40.0, height: 40.0)
+                                .foregroundColor(Color.gray)
+                        }
+                    }
                     Spacer().frame(height: 10)
                 }
                 

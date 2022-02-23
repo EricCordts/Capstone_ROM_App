@@ -15,8 +15,8 @@ struct ContentView: View {
     @ObservedObject var exercises = Exercises()
     var body: some View {
         NavigationView{
-            OpeningPage(exercises: exercises)
-        }
+            ExerciseMenuPage(exercises: exercises).navigationBarTitle("Home", displayMode: .large)
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     @ObservedObject var bleManager = BluetoothViewController()

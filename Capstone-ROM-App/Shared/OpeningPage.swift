@@ -5,6 +5,10 @@
 //  Created by Eric Cordts on 1/25/22.
 //
 
+// NOT USED BUT KEEPING IN CASE NECESSARY TO USE IN FUTURE
+// COMMENTING OUT EVERYTHING
+
+/*
 import SwiftUI
 
 struct OpeningPage : View {
@@ -66,3 +70,4 @@ struct OpeningPageView_Previews: PreviewProvider {
         OpeningPage(exercises: Exercises())
     }
 }
+*/
