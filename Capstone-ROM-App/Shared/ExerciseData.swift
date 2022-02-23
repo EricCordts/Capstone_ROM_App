@@ -18,8 +18,8 @@ let exercise1NumberOfReps = 6
 let exercise1NumberOfWearablesRequired = 2
 let exercise1WearableIDs = [1, 2]
 let exercise1Completed = false
-let exercise1WearablesPowerOn = [false, true]
-let exercise1WearablesCalibrated = [false, true]
+let exercise1WearablesPowerOn = [false, false]
+let exercise1WearablesCalibrated = [false, false]
 
 // exercise1
 let exercise1 = Exercise(exerciseName: exercise1Name, description: exercise1Description, exerciseTip: exercise1Tip, exerciseImageName: exercise1ImageName, wearablePlacementImageName: exercise1WearablePlacementImageName, numberOfSets: exercise1NumberOfSets, numberOfReps: exercise1NumberOfReps, numberOfWearablesRequired: exercise1NumberOfWearablesRequired, wearableIDs: exercise1WearableIDs, exerciseCompleted: exercise1Completed, wearablesPowerOn: exercise1WearablesPowerOn, wearablesCalibrated: exercise1WearablesCalibrated)
@@ -36,7 +36,7 @@ let exercise2WearableIDs = [1, 2]
 let exercise2Tip = "Exercise2 Tip"
 let exercise2Completed = false
 let exercise2WearablesPowerOn = [false, false]
-let exercise2WearablesCalibrated = [false, true]
+let exercise2WearablesCalibrated = [false, false]
 
 // exercise2
 let exercise2 = Exercise(exerciseName: exercise2Name, description: exercise2Description, exerciseTip: exercise2Tip, exerciseImageName: exercise2ImageName, wearablePlacementImageName: exercise2WearablePlacementImageName, numberOfSets: exercise2NumberOfSets, numberOfReps: exercise2NumberOfReps, numberOfWearablesRequired: exercise2NumberOfWearablesRequired, wearableIDs: exercise2WearableIDs, exerciseCompleted: exercise2Completed, wearablesPowerOn: exercise2WearablesPowerOn, wearablesCalibrated: exercise2WearablesCalibrated)
@@ -53,7 +53,7 @@ let exercise3WearableIDs = [1, 2]
 let exercise3Tip = "Exercise3 Tip"
 let exercise3Completed = false
 let exercise3WearablesPowerOn = [false, false]
-let exercise3WearablesCalibrated = [false, true]
+let exercise3WearablesCalibrated = [false, false]
 
 // exercise3
 let exercise3 = Exercise(exerciseName: exercise3Name, description: exercise3Description, exerciseTip: exercise3Tip, exerciseImageName: exercise3ImageName, wearablePlacementImageName: exercise3WearablePlacementImageName, numberOfSets: exercise3NumberOfSets, numberOfReps: exercise3NumberOfReps, numberOfWearablesRequired: exercise3NumberOfWearablesRequired, wearableIDs: exercise3WearableIDs, exerciseCompleted: exercise3Completed, wearablesPowerOn: exercise3WearablesPowerOn, wearablesCalibrated: exercise3WearablesCalibrated)
@@ -70,7 +70,7 @@ let exercise4WearableIDs = [1, 2]
 let exercise4Tip = "Exercise4 Tip"
 let exercise4Completed = false
 let exercise4WearablesPowerOn = [false, false]
-let exercise4WearablesCalibrated = [false, true]
+let exercise4WearablesCalibrated = [false, false]
 
 // exercise4
 let exercise4 = Exercise(exerciseName: exercise4Name, description: exercise4Description, exerciseTip: exercise4Tip, exerciseImageName: exercise4ImageName, wearablePlacementImageName: exercise4WearablePlacementImageName, numberOfSets: exercise4NumberOfSets, numberOfReps: exercise4NumberOfReps, numberOfWearablesRequired: exercise4NumberOfWearablesRequired, wearableIDs: exercise4WearableIDs, exerciseCompleted: exercise4Completed, wearablesPowerOn: exercise4WearablesPowerOn, wearablesCalibrated: exercise4WearablesCalibrated)
@@ -87,7 +87,7 @@ let exercise5WearableIDs = [1, 2]
 let exercise5Tip = "Exercise5 Tip"
 let exercise5Completed = false
 let exercise5WearablesPowerOn = [false, false]
-let exercise5WearablesCalibrated = [false, true]
+let exercise5WearablesCalibrated = [false, false]
 
 // exercise5
 let exercise5 = Exercise(exerciseName: exercise5Name, description: exercise5Description, exerciseTip: exercise5Tip, exerciseImageName: exercise5ImageName, wearablePlacementImageName: exercise5WearablePlacementImageName, numberOfSets: exercise5NumberOfSets, numberOfReps: exercise5NumberOfReps, numberOfWearablesRequired: exercise5NumberOfWearablesRequired, wearableIDs: exercise5WearableIDs, exerciseCompleted: exercise5Completed, wearablesPowerOn: exercise5WearablesPowerOn, wearablesCalibrated: exercise5WearablesCalibrated)
@@ -104,7 +104,7 @@ let exercise6WearableIDs = [1, 2]
 let exercise6Tip = "Exercise6 Tip"
 let exercise6Completed = false
 let exercise6WearablesPowerOn = [false, false]
-let exercise6WearablesCalibrated = [false, true]
+let exercise6WearablesCalibrated = [false, false]
 
 // exercise6
 let exercise6 = Exercise(exerciseName: exercise6Name, description: exercise6Description, exerciseTip: exercise6Tip, exerciseImageName: exercise6ImageName, wearablePlacementImageName: exercise6WearablePlacementImageName, numberOfSets: exercise6NumberOfSets, numberOfReps: exercise6NumberOfReps, numberOfWearablesRequired: exercise6NumberOfWearablesRequired, wearableIDs: exercise6WearableIDs, exerciseCompleted: exercise6Completed, wearablesPowerOn: exercise6WearablesPowerOn, wearablesCalibrated: exercise6WearablesCalibrated)
@@ -121,7 +121,7 @@ let exercise7WearableIDs = [1, 2]
 let exercise7Tip = "Exercise7 Tip"
 let exercise7Completed = false
 let exercise7WearablesPowerOn = [false, false]
-let exercise7WearablesCalibrated = [false, true]
+let exercise7WearablesCalibrated = [false, false]
 
 // exercise7
 let exercise7 = Exercise(exerciseName: exercise7Name, description: exercise7Description, exerciseTip: exercise7Tip, exerciseImageName: exercise7ImageName, wearablePlacementImageName: exercise7WearablePlacementImageName, numberOfSets: exercise7NumberOfSets, numberOfReps: exercise7NumberOfReps, numberOfWearablesRequired: exercise7NumberOfWearablesRequired, wearableIDs: exercise7WearableIDs, exerciseCompleted: exercise7Completed, wearablesPowerOn: exercise7WearablesPowerOn, wearablesCalibrated: exercise7WearablesCalibrated)
@@ -138,7 +138,7 @@ let exercise8WearableIDs = [1, 2]
 let exercise8Tip = "Exercise8 Tip"
 let exercise8Completed = false
 let exercise8WearablesPowerOn = [false, false]
-let exercise8WearablesCalibrated = [false, true]
+let exercise8WearablesCalibrated = [false, false]
 
 // exercise8
 let exercise8 = Exercise(exerciseName: exercise8Name, description: exercise8Description, exerciseTip: exercise8Tip, exerciseImageName: exercise8ImageName, wearablePlacementImageName: exercise8WearablePlacementImageName, numberOfSets: exercise8NumberOfSets, numberOfReps: exercise8NumberOfReps, numberOfWearablesRequired: exercise8NumberOfWearablesRequired, wearableIDs: exercise2WearableIDs, exerciseCompleted: exercise8Completed, wearablesPowerOn: exercise8WearablesPowerOn, wearablesCalibrated: exercise8WearablesCalibrated)
@@ -155,7 +155,7 @@ let exercise9WearableIDs = [1, 2]
 let exercise9Tip = "Exercise9 Tip"
 let exercise9Completed = false
 let exercise9WearablesPowerOn = [false, false]
-let exercise9WearablesCalibrated = [false, true]
+let exercise9WearablesCalibrated = [false, false]
 
 // exercise9
 let exercise9 = Exercise(exerciseName: exercise9Name, description: exercise9Description, exerciseTip: exercise9Tip, exerciseImageName: exercise9ImageName, wearablePlacementImageName: exercise9WearablePlacementImageName, numberOfSets: exercise9NumberOfSets, numberOfReps: exercise9NumberOfReps, numberOfWearablesRequired: exercise9NumberOfWearablesRequired, wearableIDs: exercise9WearableIDs, exerciseCompleted: exercise9Completed, wearablesPowerOn: exercise9WearablesPowerOn, wearablesCalibrated: exercise9WearablesCalibrated)
@@ -172,7 +172,7 @@ let exercise10WearableIDs = [1, 2, 5, 7]
 let exercise10Tip = "Exercise10 Tip"
 let exercise10Completed = false
 let exercise10WearablesPowerOn = [false, false]
-let exercise10WearablesCalibrated = [false, true]
+let exercise10WearablesCalibrated = [false, false]
 
 // exercise10
 let exercise10 = Exercise(exerciseName: exercise10Name, description: exercise10Description, exerciseTip: exercise10Tip, exerciseImageName: exercise10ImageName, wearablePlacementImageName: exercise10WearablePlacementImageName, numberOfSets: exercise10NumberOfSets, numberOfReps: exercise10NumberOfReps, numberOfWearablesRequired: exercise10NumberOfWearablesRequired, wearableIDs: exercise10WearableIDs, exerciseCompleted: exercise10Completed, wearablesPowerOn: exercise10WearablesPowerOn, wearablesCalibrated: exercise10WearablesCalibrated)
