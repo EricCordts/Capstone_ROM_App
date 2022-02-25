@@ -32,28 +32,42 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct BluetoothView : View {
-    @ObservedObject var bleManager = BluetoothViewController()
+    @StateObject var bleManager = BluetoothViewController()
     var body : some View {
+        
         if bleManager.isSwitchedOn {
             Text("Bluetooth is switched on")
                 .foregroundColor(.green)
-            if bleManager.isConnected {
-                Text("Connected to yo mama")
-                    .foregroundColor(.green)
-                if !bleManager.characteristicInfo.isEmpty && bleManager.characteristicInfo[0].isNotifying {
-                    Text("notifying")
-                        .foregroundColor(.green)
-                } else {
-                    Text("not notifying")
-                        .foregroundColor(.red)
+            
+//            if bleManager.isConnected {
+//                Text("Connected to yo mama")
+//                    .foregroundColor(.green)
+//                if !bleManager.characteristicInfo.isEmpty && bleManager.characteristicInfo[0].isNotifying {
+//                    Text("notifying")
+//                        .foregroundColor(.green)
+//                } else {
+//                    Text("not notifying")
+//                        .foregroundColor(.red)
+//                }
+//            }
+            VStack{
+                ForEach(bleManager.soughtPeripherals.map{$0.key}.indices, id: \.self) { index in
+                    let peripheral = bleManager.soughtPeripherals.map{$0.value}[index]
+                        if peripheral.state == CBPeripheralState.init(rawValue: 2){
+                        Text("Connected to \( peripheral.name ?? "Arbitrary Arduino ") ")
+                            .foregroundColor(.green)
+                        
+                        Text("\(bleManager.accelValues[peripheral.identifier.uuidString]?.Xvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Yvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Zvalue ?? 1 )")
+                            .foregroundColor(.blue)
+                    }
                 }
             }
-            Text("\(bleManager.Xvalue) : \(bleManager.Yvalue) : \(bleManager.Zvalue)")
-                .foregroundColor(.blue)
         } else {
             Text("Bluetooth is NOT switched on")
                 .foregroundColor(.red)
         }
         
+        
     }
+    
 }
