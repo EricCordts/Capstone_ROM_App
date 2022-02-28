@@ -15,8 +15,7 @@ class Exercises: ObservableObject, Identifiable{
 class Exercise : ObservableObject, Identifiable{
     var id = UUID()
     @Published var exerciseName: String = ""
-    @Published var description: String = ""
-    @Published var exerciseTip: String = ""
+    @Published var instructions: String = ""
 
     @Published var exerciseImageName: String = ""
 
@@ -26,17 +25,16 @@ class Exercise : ObservableObject, Identifiable{
     @Published var numberOfReps: Int = 0
     
     @Published var numberOfWearablesRequired: Int = 0
-    @Published var wearableIDs = [Int]()
+    @Published var wearableIDs = [[Int]]()
     @Published var exerciseCompleted: Bool = false
-    @Published var wearablesPowerOn = [Bool]()
-    @Published var wearablesCalibrated = [Bool]()
+    @Published var wearablesPowerOn = [[Bool]]()
+    @Published var wearablesCalibrated = [[Bool]]()
     
-    init(exerciseName: String, description: String, exerciseTip: String,
-         exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool, wearablesPowerOn: [Bool], wearablesCalibrated: [Bool])
+    init(exerciseName: String, instructions: String,
+         exerciseImageName: String, wearablePlacementImageName: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [[Int]], exerciseCompleted: Bool, wearablesPowerOn: [[Bool]], wearablesCalibrated: [[Bool]])
     {
         self.exerciseName = exerciseName
-        self.description = description
-        self.exerciseTip = exerciseTip
+        self.instructions = instructions
         self.exerciseImageName = exerciseImageName
         self.wearablePlacementImageName = wearablePlacementImageName
         self.numberOfSets = numberOfSets
