@@ -13,11 +13,11 @@ struct WorkoutView : View {
     @State var repsCompleted = 0
     @ObservedObject var exercise: Exercise
     var body : some View {
-        
         ZStack{
             // create a background with a linear gradient
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-            
+            GeometryReader { geo in
+
             VStack{
                 if exercisesCompleted
                 {
@@ -28,23 +28,26 @@ struct WorkoutView : View {
                 }
                 else
                 {
-                    Text(exercise.exerciseTip)
-                        .font(.title2)
-                        .multilineTextAlignment(.center)
+                    Text(exercise.exerciseName)
+                        .font(.title)
+                        .fontWeight(.bold).multilineTextAlignment(.center).frame(width: geo.size.width * 0.98, height: geo.size.height * 0.15)
                     
                     // temp image
-                    Image("ROMSymbol").resizable().frame(width: 250, height: 250)
+                    Image("ArmImage").resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.33)
                     
                     HStack{
-                        Text("Sets left: " + String(exercise.numberOfSets - setsCompleted) + "  |  Reps left: " + String(exercise.numberOfReps - repsCompleted))
-                    }.padding()
+                        Text("Sets left: \(exercise.numberOfSets - setsCompleted)  |  Reps left: \(exercise.numberOfReps - repsCompleted)").font(.title3)
+                            .multilineTextAlignment(.center)
+                            .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
+                    }
                     
-                    Image("ColorBar").resizable().scaledToFit().overlay( Image(systemName: "square").resizable().frame(width: 50.0, height: 50.0).foregroundColor(Color.gray))
+                    Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
+                        Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
+                    })
                     
-                    Text("Instruction filler")
-                    Text("Instruction 1 filler")
-                    Text("Instruction 2 filler")
-                    Text("Instruction 3 filler")
+                    Text("\(exercise.instructions)").font(.title3)
+                        .multilineTextAlignment(.center)
+                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.2)
                     
                     // temp button to decrease reps
                     Button(
@@ -57,7 +60,7 @@ struct WorkoutView : View {
                     ).buttonStyle(RoundedRectangleButtonStyle())
                 }
             }.transition(.slide).animation(.easeIn(duration: 1), value: exercisesCompleted)
-              
+            }
         }
     }
 }

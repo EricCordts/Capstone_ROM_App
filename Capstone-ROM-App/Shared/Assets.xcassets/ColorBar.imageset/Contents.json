@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ColorBar.png",
+      "filename" : "ColorBar.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ColorBar-1.png",
+      "filename" : "ColorBar-1.jpeg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ColorBar-2.png",
+      "filename" : "ColorBar-2.jpeg",
       "idiom" : "universal",
       "scale" : "3x"
     }
