@@ -41,7 +41,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     var arduinos = [
         // UUID's of Arduino Services you are scanning for
         CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196"),
-        CBUUID.init(string: "1805")
+        CBUUID.init(string: "fc6e77ae-713d-47b0-ab7a-88340d3b1986")
     ]
     
     /* --- DELEGATE EXTENSION --- */
