@@ -15,7 +15,24 @@ typealias Finished = () -> ()
 
 class BluetoothViewController: UIViewController, CBCentralManagerDelegate, ObservableObject, CBPeripheralDelegate {
     
-    /* --- REQUIRED INITIALIZATION --- */
+    /* Variables */
+    // Published variables go here. These variables automatically announce when they've been changed. (reinvoked 'body' property)
+    @Published var isSwitchedOn = false
+    @Published var isConnected: [String:Bool] = [:]
+    @Published var characteristicInfo: [CBCharacteristic] = []
+    @Published var soughtPeripherals: [String:CBPeripheral] = [:]
+    @Published var accelValues: [String:accelerometerData] = [:]
+
+    // Normal Variables
+    var centralManager: CBCentralManager!
+    var discoveredPeripherals: [String:CBPeripheral] = [:]
+    var arduinoServices = [
+        // UUID's of Arduino Services you are scanning for
+        CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196"),
+        CBUUID.init(string: "fc6e77ae-713d-47b0-ab7a-88340d3b1986")
+    ]
+    
+    /* Init */
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -27,24 +44,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         fatalError("init(coder:) has not been implemented")
     }
     
-    /* --- VARIABLES --- */
-    // Published variables go here. These variables automatically announce when they've been changed. (reinvoked 'body' property)
-    @Published var isSwitchedOn = false
-    @Published var isConnected: [String:Bool] = [:]
-    @Published var characteristicInfo: [CBCharacteristic] = []
-    @Published var soughtPeripherals: [String:CBPeripheral] = [:]  // explicit strong reference containing list of desired peripherals
-    @Published var accelValues: [String:accelerometerData] = [:]
-
-    // Normal Variables
-    var centralManager: CBCentralManager!
-    var discoveredPeripherals: [String:CBPeripheral] = [:]
-    var arduinos = [
-        // UUID's of Arduino Services you are scanning for
-        CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196"),
-        CBUUID.init(string: "fc6e77ae-713d-47b0-ab7a-88340d3b1986")
-    ]
-    
-    /* --- DELEGATE EXTENSION --- */
+    /* Delegate Functions */
     
     // Peripheral Discovered
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -63,7 +63,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
     }
 
-    // Peripheral Successfully Connects
+    //  centralManagerDidConnect
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Successfully connected. Store reference to peripheral if not already done.
         self.soughtPeripherals[peripheral.identifier.uuidString] = peripheral
@@ -73,7 +73,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         self.discoverServices(peripheral: peripheral)
     }
     
-    // Peripheral Failed to Connect
+    // centralManagerDidFailToConnect
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         if let error = error {
             print("ERROR didFailToConnect message: \(error)")
@@ -83,7 +83,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
     }
     
-    // Peripheral Disconnects
+    // centralManagerDidDisconnectPeripheral
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if let error = error {
             print("ERROR didDisconnectPeripheral message: \(error)")
@@ -92,12 +92,10 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
             self.centralManagerDidUpdateState(central) // Called to trigger update of BluetoothView in ContentView
             return
         }
-        
-        // Successfully disconnected
         self.centralManager.connect(peripheral, options: nil)
     }
     
-    // Discovered a Service
+    // peripheralDidDiscoverServices
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             print("ERROR didDiscoverServices message: \(error)")
@@ -106,7 +104,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         self.discoverCharacteristics(peripheral: peripheral)
     }
     
-    // Discovered a Characteristic
+    // peripheralDidDiscoverCharacteristicsFor
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
             print("ERROR didDiscoverCharacteristicsFor message: \(error)")
@@ -124,7 +122,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
     }
     
-    // Callback: Updated the notification state of a characteristic
+    // peripheralDidUpdateNotifiationStateFor
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             print("ERROR didUpdateNotificationStateFor message: \(error)")
@@ -134,15 +132,13 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         self.centralManagerDidUpdateState(centralManager) 
     }
     
-    // Callback: Updated the value held by a characteristics
+    // peripheralDidUpdateValueFor
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-
         if let error = error {
             print("ERROR didUpdateValue message:\(error)")
             return
         }
-        
-        // Convert Data? object into readable format
+
         var wavelength: UInt16?
         if let unwrapped = characteristic.value {
             var bytes = Array(repeating: 0 as UInt8, count:unwrapped.count/MemoryLayout<UInt8>.size)
@@ -153,35 +149,33 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
         
         if let wavelength = wavelength {
-            processXyz(peripheral: peripheral, uuid: characteristic.uuid, value: wavelength, start: start)
+            handleByteBuffer(peripheral: peripheral, uuid: characteristic.uuid, buffer: wavelength, start: start)
         }
     }
     
     
-    // Process the Position Data that has been updated.
-    func processXyz(peripheral: CBPeripheral, uuid: CBUUID, value: UInt16, start: CFAbsoluteTime) {
-
-        
+    // Process the Position Data that has been updated
+    func handleByteBuffer(peripheral: CBPeripheral, uuid: CBUUID, buffer: UInt16, start: CFAbsoluteTime) {
         switch peripheral.identifier.uuidString {
         case "2D7F82BF-7F7F-F332-EC3E-EC75941F228F":
                 switch uuid.uuidString {
                 case "2101":
-                    accelValues[peripheral.identifier.uuidString]?.Xvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Xvalue = buffer
                 case "2102":
-                    accelValues[peripheral.identifier.uuidString]?.Yvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Yvalue = buffer
                 case "2103":
-                    accelValues[peripheral.identifier.uuidString]?.Zvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Zvalue = buffer
                 default:
                     break
                 }
         case "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7":
                 switch uuid.uuidString {
                 case "2104":
-                    accelValues[peripheral.identifier.uuidString]?.Xvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Xvalue = buffer
                 case "2105":
-                    accelValues[peripheral.identifier.uuidString]?.Yvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Yvalue = buffer
                 case "2106":
-                    accelValues[peripheral.identifier.uuidString]?.Zvalue = value
+                    accelValues[peripheral.identifier.uuidString]?.Zvalue = buffer
                 default:
                     break
             }
@@ -189,11 +183,13 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
             break
         }
     }
-    /* --- FUNCTIONS --- */
+    
+    
+    /* Helper Functions */
     
     // Start Scanning for peripherals
     func startScan() {
-        centralManager.scanForPeripherals(withServices: arduinos, options: nil)
+        centralManager.scanForPeripherals(withServices: arduinoServices, options: nil)
     }
     
     // Handle State Updates of Central Manager
