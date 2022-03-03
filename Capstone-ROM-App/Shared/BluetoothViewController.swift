@@ -16,14 +16,11 @@ typealias Finished = () -> ()
 class BluetoothViewController: UIViewController, CBCentralManagerDelegate, ObservableObject, CBPeripheralDelegate {
     
     /* Variables */
-    // Published variables go here. These variables automatically announce when they've been changed. (reinvoked 'body' property)
     @Published var isSwitchedOn = false
     @Published var isConnected: [String:Bool] = [:]
     @Published var characteristicInfo: [CBCharacteristic] = []
     @Published var soughtPeripherals: [String:CBPeripheral] = [:]
     @Published var accelValues: [String:accelerometerData] = [:]
-
-    // Normal Variables
     var centralManager: CBCentralManager!
     var discoveredPeripherals: [String:CBPeripheral] = [:]
     var arduinoServices = [
@@ -46,11 +43,11 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     
     /* Delegate Functions */
     
-    // Peripheral Discovered
+    // centralManagerDidDiscover
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.discoveredPeripherals[peripheral.identifier.uuidString] = peripheral
         
-        print(peripheral.identifier.uuidString)
+        print(peripheral.identifier.uuidString) // TODO: Figure out why this prints twice for each arduino.
         // Use name as unique identifier
         switch peripheral.identifier.uuidString {
         case "2D7F82BF-7F7F-F332-EC3E-EC75941F228F":
@@ -117,7 +114,6 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         // From here, can read/write to characteristics or subscribe to notifications as desired.
         characteristicInfo.append(contentsOf: characteristics)
         for characteristic in characteristicInfo {
-            peripheral.setNotifyValue(true, for: characteristic)
             peripheral.readValue(for: characteristic)
         }
     }
@@ -138,50 +134,42 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
             print("ERROR didUpdateValue message:\(error)")
             return
         }
-
-        var wavelength: UInt16?
-        if let unwrapped = characteristic.value {
-            var bytes = Array(repeating: 0 as UInt8, count:unwrapped.count/MemoryLayout<UInt8>.size)
-
-            unwrapped.copyBytes(to: &bytes, count:unwrapped.count)
-            let data16 = bytes.map { UInt16($0) }
-            wavelength = 256 * data16[1] + data16[0]
-        }
         
-        if let wavelength = wavelength {
-            handleByteBuffer(peripheral: peripheral, uuid: characteristic.uuid, buffer: wavelength, start: start)
+        // Convert the data to an array UInt8's 
+        if let data = characteristic.value {
+            let bytes: [UInt8] = data.map { UInt8($0) }
+            
+//            var wavelength: UInt16?
+//            var bytes = Array(repeating: 0 as UInt8, count:unwrapped.count/MemoryLayout<UInt8>.size)
+//
+//            unwrapped.copyBytes(to: &bytes, count:unwrapped.count)
+//            let data16 = bytes.map { UInt16($0) }
+//            wavelength = 256 * data16[1] + data16[0]
+            
+            handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: bytes, start: start)
         }
+    
     }
     
     
     // Process the Position Data that has been updated
-    func handleByteBuffer(peripheral: CBPeripheral, uuid: CBUUID, buffer: UInt16, start: CFAbsoluteTime) {
-        switch peripheral.identifier.uuidString {
-        case "2D7F82BF-7F7F-F332-EC3E-EC75941F228F":
-                switch uuid.uuidString {
-                case "2101":
-                    accelValues[peripheral.identifier.uuidString]?.Xvalue = buffer
-                case "2102":
-                    accelValues[peripheral.identifier.uuidString]?.Yvalue = buffer
-                case "2103":
-                    accelValues[peripheral.identifier.uuidString]?.Zvalue = buffer
-                default:
-                    break
-                }
-        case "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7":
-                switch uuid.uuidString {
-                case "2104":
-                    accelValues[peripheral.identifier.uuidString]?.Xvalue = buffer
-                case "2105":
-                    accelValues[peripheral.identifier.uuidString]?.Yvalue = buffer
-                case "2106":
-                    accelValues[peripheral.identifier.uuidString]?.Zvalue = buffer
-                default:
-                    break
-            }
-        default:
-            break
+    func handleByteBuffer(peripheral: CBPeripheral, characteristic: CBCharacteristic, buffer: [UInt8], start: CFAbsoluteTime) {
+        // Prints the incoming data if the length of it is 5 bytes corresponding to the arduino Union object date_time_data
+        if (buffer.count == 5)  {
+            print("\(buffer) \t \(peripheral.name!)")
+            peripheral.readValue(for: characteristic)
         }
+        
+//        switch peripheral.identifier.uuidString {
+//        case "2D7F82BF-7F7F-F332-EC3E-EC75941F228F":
+//            print("\(buffer) \t \(peripheral.name!)")
+//            peripheral.readValue(for: characteristic)
+//        case "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7":
+//            print("\(buffer) \t \(peripheral.name!)")
+//            peripheral.readValue(for: characteristic)
+//        default:
+//            break
+//        }
     }
     
     
