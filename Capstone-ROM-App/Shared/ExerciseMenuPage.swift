@@ -26,6 +26,7 @@ struct ExerciseMenuPage : View {
                             PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
                         } label:{ExerciseRow(exercise: exercise)}
                     }
+                    BluetoothView()
                 }
             }
         }
