@@ -15,7 +15,8 @@ struct ContentView: View {
     }
     
     @ObservedObject var exercises = Exercises()
-    
+    @ObservedObject var bleManager = BluetoothViewController()
+
     var body: some View {
         NavigationView{
             ExerciseMenuPage(exercises: exercises).navigationBarTitle("Home", displayMode: .large)
@@ -42,8 +43,8 @@ struct BluetoothView : View {
                         Text("Connected to \( peripheral.name ?? "Arbitrary Arduino ") ")
                             .foregroundColor(.black)
                         
-                        Text("\(bleManager.accelValues[peripheral.identifier.uuidString]?.Xvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Yvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Zvalue ?? 1 )")
-                            .foregroundColor(.black)
+//                        Text("\(bleManager.accelValues[peripheral.identifier.uuidString]?.Xvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Yvalue ?? 1) : \(bleManager.accelValues[peripheral.identifier.uuidString]?.Zvalue ?? 1 )")
+//                            .foregroundColor(.black)
                     }
                 }
             }

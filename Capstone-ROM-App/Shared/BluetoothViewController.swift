@@ -136,19 +136,17 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
         
         if let data = characteristic.value {
-            let bytes: [UInt8] = data.map { UInt8($0) }
-            handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: bytes, start: start)
+            var myArray16 = Array<Int16>(repeating: 0, count:data.count/MemoryLayout<Int16>.stride)
+            myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
+            handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: myArray16, start: start)
         }
-    
     }
     
     
     // Process the Position Data that has been updated
-    func handleByteBuffer(peripheral: CBPeripheral, characteristic: CBCharacteristic, buffer: [UInt8], start: CFAbsoluteTime) {
-        if (buffer.count == 5)  {
-            print("\(buffer) \t \(peripheral.name!)") // Print Byte Buffer
-            peripheral.readValue(for: characteristic) // Callback to poll characteristic again
-        }
+    func handleByteBuffer(peripheral: CBPeripheral, characteristic: CBCharacteristic, buffer: [Int16], start: CFAbsoluteTime) {
+        print("---> bytes: \(buffer)")
+        peripheral.readValue(for: characteristic)
     }
     
     
@@ -206,7 +204,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         }
     }
     
-    func handleError(error: Error?) -> Bool {
+    func handleError(name: String, error: Error?) -> Bool {
         // TODO: Finish Function
         if let error = error {
             print("ERROR  message:\(error)")

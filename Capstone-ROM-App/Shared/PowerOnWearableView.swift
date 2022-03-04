@@ -48,7 +48,7 @@ struct PowerOnWearableView : View {
                             }
                         }
                     }
-                    
+
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 
                     Image(exercise.exerciseImageName).resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.33)
