@@ -34,6 +34,7 @@
 		368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368E74F027B1D3FA0069186D /* Launch Screen.storyboard */; };
 		368E74F427B341B70069186D /* CalibrationCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74F327B341B70069186D /* CalibrationCalculations.swift */; };
 		3B4DF4B627AA14F40079A17C /* BluetoothViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */; };
+		3BBEFB1027D257DA00DB5CB7 /* ArduinoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BBEFB0F27D257DA00DB5CB7 /* ArduinoData.swift */; };
 		3BFA8A2E279A4463008FB82C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2D279A4463008FB82C /* Tests_iOS.swift */; };
 		3BFA8A30279A4463008FB82C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A2F279A4463008FB82C /* Tests_iOSLaunchTests.swift */; };
 		3BFA8A3A279A4463008FB82C /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFA8A39279A4463008FB82C /* Tests_macOS.swift */; };
@@ -80,6 +81,7 @@
 		368E74F227B1D5B70069186D /* Capstone-ROM-App--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-ROM-App--iOS--Info.plist"; sourceTree = "<group>"; };
 		368E74F327B341B70069186D /* CalibrationCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCalculations.swift; sourceTree = "<group>"; };
 		3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothViewController.swift; sourceTree = "<group>"; };
+		3BBEFB0F27D257DA00DB5CB7 /* ArduinoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArduinoData.swift; sourceTree = "<group>"; };
 		3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capstone_ROM_AppApp.swift; sourceTree = "<group>"; };
 		3BFA8A16279A4462008FB82C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3BFA8A17279A4463008FB82C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				3BFA8A15279A4462008FB82C /* Capstone_ROM_AppApp.swift */,
 				3BFA8A16279A4462008FB82C /* ContentView.swift */,
+				3BBEFB0F27D257DA00DB5CB7 /* ArduinoData.swift */,
 				36445C1B27A0CAC200C2872F /* OpeningPage.swift */,
 				36445C1827A0CA9000C2872F /* ExerciseMenuPage.swift */,
 				36445C1E27A0CD7500C2872F /* Utilities.swift */,
@@ -368,6 +371,7 @@
 				36445C1C27A0CAC200C2872F /* OpeningPage.swift in Sources */,
 				36445C4027AA076800C2872F /* CalibrationView.swift in Sources */,
 				3BFA8A3F279A4463008FB82C /* ContentView.swift in Sources */,
+				3BBEFB1027D257DA00DB5CB7 /* ArduinoData.swift in Sources */,
 				36445C3427A5A80800C2872F /* ExerciseRow.swift in Sources */,
 				36445C1F27A0CD7500C2872F /* Utilities.swift in Sources */,
 				36445C3D27A89ABC00C2872F /* PowerOnWearableView.swift in Sources */,
@@ -551,7 +555,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4HMJWFU8HL;
+				DEVELOPMENT_TEAM = RZS5AWC462;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Capstone-ROM-App--iOS--Info.plist";
@@ -582,7 +586,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4HMJWFU8HL;
+				DEVELOPMENT_TEAM = RZS5AWC462;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Capstone-ROM-App--iOS--Info.plist";
