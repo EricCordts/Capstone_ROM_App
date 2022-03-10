@@ -10,6 +10,9 @@ import SwiftUI
 
 struct PowerOnWearableView : View {
     @ObservedObject var exercise: Exercise
+    @Binding var modelController: ModelController
+    
+    
     var body : some View {
     
         ZStack{
@@ -65,12 +68,12 @@ struct PowerOnWearableView : View {
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 }
             }
-        }
+        }.onAppear(perform: change)
     }
 }
 
-struct PowerOnWearableView_Previews: PreviewProvider {
-    static var previews: some View {
-        PowerOnWearableView(exercise: exercisesData[0])
-    }
-}
+//struct PowerOnWearableView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PowerOnWearableView(exercise: exercisesData[0])
+//    }
+//}

@@ -8,8 +8,10 @@
 import Foundation
 import SwiftUI
 
+var modelController: ModelController!
+
 class Exercises: ObservableObject, Identifiable{
-    @Published var exerciseArray : [Exercise] = exercisesData
+    @Published var exerciseArray : [Exercise] = modelController.exercises
 }
 
 class Exercise : ObservableObject, Identifiable{

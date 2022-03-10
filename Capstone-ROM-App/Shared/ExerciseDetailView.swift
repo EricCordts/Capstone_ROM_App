@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ExerciseDetailView: View {
+    var modelController: ModelController!
+    
     @ObservedObject var exercise: Exercise
 
     var body: some View {
@@ -60,9 +62,11 @@ struct ExerciseDetailView: View {
     }
 }
 
-struct ExerciseDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseDetailView(exercise: exercisesData[0])
-    }
-}
+//var modelController: ModelController!
+//
+//struct ExerciseDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseDetailView(exercise: modelController.exercises[0])
+//    }
+//}
 

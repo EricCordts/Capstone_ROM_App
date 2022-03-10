@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-struct ExerciseMenuPage : View {
-    @ObservedObject var exercises: Exercises
-    var body : some View {
+struct ExerciseMenuPageView : View {
+    
+    var menuPageManager = ExerciseMenuPageViewController()
+    
+    @Binding var modelController: ModelController
 
+    var body : some View {
         ZStack{
             // create a background with a linear gradient
             LinearGradient(gradient: Gradient(colors: [CustomColors.BackgroundColorBlue, CustomColors.BackgroundColorGreen]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
@@ -19,11 +22,12 @@ struct ExerciseMenuPage : View {
                     Text("Please choose an exercise prescribed by your therapist from the list below:")
                     .font(.system(size: 20)).padding()
                     .frame(width: geo.size.width)
+                    Text(String(modelController.temp))
                 
-                    List(exercises.exerciseArray)
+                    List(modelController.exercises)
                     { exercise in
                         NavigationLink {
-                            PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
+                            PowerOnWearableView(exercise: exercise, modelController: .constant(modelController)).navigationBarTitle("Setup", displayMode: .inline)
                         } label:{ExerciseRow(exercise: exercise)}
                     }
                     BluetoothView()
@@ -33,8 +37,8 @@ struct ExerciseMenuPage : View {
     }
 }
 
-struct ExerciseMenuPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseMenuPage(exercises: Exercises())
-    }
-}
+//struct ExerciseMenuPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseMenuPage(exercises: Exercises())
+//    }
+//}

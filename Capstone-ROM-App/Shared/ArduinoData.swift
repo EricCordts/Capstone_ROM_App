@@ -9,15 +9,15 @@ import Foundation
 
 
 struct gryoscopeData {
-    var Xvalue = UInt16.init(0)
-    var Yvalue = UInt16.init(0)
-    var Zvalue = UInt16.init(0)
+    var Xvalue = Int16.init(0)
+    var Yvalue = Int16.init(0)
+    var Zvalue = Int16.init(0)
 }
 
 struct accelerometerData {
-    var Xvalue = UInt16.init(0)
-    var Yvalue = UInt16.init(0)
-    var Zvalue = UInt16.init(0)
+    var Xvalue = Int16.init(0)
+    var Yvalue = Int16.init(0)
+    var Zvalue = Int16.init(0)
 }
 
 struct dateTimeData {
@@ -27,4 +27,14 @@ struct dateTimeData {
     var minute = UInt16.init(0)
     var second = UInt16.init(0)
     var millisecond = UInt16.init(0)
+}
+
+class arduino {
+    var accelerometerX: [Int16] = []
+    var accelerometerY: [Int16] = []
+    var accelerometerZ: [Int16] = []
+    
+    var gyroscopeX: [Int16] = []
+    var gyroscopeY: [Int16] = []
+    var gyroscopeZ: [Int16] = []
 }

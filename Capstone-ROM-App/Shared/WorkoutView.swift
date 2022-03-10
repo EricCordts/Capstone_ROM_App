@@ -65,11 +65,11 @@ struct WorkoutView : View {
     }
 }
 
-struct WorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutView(exercise: exercisesData[0])
-    }
-}
+//struct WorkoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WorkoutView(exercise: exercisesData[0])
+//    }
+//}
 
 func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSetsCompleted: inout Int, targetSets: Int)->(repsCompleted: Int, setsCompleted: Int, exercisesCompleted: Bool)
 {

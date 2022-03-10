@@ -24,9 +24,9 @@ struct CompletedWorkoutView : View {
     }
 }
 
-struct CompletedWorkoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        CompletedWorkoutView()
-    }
-}
+//struct CompletedWorkoutView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CompletedWorkoutView()
+//    }
+//}
 

@@ -67,8 +67,8 @@ struct CalibrationView : View {
     }
 }
 
-struct CalibrationView_Previews: PreviewProvider {
-    static var previews: some View {
-        CalibrationView(exercise: exercisesData[0])
-    }
-}
+//struct CalibrationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CalibrationView(exercise: exercisesData[0])
+//    }
+//}

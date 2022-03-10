@@ -29,8 +29,8 @@ struct ExerciseRow: View {
     }
 }
 
-struct ExerciseRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseRow(exercise: exercisesData[0])
-    }
-}
+//struct ExerciseRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseRow(exercise: exercisesData[0])
+//    }
+//}

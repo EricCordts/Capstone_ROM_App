@@ -21,7 +21,7 @@ let exercise1WearablesPowerOn = [[false, false], [false, false]]
 let exercise1WearablesCalibrated = [[false, false], [false, false]]
 
 // exercise1
-let exercise1 = Exercise(exerciseName: exercise1Name, instructions: exercise1Instruction, exerciseImageName: exercise1ImageName, wearablePlacementImageName: exercise1WearablePlacementImageName, numberOfSets: exercise1NumberOfSets, numberOfReps: exercise1NumberOfReps, numberOfWearablesRequired: exercise1NumberOfWearablesRequired, wearableIDs: exercise1WearableIDs, exerciseCompleted: exercise1Completed, wearablesPowerOn: exercise1WearablesPowerOn, wearablesCalibrated: exercise1WearablesCalibrated)
+var exercise1 = Exercise(exerciseName: exercise1Name, instructions: exercise1Instruction, exerciseImageName: exercise1ImageName, wearablePlacementImageName: exercise1WearablePlacementImageName, numberOfSets: exercise1NumberOfSets, numberOfReps: exercise1NumberOfReps, numberOfWearablesRequired: exercise1NumberOfWearablesRequired, wearableIDs: exercise1WearableIDs, exerciseCompleted: exercise1Completed, wearablesPowerOn: exercise1WearablesPowerOn, wearablesCalibrated: exercise1WearablesCalibrated)
 
 // exercise 2 information
 let exercise2Name = "Exercise2"
@@ -166,16 +166,3 @@ let exercise10WearablesCalibrated = [[false, false], [false, false]]
 
 // exercise10
 let exercise10 = Exercise(exerciseName: exercise10Name, instructions: exercise10Instruction, exerciseImageName: exercise10ImageName, wearablePlacementImageName: exercise10WearablePlacementImageName, numberOfSets: exercise10NumberOfSets, numberOfReps: exercise10NumberOfReps, numberOfWearablesRequired: exercise10NumberOfWearablesRequired, wearableIDs: exercise10WearableIDs, exerciseCompleted: exercise10Completed, wearablesPowerOn: exercise10WearablesPowerOn, wearablesCalibrated: exercise10WearablesCalibrated)
-
-let exercisesData: [Exercise] = [
-    exercise1,
-    exercise2,
-    exercise3,
-    exercise4,
-    exercise5,
-    exercise6,
-    exercise7,
-    exercise8,
-    exercise9,
-    exercise10
-]

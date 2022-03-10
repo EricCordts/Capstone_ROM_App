@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 import CoreBluetooth
 import SwiftUI
+
 let start = CFAbsoluteTimeGetCurrent()
+let file = "Identifiers.txt"
 
 typealias Finished = () -> ()
 
@@ -17,17 +19,22 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     
     /* Variables */
     @Published var isSwitchedOn = false
-    @Published var isConnected: [String:Bool] = [:]
     @Published var characteristicInfo: [CBCharacteristic] = []
     @Published var soughtPeripherals: [String:CBPeripheral] = [:]
-    @Published var accelValues: [String:accelerometerData] = [:]
+    @Published var isConnected: [String:Bool] = [:]
     var centralManager: CBCentralManager!
     var discoveredPeripherals: [String:CBPeripheral] = [:]
     var arduinoServices = [
         // UUID's of Arduino Services you are scanning for
-        CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196"),
-        CBUUID.init(string: "fc6e77ae-713d-47b0-ab7a-88340d3b1986")
+        CBUUID.init(string: "2a675dfb-a1b0-4c11-9ad1-031a84594196")
     ]
+    
+    var modelController: ModelController!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.isConnected = modelController.isConnected
+    }
     
     /* Init */
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -46,7 +53,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     // centralManagerDidDiscover
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.discoveredPeripherals[peripheral.identifier.uuidString] = peripheral
-        
+   
         print(peripheral.identifier.uuidString) // TODO: Figure out why this prints twice for each arduino.
         // Use name as unique identifier
         switch peripheral.identifier.uuidString {
@@ -64,9 +71,8 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         // Successfully connected. Store reference to peripheral if not already done.
         self.soughtPeripherals[peripheral.identifier.uuidString] = peripheral
-        self.accelValues[peripheral.identifier.uuidString] = accelerometerData.init()
         peripheral.delegate = self
-        isConnected[peripheral.identifier.uuidString] = true
+        modelController.isConnected[peripheral.identifier.uuidString] = true
         self.discoverServices(peripheral: peripheral)
     }
     
@@ -74,7 +80,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         if let error = error {
             print("ERROR didFailToConnect message: \(error)")
-            isConnected[peripheral.identifier.uuidString] = false
+            modelController.isConnected[peripheral.identifier.uuidString] = false
             self.centralManagerDidUpdateState(central) // Called to trigger update of BluetoothView in ContentView
             return
         }
@@ -84,7 +90,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         if let error = error {
             print("ERROR didDisconnectPeripheral message: \(error)")
-            isConnected[peripheral.identifier.uuidString] = false
+            modelController.isConnected[peripheral.identifier.uuidString] = false
             self.soughtPeripherals.removeValue(forKey: peripheral.identifier.uuidString)
             self.centralManagerDidUpdateState(central) // Called to trigger update of BluetoothView in ContentView
             return
@@ -138,14 +144,18 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         if let data = characteristic.value {
             var myArray16 = Array<Int16>(repeating: 0, count:data.count/MemoryLayout<Int16>.stride)
             myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
-            handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: myArray16, start: start)
+            handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: myArray16, start: CFAbsoluteTimeGetCurrent())
         }
     }
     
     
     // Process the Position Data that has been updated
     func handleByteBuffer(peripheral: CBPeripheral, characteristic: CBCharacteristic, buffer: [Int16], start: CFAbsoluteTime) {
-        print("---> bytes: \(buffer)")
+        let today = Date()
+        let hours   = (Calendar.current.component(.hour, from: today))
+        let minutes = (Calendar.current.component(.minute, from: today))
+        let seconds = (Calendar.current.component(.second, from: today))
+        print("\(hours):\(minutes):\(seconds) ---> bytes: \(buffer) \(peripheral.identifier)")
         peripheral.readValue(for: characteristic)
     }
     
