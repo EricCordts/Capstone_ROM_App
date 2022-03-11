@@ -143,7 +143,7 @@ class BluetoothViewController: UIViewController, CBCentralManagerDelegate, Obser
         
         if let data = characteristic.value {
             var myArray16 = Array<Int16>(repeating: 0, count:data.count/MemoryLayout<Int16>.stride)
-            myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
+            _ = myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
             handleByteBuffer(peripheral: peripheral, characteristic: characteristic, buffer: myArray16, start: CFAbsoluteTimeGetCurrent())
         }
     }

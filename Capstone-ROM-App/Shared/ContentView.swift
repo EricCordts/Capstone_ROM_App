@@ -15,8 +15,6 @@ struct ContentView: View {
         UITableView.appearance().backgroundColor = UIColor.clear
         UITableViewCell.appearance().backgroundColor = .clear
     }
-//    @ObservedObject var contentManager = ContentViewController()
-//    @ObservedObject var bleManager = BluetoothViewController()
     
     private func change() {
         modelController.temp = true

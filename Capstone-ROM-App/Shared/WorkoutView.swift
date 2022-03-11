@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WorkoutView : View {
+    @Binding var modelController: ModelController!
     @State var exercisesCompleted:Bool = false
     @State var setsCompleted = 0
     @State var repsCompleted = 0
@@ -21,7 +22,7 @@ struct WorkoutView : View {
             VStack{
                 if exercisesCompleted
                 {
-                    CompletedWorkoutView()
+                    CompletedWorkoutView(modelController: .constant(modelController))
                         .onAppear{
                             self.exercise.exerciseCompleted = true
                         }

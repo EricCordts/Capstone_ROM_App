@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CalibrationView : View {
+    @Binding var modelController: ModelController!
     @ObservedObject var exercise: Exercise
     @Environment(\.presentationMode) var presentationMode
     var body : some View {
@@ -59,7 +60,7 @@ struct CalibrationView : View {
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     // temp button to navigate to next page
                     // will be replaced by automatically going to next page after all devices are calibrated
-                    NavigationLink(destination: WorkoutView(exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: WorkoutView(modelController: .constant(modelController), exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
 
                 }
             }

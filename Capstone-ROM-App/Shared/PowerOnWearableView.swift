@@ -9,10 +9,9 @@ import Foundation
 import SwiftUI
 
 struct PowerOnWearableView : View {
-    @ObservedObject var exercise: Exercise
     @Binding var modelController: ModelController
-    
-    
+    @ObservedObject var exercise: Exercise
+
     var body : some View {
     
         ZStack{
@@ -63,12 +62,12 @@ struct PowerOnWearableView : View {
                         
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                     
-                    NavigationLink(destination: ExerciseDetailView(exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: ExerciseDetailView(modelController: .constant(modelController), exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
                                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 }
             }
-        }.onAppear(perform: change)
+        }
     }
 }
 

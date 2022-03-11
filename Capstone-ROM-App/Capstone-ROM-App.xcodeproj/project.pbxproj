@@ -147,8 +147,8 @@
 		3BFA8A14279A4462008FB82C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				368E74F027B1D3FA0069186D /* Launch Screen.storyboard */,
 				3BBEFB0F27D257DA00DB5CB7 /* ArduinoData.swift */,
-				3BFA8A17279A4463008FB82C /* Assets.xcassets */,
 				3B715CB527D6C67B009FB1CC /* BluetoothView.swift */,
 				3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */,
 				368E74F327B341B70069186D /* CalibrationCalculations.swift */,
@@ -161,13 +161,13 @@
 				36445C3927A5D07A00C2872F /* ExerciseDetailView.swift */,
 				36445C1827A0CA9000C2872F /* ExerciseMenuPage.swift */,
 				36445C3327A5A80800C2872F /* ExerciseRow.swift */,
-				368E74F027B1D3FA0069186D /* Launch Screen.storyboard */,
 				3B715CB727D6CAE7009FB1CC /* ModelController.swift */,
 				36445C1B27A0CAC200C2872F /* OpeningPage.swift */,
 				36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */,
 				368E74ED27ADB3B20069186D /* SummaryView.swift */,
 				36445C1E27A0CD7500C2872F /* Utilities.swift */,
 				36445C4227AA12D300C2872F /* WorkoutView.swift */,
+				3BFA8A17279A4463008FB82C /* Assets.xcassets */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -571,6 +571,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIMainStoryboardFile = "Launch Screen";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -604,6 +605,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIMainStoryboardFile = "Launch Screen";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

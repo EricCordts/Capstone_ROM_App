@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ExerciseDetailView: View {
-    var modelController: ModelController!
-    
+    @Binding var modelController: ModelController!
     @ObservedObject var exercise: Exercise
 
     var body: some View {
@@ -55,7 +54,7 @@ struct ExerciseDetailView: View {
                     
                     Spacer().frame(height: geo.size.height * 0.1)
                     
-                    NavigationLink(destination: CalibrationView(exercise: exercise).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: CalibrationView(modelController: .constant(modelController), exercise: exercise).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle())
                 }
             }
         }

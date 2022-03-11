@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct ExerciseMenuPageView : View {
-    
-    var menuPageManager = ExerciseMenuPageViewController()
-    
     @Binding var modelController: ModelController
 
     var body : some View {
@@ -27,7 +24,7 @@ struct ExerciseMenuPageView : View {
                     List(modelController.exercises)
                     { exercise in
                         NavigationLink {
-                            PowerOnWearableView(exercise: exercise, modelController: .constant(modelController)).navigationBarTitle("Setup", displayMode: .inline)
+                            PowerOnWearableView(modelController: .constant(modelController), exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
                         } label:{ExerciseRow(exercise: exercise)}
                     }
                     BluetoothView()

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CompletedWorkoutView : View {
+    @Binding var modelController: ModelController!
     var body : some View {
         
         ZStack{
