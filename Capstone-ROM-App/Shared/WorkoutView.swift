@@ -30,12 +30,18 @@ struct WorkoutView : View {
                 {
                     Text(exercise.exerciseName)
                         .font(.title)
-                        .fontWeight(.bold).multilineTextAlignment(.center).frame(width: geo.size.width * 0.98, height: geo.size.height * 0.15)
+                        .fontWeight(.bold).multilineTextAlignment(.center).frame(width: geo.size.width * 0.98, height: geo.size.height * 0.1)
                     
-                    // temp image
-                    Image("ArmImage").resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.33)
+                    Image(exercise.wearablePlacementImageOn).resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.33)
+                    
+                    Text("\(exercise.instructions)").font(.title3)
+                        .multilineTextAlignment(.center)
+                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.14)
                     
                     HStack{
+                        
+                        
+                        
                         Text("Sets left: \(exercise.numberOfSets - setsCompleted)  |  Reps left: \(exercise.numberOfReps - repsCompleted)").font(.title3)
                             .multilineTextAlignment(.center)
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
@@ -44,10 +50,6 @@ struct WorkoutView : View {
                     Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
                         Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
                     })
-                    
-                    Text("\(exercise.instructions)").font(.title3)
-                        .multilineTextAlignment(.center)
-                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.2)
                     
                     // temp button to decrease reps
                     Button(
