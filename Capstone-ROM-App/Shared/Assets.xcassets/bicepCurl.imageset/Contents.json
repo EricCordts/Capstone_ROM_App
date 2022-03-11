@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ArmImage.jpg",
+      "filename" : "bicepCurl.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ArmImage-1.jpg",
+      "filename" : "bicepCurl-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ArmImage-2.jpg",
+      "filename" : "bicepCurl-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

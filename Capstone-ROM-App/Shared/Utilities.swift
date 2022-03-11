@@ -19,7 +19,7 @@ struct CustomColors {
 struct RoundedRectangleButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     configuration.label.foregroundColor(.black).font(.system(size: 30, weight: .bold))
-    .padding(15)
+          .padding(10)
     .background(CustomColors.BackgroundColorBlue.cornerRadius(10))
     .shadow(color: Color.white, radius: 20)
     .scaleEffect(configuration.isPressed ? 0.90 : 1)

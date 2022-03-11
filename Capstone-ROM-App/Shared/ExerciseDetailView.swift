@@ -24,11 +24,10 @@ struct ExerciseDetailView: View {
                         .font(.title)
                         .fontWeight(.bold).multilineTextAlignment(.center)
                         .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.15)
-                
-                    Image(exercise.exerciseImageName).resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.33)
-                    //exercise.wearablePlacementImage
                     
-                    Text("Verify your wearables are in the correct positions.")
+                    Image(exercise.wearablePlacementImageOn).resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.40)
+                    
+                    Text("Please verify your wearables are in the correct positions.")
                         .font(.title3)
                         .multilineTextAlignment(.center)
                         .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
@@ -50,7 +49,7 @@ struct ExerciseDetailView: View {
                             .font(.title2)
                     }
                     .frame(width: geo.size.width, height: geo.size.height * 0.06)
-                    
+
                     Spacer().frame(height: geo.size.height * 0.1)
                     
                     NavigationLink(destination: CalibrationView(exercise: exercise).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle())
