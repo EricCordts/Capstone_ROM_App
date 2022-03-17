@@ -12,6 +12,7 @@ struct WorkoutView : View {
     @State var setsCompleted = 0
     @State var repsCompleted = 0
     @ObservedObject var exercise: Exercise
+    @ObservedObject var bleManager: BluetoothViewController
     var body : some View {
         ZStack{
             // create a background with a linear gradient
@@ -24,6 +25,12 @@ struct WorkoutView : View {
                     CompletedWorkoutView()
                         .onAppear{
                             self.exercise.exerciseCompleted = true
+                            self.bleManager.angle.runCalibration = false
+                            self.bleManager.angle.runAngleCalculation = false
+                            self.bleManager.angle.storeAngleData = false
+                            self.bleManager.angle.storeCalibrationData = false
+                            self.bleManager.angle.reallyRunCalibration = false
+                            self.bleManager.angle.reallyRunAngleCalculation = false
                         }
                 }
                 else
@@ -39,9 +46,6 @@ struct WorkoutView : View {
                         .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.14)
                     
                     HStack{
-                        
-                        
-                        
                         Text("Sets left: \(exercise.numberOfSets - setsCompleted)  |  Reps left: \(exercise.numberOfReps - repsCompleted)").font(.title3)
                             .multilineTextAlignment(.center)
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
@@ -63,15 +67,29 @@ struct WorkoutView : View {
                 }
             }.transition(.slide).animation(.easeIn(duration: 1), value: exercisesCompleted)
             }
+        }.onAppear
+        {
+            self.bleManager.angle.runCalibration = false
+            self.bleManager.angle.runAngleCalculation = false
+            self.bleManager.angle.storeAngleData = true
+            self.bleManager.angle.storeCalibrationData = false
+            self.bleManager.angle.reallyRunCalibration = false
+            self.bleManager.angle.reallyRunAngleCalculation = true
+            // after approximately 1 second, there should be enough data collected to run angle calculations
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.bleManager.angle.runAngleCalculation = true
+            }
         }
     }
 }
 
+/*
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutView(exercise: exercisesData[0])
     }
 }
+*/
 
 func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSetsCompleted: inout Int, targetSets: Int)->(repsCompleted: Int, setsCompleted: Int, exercisesCompleted: Bool)
 {

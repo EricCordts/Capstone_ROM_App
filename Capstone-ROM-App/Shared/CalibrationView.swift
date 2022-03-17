@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalibrationView : View {
     @ObservedObject var exercise: Exercise
+    @ObservedObject var bleManager: BluetoothViewController
     @Environment(\.presentationMode) var presentationMode
     var body : some View {
         
@@ -21,30 +22,28 @@ struct CalibrationView : View {
                         .font(.title)
                         .fontWeight(.bold).multilineTextAlignment(.center).frame(width: geo.size.width * 0.98, height: geo.size.height * 0.15)
                 
-                    ForEach(0..<exercise.wearableIDs.count, id: \.self)
-                    {
-                        exerciseArray in
-                        HStack{
-                            ForEach(Array(zip(exercise.wearableIDs[exerciseArray], exercise.wearablesCalibrated[exerciseArray])), id: \.0)
+                    
+                    HStack{
+                        ForEach(Array(zip(exercise.wearableIDs, exercise.wearablesCalibrated)), id: \.0)
+                        {
+                            exerciseItem in
+                            Spacer().frame(width: geo.size.width * 0.06)
+                            Text("ID: \(exerciseItem.0)").font(.title2).frame(width: geo.size.width * 0.15)
+                            Spacer().frame(width: geo.size.width * 0.03)
+                            if exerciseItem.1
                             {
-                                exerciseItem in
-                                Spacer().frame(width: geo.size.width * 0.06)
-                                Text("ID: \(exerciseItem.0)").font(.title2).frame(width: geo.size.width * 0.15)
-                                Spacer().frame(width: geo.size.width * 0.03)
-                                if exerciseItem.1
-                                {
-                                    Image(systemName: "checkmark.square").resizable().frame(width: geo.size.width * 0.10, height: geo.size.width * 0.10)
-                                        .foregroundColor(Color.green)
-                                }
-                                else
-                                {
-                                    Image(systemName: "square").resizable().frame(width: geo.size.width * 0.10, height: geo.size.width * 0.10)
-                                        .foregroundColor(Color.gray)
-                                }
-                                Spacer().frame(width: geo.size.width * 0.06)
+                                Image(systemName: "checkmark.square").resizable().frame(width: geo.size.width * 0.10, height: geo.size.width * 0.10)
+                                    .foregroundColor(Color.green)
                             }
+                            else
+                            {
+                                Image(systemName: "square").resizable().frame(width: geo.size.width * 0.10, height: geo.size.width * 0.10)
+                                    .foregroundColor(Color.gray)
+                            }
+                            Spacer().frame(width: geo.size.width * 0.06)
                         }
                     }
+                    
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 
@@ -59,16 +58,30 @@ struct CalibrationView : View {
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     // temp button to navigate to next page
                     // will be replaced by automatically going to next page after all devices are calibrated
-                    NavigationLink(destination: WorkoutView(exercise: exercise).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
 
                 }
+            }
+        }.onAppear
+        {
+            self.bleManager.angle.runCalibration = false
+            self.bleManager.angle.runAngleCalculation = false
+            self.bleManager.angle.storeAngleData = false
+            self.bleManager.angle.storeCalibrationData = true
+            self.bleManager.angle.reallyRunCalibration = true
+            self.bleManager.angle.reallyRunAngleCalculation = false
+            // after approximately 10 seconds, there should be enough data collected to run calibration
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                self.bleManager.angle.runCalibration = true
             }
         }
     }
 }
 
+/*
 struct CalibrationView_Previews: PreviewProvider {
     static var previews: some View {
         CalibrationView(exercise: exercisesData[0])
     }
 }
+*/

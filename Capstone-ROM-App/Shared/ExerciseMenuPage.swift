@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExerciseMenuPage : View {
     @ObservedObject var exercises: Exercises
+    @ObservedObject var bleManager: BluetoothViewController
     var body : some View {
 
         ZStack{
@@ -23,18 +24,27 @@ struct ExerciseMenuPage : View {
                     List(exercises.exerciseArray)
                     { exercise in
                         NavigationLink {
-                            PowerOnWearableView(exercise: exercise).navigationBarTitle("Setup", displayMode: .inline)
+                            PowerOnWearableView(exercise: exercise, bleManager: bleManager).navigationBarTitle("Setup", displayMode: .inline)
                         } label:{ExerciseRow(exercise: exercise)}
                     }
-                    BluetoothView()
+
+                    BluetoothView(bleManager: bleManager)
                 }
             }
+        }.onAppear
+        {
+            self.bleManager.angle.runCalibration = false
+            self.bleManager.angle.runAngleCalculation = false
+            self.bleManager.angle.storeAngleData = false
+            self.bleManager.angle.storeCalibrationData = false
+            self.bleManager.angle.reallyRunCalibration = false
+            self.bleManager.angle.reallyRunAngleCalculation = false
         }
     }
 }
 
-struct ExerciseMenuPageView_Previews: PreviewProvider {
+/*struct ExerciseMenuPageView_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseMenuPage(exercises: Exercises())
     }
-}
+}*/
