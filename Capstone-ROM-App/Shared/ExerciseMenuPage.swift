@@ -10,6 +10,7 @@ import SwiftUI
 struct ExerciseMenuPage : View {
     @ObservedObject var exercises: Exercises
     @ObservedObject var bleManager: BluetoothViewController
+    @ObservedObject var angle: angleClass
     var body : some View {
 
         ZStack{
@@ -24,7 +25,7 @@ struct ExerciseMenuPage : View {
                     List(exercises.exerciseArray)
                     { exercise in
                         NavigationLink {
-                            PowerOnWearableView(exercise: exercise, bleManager: bleManager).navigationBarTitle("Setup", displayMode: .inline)
+                            PowerOnWearableView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle("Setup", displayMode: .inline)
                         } label:{ExerciseRow(exercise: exercise)}
                     }
 
@@ -33,12 +34,15 @@ struct ExerciseMenuPage : View {
             }
         }.onAppear
         {
-            self.bleManager.angle.runCalibration = false
+            self.bleManager.angle = angle
+            self.angle.imus = [self.bleManager.imu1, self.bleManager.imu2]
+            self.angle.setStoreData(false)
+            self.bleManager.runAngleCalculation = false
+            /*self.bleManager.angle.runCalibration = false
             self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeAngleData = false
-            self.bleManager.angle.storeCalibrationData = false
+            self.bleManager.angle.storeData = false
             self.bleManager.angle.reallyRunCalibration = false
-            self.bleManager.angle.reallyRunAngleCalculation = false
+            self.bleManager.angle.reallyRunAngleCalculation = false*/
         }
     }
 }

@@ -11,6 +11,8 @@ import SwiftUI
 struct PowerOnWearableView : View {
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
+    @ObservedObject var angle: angleClass
+
     @State var count = 0
     var body : some View {
     
@@ -65,7 +67,7 @@ struct PowerOnWearableView : View {
                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                     
-                    NavigationLink(destination: ExerciseDetailView(exercise: exercise, bleManager: bleManager).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: ExerciseDetailView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
                                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 }
@@ -76,13 +78,14 @@ struct PowerOnWearableView : View {
             {
                 self.bleManager.startScan()
             }
-            
-            self.bleManager.angle.runCalibration = false
+            self.angle.setStoreData(false)
+            self.bleManager.runAngleCalculation = false
+
+            /*self.bleManager.angle.runCalibration = false
             self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeAngleData = false
-            self.bleManager.angle.storeCalibrationData = false
+            self.bleManager.angle.storeData = false
             self.bleManager.angle.reallyRunCalibration = false
-            self.bleManager.angle.reallyRunAngleCalculation = false
+            self.bleManager.angle.reallyRunAngleCalculation = false*/
         }
     }
 }

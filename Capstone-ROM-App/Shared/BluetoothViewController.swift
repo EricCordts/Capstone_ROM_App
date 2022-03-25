@@ -13,6 +13,8 @@ let start = CFAbsoluteTimeGetCurrent()
 
 typealias Finished = () -> ()
 
+let characteristicUUID = "D80DE551-8403-4BAE-9F78-4D2AF89FF17B"
+
 class BluetoothViewController: UIViewController, ObservableObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     /* Variables */
@@ -20,7 +22,14 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
     @Published var isConnected: [String:Bool] = [:]
     @Published var characteristicInfo: [CBCharacteristic] = []
     @Published var soughtPeripherals: [String:CBPeripheral] = [:]
-    @Published var angle = Angle()
+    //@Published var angle = Angle()
+    @Published var imu1 = imuClass()
+    @Published var imu2 = imuClass()
+    var runAngleCalculation = false
+    private var imu1NewData = false
+    private var imu2NewData = false
+    var angle = angleClass()
+    
     var centralManager: CBCentralManager!
     var discoveredPeripherals: [String:CBPeripheral] = [:]
     var arduinoServices = [
@@ -53,13 +62,15 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
         self.discoveredPeripherals[peripheral.identifier.uuidString] = peripheral
 
         switch peripheral.identifier.uuidString {
-            case "D386AC34-D651-4AA1-CDF8-92B767DAA27E":
+            case arduino1PeripheralUuid:
                 peripheral.delegate = self
                 self.connect(peripheral: peripheral)
+                imu1.id = peripheral.identifier.uuidString
                 break
-            case "26AA88E4-B8C5-75BF-0BC9-63255517C698":
+            case arduino2PeripheralUuid:
                 peripheral.delegate = self
                 self.connect(peripheral: peripheral)
+                imu2.id = peripheral.identifier.uuidString
                 break
             default:
                 break
@@ -71,7 +82,7 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
         // Successfully connected. Store reference to peripheral if not already done.
         self.soughtPeripherals[peripheral.identifier.uuidString] = peripheral
         isConnected[peripheral.identifier.uuidString] = true
-        self.angle.IMUs[peripheral.identifier.uuidString] = IMU()
+        //self.angle.IMUs[peripheral.identifier.uuidString] = IMU()
         self.discoverServices(peripheral: peripheral)
     }
     
@@ -91,7 +102,7 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
             print("ERROR didDisconnectPeripheral message: \(error)")
             self.isConnected.removeValue(forKey: peripheral.identifier.uuidString)
             self.soughtPeripherals.removeValue(forKey: peripheral.identifier.uuidString)
-            self.angle.IMUs.removeValue(forKey: peripheral.identifier.uuidString)
+            //self.angle.IMUs.removeValue(forKey: peripheral.identifier.uuidString)
             self.centralManagerDidUpdateState(central) // Called to trigger update of BluetoothView in ContentView
             return
         }
@@ -117,11 +128,12 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
         guard let characteristics = service.characteristics else {
             return
         }
-        // Consider storing important characteristics internally for easy access and equivalency checks later.
-        // From here, can read/write to characteristics or subscribe to notifications as desired.
-        characteristicInfo.append(contentsOf: characteristics)
-        for characteristic in characteristicInfo {
-            peripheral.readValue(for: characteristic)
+
+        for characteristic in characteristics {
+            if characteristic.uuid.uuidString == characteristicUUID
+            {
+                peripheral.readValue(for: characteristic)
+            }
         }
     }
     
@@ -143,9 +155,29 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
         }
         if let data = characteristic.value {
             var myArray16 = Array<Int16>(repeating: 0, count:data.count/MemoryLayout<Int16>.stride)
-            myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
+            _ = myArray16.withUnsafeMutableBytes { data.copyBytes(to: $0) }
             print("Initial data: ", myArray16)
-            self.angle.customAdd(peripheralUUIDString: peripheral.identifier.uuidString, arduinoData: myArray16)
+            
+            if peripheral.identifier.uuidString == arduino1PeripheralUuid
+            {
+                imu1.customAppend(myArray16)
+                imu1NewData = true
+            }
+            
+            if peripheral.identifier.uuidString == arduino2PeripheralUuid
+            {
+                imu2.customAppend(myArray16)
+                imu2NewData = true
+            }
+            
+            if runAngleCalculation && imu1NewData && imu2NewData
+            {
+                print("Running angle")
+                self.angle.updateAngle()
+                imu1NewData = false
+                imu2NewData = false
+            }
+            //self.angle.customAdd(peripheralUUIDString: peripheral.identifier.uuidString, arduinoData: myArray16)
             peripheral.readValue(for: characteristic)
         }
     }
@@ -212,12 +244,11 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
         return true
     }
     
-    
     // Disconnect from a peripheral
     func disconnect(peripheral: CBPeripheral) {
         self.isConnected.removeValue(forKey: peripheral.identifier.uuidString)
         self.soughtPeripherals.removeValue(forKey: peripheral.identifier.uuidString)
-        self.angle.IMUs.removeValue(forKey: peripheral.identifier.uuidString)
+        //self.angle.IMUs.removeValue(forKey: peripheral.identifier.uuidString)
         centralManager.cancelPeripheralConnection(peripheral)
     }
 }

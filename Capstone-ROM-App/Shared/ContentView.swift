@@ -16,10 +16,11 @@ struct ContentView: View {
     
     @ObservedObject var exercises = Exercises()
     @ObservedObject var bleManager = BluetoothViewController()
+    @ObservedObject var angle = angleClass()
 
     var body: some View {
         NavigationView{
-            ExerciseMenuPage(exercises: exercises, bleManager: bleManager).navigationBarTitle("Home", displayMode: .large)
+            ExerciseMenuPage(exercises: exercises, bleManager: bleManager, angle: angle).navigationBarTitle("Home", displayMode: .large)
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

@@ -10,6 +10,8 @@ import SwiftUI
 struct CalibrationView : View {
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
+    @ObservedObject var angle: angleClass
+
     @Environment(\.presentationMode) var presentationMode
     var body : some View {
         
@@ -50,7 +52,33 @@ struct CalibrationView : View {
                     Text("Instructions for calibration").frame(width: geo.size.width * 0.98, height: geo.size.height * 0.1)
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
-                
+                    
+                    if !self.angle.calibrated && !self.angle.driftCalculated
+                    {
+                        Button(
+                            "Start Calibration", action: {
+                                self.angle.prepCalibration()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                                    self.angle.calibrate()
+                                }
+                            }
+                        ).buttonStyle(RoundedRectangleButtonStyle())
+                    }
+                    else if self.angle.calibrated && !self.angle.driftCalculated
+                    {
+                        Button(
+                            "Drift Calibration", action: {
+                                self.angle.prepDriftCalibration()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                                    self.angle.calibrateDrift()
+                                }
+                            }
+                        ).buttonStyle(RoundedRectangleButtonStyle())
+                    }
+                    else
+                    {
+                        Text("DONE CALIBRATION")
+                    }
                     Button(
                         "Cancel Calibration", action: {self.presentationMode.wrappedValue.dismiss()}
                     ).buttonStyle(RoundedRectangleButtonStyle())
@@ -58,22 +86,24 @@ struct CalibrationView : View {
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     // temp button to navigate to next page
                     // will be replaced by automatically going to next page after all devices are calibrated
-                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
 
                 }
             }
         }.onAppear
         {
+            self.bleManager.runAngleCalculation = false
+            /*self.bleManager.angle.clear()
             self.bleManager.angle.runCalibration = false
             self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeAngleData = false
-            self.bleManager.angle.storeCalibrationData = true
+            self.bleManager.angle.storeData = true
             self.bleManager.angle.reallyRunCalibration = true
             self.bleManager.angle.reallyRunAngleCalculation = false
+            self.bleManager.angle.setMaxSize(size: 100)
             // after approximately 10 seconds, there should be enough data collected to run calibration
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 self.bleManager.angle.runCalibration = true
-            }
+            }*/
         }
     }
 }

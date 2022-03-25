@@ -13,6 +13,8 @@ struct WorkoutView : View {
     @State var repsCompleted = 0
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
+    @ObservedObject var angle: angleClass
+
     var body : some View {
         ZStack{
             // create a background with a linear gradient
@@ -25,12 +27,12 @@ struct WorkoutView : View {
                     CompletedWorkoutView()
                         .onAppear{
                             self.exercise.exerciseCompleted = true
+                            /*self.bleManager.angle.clear()
                             self.bleManager.angle.runCalibration = false
                             self.bleManager.angle.runAngleCalculation = false
-                            self.bleManager.angle.storeAngleData = false
-                            self.bleManager.angle.storeCalibrationData = false
+                            self.bleManager.angle.storeData = false
                             self.bleManager.angle.reallyRunCalibration = false
-                            self.bleManager.angle.reallyRunAngleCalculation = false
+                            self.bleManager.angle.reallyRunAngleCalculation = false*/
                         }
                 }
                 else
@@ -51,6 +53,8 @@ struct WorkoutView : View {
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
                     }
                     
+                    Text("\(angle.angle)")
+                    
                     Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
                         Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
                     })
@@ -69,16 +73,21 @@ struct WorkoutView : View {
             }
         }.onAppear
         {
-            self.bleManager.angle.runCalibration = false
+            self.angle.setStoreData(true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.bleManager.runAngleCalculation = true
+            }
+            
+            /*self.bleManager.angle.runCalibration = false
             self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeAngleData = true
-            self.bleManager.angle.storeCalibrationData = false
+            self.bleManager.angle.storeData = true
+            self.bleManager.angle.setMaxSize(size: 5)
             self.bleManager.angle.reallyRunCalibration = false
             self.bleManager.angle.reallyRunAngleCalculation = true
             // after approximately 1 second, there should be enough data collected to run angle calculations
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.bleManager.angle.runAngleCalculation = true
-            }
+            }*/
         }
     }
 }
