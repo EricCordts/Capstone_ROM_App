@@ -6,11 +6,17 @@
 //
 
 import SwiftUI
+import UIKit
 
-struct WorkoutView : View {
+struct WorkoutView : View { 
     @State var exercisesCompleted:Bool = false
     @State var setsCompleted = 0
     @State var repsCompleted = 0
+    
+    @State var currentTime = Time(min: 0, sec: 0, hour: 0)
+    @State var reciever = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
+
+    
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
     @ObservedObject var angle: angleClass
@@ -54,10 +60,66 @@ struct WorkoutView : View {
                     }
                     
                     Text("\(angle.angle)")
+
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5, style: .circular)
+                            .frame(width: 5, height: geo.size.height * 0.08)
+                            .offset(x: -(geo.size.width / 2 + 2.5) + CGFloat(currentTime.sec.converting(from: 0...60, to: 0...Int(geo.size.width))), y: 0)
+                            .foregroundColor(Color.purple)
+                            .animation(.default, value: 1)
+                            .onAppear(perform : {
+                                let calendar = Calendar.current
+                                let sec = calendar.component(.second, from: Date())
+                                DispatchQueue.main.async {
+                                    withAnimation(Animation.linear(duration: 0.01)) {
+                                        self.currentTime = Time(min: 0, sec: sec, hour: 0)
+                                    }
+                                }
+                            })
+                            .onReceive(reciever){ (_) in
+                                
+                                let calendar = Calendar.current
+                                let sec = calendar.component(.second, from: Date())
+                                DispatchQueue.main.async {
+                                    withAnimation(Animation.linear(duration: 0.01)) {
+                                        self.currentTime = Time(min: 0, sec: sec, hour: 0)
+                                    }
+                                }
+                            }
+                            
+                    }
+                    .background(
+                        Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
+                            Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
+                        })
+                    )
                     
-                    Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
-                        Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
+                    
+
+                    ZStack{
+                        Wave(second: currentTime.sec)
+                            .stroke(Color.white, lineWidth: 5)
+                    }
+                    .background(Color.blue)
+                    .onAppear(perform : {
+                        let calendar = Calendar.current
+                        let sec = calendar.component(.second, from: Date())
+                        DispatchQueue.main.async {
+                            withAnimation(Animation.linear(duration: 0.01)) {
+                                self.currentTime = Time(min: 0, sec: sec, hour: 0)
+                            }
+                        }
                     })
+                    .onReceive(reciever){ (_) in
+                        
+                        let calendar = Calendar.current
+                        let sec = calendar.component(.second, from: Date())
+                        DispatchQueue.main.async {
+                            withAnimation(Animation.linear(duration: 0.01)) {
+                                self.currentTime = Time(min: 0, sec: sec, hour: 0)
+                            }
+                        }
+                    }
                     
                     // temp button to decrease reps
                     Button(
@@ -121,3 +183,11 @@ func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSet
 
     return (currentRepsCompleted, currentSetsCompleted, exercisesCompleted)
 }
+
+
+struct Time {
+    var min : Int
+    var sec : Int
+    var hour : Int
+}
+

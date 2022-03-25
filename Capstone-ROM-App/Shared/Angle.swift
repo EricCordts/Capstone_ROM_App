@@ -11,6 +11,7 @@ import SwiftUI
 //let arduino1PeripheralUuid = "D386AC34-D651-4AA1-CDF8-92B767DAA27E"
 let arduino1PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212"
 let arduino2PeripheralUuid = "C662D3DE-8907-BB09-50D2-694C50719E69"
+
 /*
  class Angle : ObservableObject, Identifiable{
  var id = UUID()
