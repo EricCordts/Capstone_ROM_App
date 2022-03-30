@@ -37,8 +37,6 @@ struct CompletedWorkoutView : View {
                     .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.30)
                     .multilineTextAlignment(.center)
                 
-                //NavigationLink(destination: SummaryView().navigationBarTitle("Summary", displayMode: .inline)) {Text("Go to workout summary")}.buttonStyle(RoundedRectangleButtonStyle())
-                
                 Button(
                     "Return to home", action: {NavigationUtil.popToRootView()}
                 ).buttonStyle(RoundedRectangleButtonStyle())
@@ -52,6 +50,7 @@ struct CompletedWorkoutView_Previews: PreviewProvider {
         CompletedWorkoutView()
     }
 }
+
 
 import UIKit
 

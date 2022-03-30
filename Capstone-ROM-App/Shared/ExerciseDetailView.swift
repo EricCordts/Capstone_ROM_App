@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ExerciseDetailView: View {
     @ObservedObject var exercise: Exercise
+    @ObservedObject var bleManager: BluetoothViewController
+    @ObservedObject var angle: angleClass
 
     var body: some View {
 
@@ -52,16 +54,21 @@ struct ExerciseDetailView: View {
 
                     Spacer().frame(height: geo.size.height * 0.1)
                     
-                    NavigationLink(destination: CalibrationView(exercise: exercise).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle())
+                    NavigationLink(destination: CalibrationView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle())
                 }
             }
+        }.onAppear
+        {
+            self.angle.setStoreData(false)
+            self.bleManager.runAngleCalculation = false
         }
     }
 }
 
+/*
 struct ExerciseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseDetailView(exercise: exercisesData[0])
     }
 }
-
+*/
