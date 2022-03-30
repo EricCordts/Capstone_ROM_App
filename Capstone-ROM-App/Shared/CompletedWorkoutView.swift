@@ -51,6 +51,7 @@ struct CompletedWorkoutView_Previews: PreviewProvider {
     }
 }
 
+
 import UIKit
 
 struct NavigationUtil {

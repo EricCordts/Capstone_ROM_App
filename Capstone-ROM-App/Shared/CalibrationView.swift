@@ -56,21 +56,22 @@ struct CalibrationView : View {
                     if !self.angle.calibrated && !self.angle.driftCalculated
                     {
                         Button(
-                            "Start Calibration", action: {
-                                self.angle.prepCalibration()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                                    self.angle.calibrate()
+                            "Drift Calibration", action: {
+                                self.angle.prepDriftCalibration()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                    self.angle.calibrateDrift()
                                 }
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
                     }
-                    else if self.angle.calibrated && !self.angle.driftCalculated
+                    else if !self.angle.calibrated && self.angle.driftCalculated
                     {
                         Button(
-                            "Drift Calibration", action: {
-                                self.angle.prepDriftCalibration()
+                            "Start Calibration", action: {
+                                self.angle.prepCalibration()
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                                    self.angle.calibrateDrift()
+                                    print("Running calibrate")
+                                    self.angle.calibrate()
                                 }
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
@@ -93,17 +94,6 @@ struct CalibrationView : View {
         }.onAppear
         {
             self.bleManager.runAngleCalculation = false
-            /*self.bleManager.angle.clear()
-            self.bleManager.angle.runCalibration = false
-            self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeData = true
-            self.bleManager.angle.reallyRunCalibration = true
-            self.bleManager.angle.reallyRunAngleCalculation = false
-            self.bleManager.angle.setMaxSize(size: 100)
-            // after approximately 10 seconds, there should be enough data collected to run calibration
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                self.bleManager.angle.runCalibration = true
-            }*/
         }
     }
 }

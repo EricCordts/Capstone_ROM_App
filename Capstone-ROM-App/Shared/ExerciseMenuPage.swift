@@ -38,11 +38,6 @@ struct ExerciseMenuPage : View {
             self.angle.imus = [self.bleManager.imu1, self.bleManager.imu2]
             self.angle.setStoreData(false)
             self.bleManager.runAngleCalculation = false
-            /*self.bleManager.angle.runCalibration = false
-            self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeData = false
-            self.bleManager.angle.reallyRunCalibration = false
-            self.bleManager.angle.reallyRunAngleCalculation = false*/
         }
     }
 }

@@ -12,93 +12,7 @@ import SwiftUI
 let arduino1PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212"
 let arduino2PeripheralUuid = "C662D3DE-8907-BB09-50D2-694C50719E69"
 
-/*
- class Angle : ObservableObject, Identifiable{
- var id = UUID()
- var IMUs : [String:IMU] = [:]
- 
- @Published var currentAngle = Float()
- @Published var calibrated = false
- 
- var jargs = [[Float]]() // polar and azimuthal angles for joint axes in local coordinates of each imu
- var j = [[Float]]() // calibrated joint axes in local coordinates of each imu
- var c = [[Float]]() // calibrated joint coordinates in local coordinates of each imu
- var angListA = [Float]()
- var angListG = [Float]()
- @Published var angList = [Float]()
- var drift = Float()
- var projx = [[Float]]() // x-axes on plane perpendicular to joint axis
- var projy = [[Float]]() // y-axes on plane perpendicular to joint axis
- var axesCalibrated : Bool = false
- 
- var storeData = false
- 
- var runAngleCalculation = false
- var runCalibration = false
- // this variable "reallyRunCalibration" is necessary because
- // the runCalibration bool gets set in an asynchronous thread.
- // These threads can turn runCalibration true even if the user
- // navigates off of the CalibrationView, so reallyRunCalibration
- // to check that we really should be running calibration on any view.
- // Similar idea for reallyRunAngleCalculation
- var reallyRunCalibration = false
- var reallyRunAngleCalculation = false
- private let maxCalculatedAngleArraySize = 500
- 
- func clear()
- {
- for (_, value) in IMUs
- {
- value.accelerometerData = [[Float]]()
- value.gyroscopeData = [[Float]]()
- value.dg = [[0,0,0],[0,0,0]]
- }
- }
- 
- func setMaxSize(size : Int)
- {
- clear()
- for (_, value) in IMUs
- {
- value.maxSize = size
- }
- }
- 
- func customAdd(peripheralUUIDString : String, arduinoData : [Int16])
- {
- assert(arduinoData.count == 6);
- 
- let floatArduinoData = arduinoData.map(){Float($0)}
- 
- IMUs[peripheralUUIDString]?.customAdd(newAccelerometerData: [floatArduinoData[0], floatArduinoData[1], floatArduinoData[2]], newGyroscopeData: [floatArduinoData[3], floatArduinoData[4], floatArduinoData[5]], storeData: storeData)
- 
- print("AccelerationData: ", IMUs[peripheralUUIDString]?.accelerometerData ?? [[Int16]]())
- print("GyroData: ", IMUs[peripheralUUIDString]?.gyroscopeData ?? [[Int16]]())
- 
- if runAngleCalculation && reallyRunAngleCalculation
- {
- print("Running angle calculation")
- }
- 
- if runCalibration && reallyRunCalibration
- {
- print("Running calibration calculation")
- }
- }
- 
- func len() -> Int { return min(IMUs[arduino1PeripheralUuid]?.lengthGyroscope() ?? 0,IMUs[arduino2PeripheralUuid]?.lengthGyroscope() ?? 0) }
- 
- 
- private func Gam(_ k: String, _ i: Int, _ ck: [Float]) -> [Float] {
- return vadd(vcross(IMUs[k]?.gyroscopeData[i] ?? [0.0, 0.0, 0.0],vcross(IMUs[k]?.gyroscopeData[i] ?? [0.0, 0.0, 0.0],ck)),vcross(IMUs[k]?.dg[i] ?? [0.0, 0.0, 0.0],ck))
- }
- 
- private func Acc(_ k: Int, _ i: Int, _ peripheralUUID : String) -> [Float] {
- return vsub(IMUs[peripheralUUID]?.accelerometerData[i] ?? [0.0, 0.0, 0.0],Gam(k,i,c[k]))
- }
- 
- }
- */
+let frequency : Float = 8.0
 
 class angleClass : ObservableObject, Identifiable {
     var imus = [imuClass]()
@@ -108,9 +22,8 @@ class angleClass : ObservableObject, Identifiable {
     var angListA = [Float]()
     var angListG = [Float]()
     @Published var angList = [Float]()
-    @Published var angle : Float = 180
+    @Published var angle = Float()
     let maxAngleArraySize = 500
-    var drift = Float()
     var projx = [[Float]]() // x-axes on plane perpendicular to joint axis
     var projy = [[Float]]() // y-axes on plane perpendicular to joint axis
     var storeData : Bool = false
@@ -212,7 +125,7 @@ class angleClass : ObservableObject, Identifiable {
     ////////////// Angle
     
     private func deltaAngG(_ i: Int) -> Float {
-        return vdot(imus[0].g[i],j[0])-vdot(imus[1].g[i],j[1])
+        return (vdot(imus[1].g[i],j[1]) - vdot(imus[0].g[i],j[0]))*(1/frequency)
     }
     
     private func angG(_ i: Int) -> Float {
@@ -225,26 +138,36 @@ class angleClass : ObservableObject, Identifiable {
     }
     
     func calAngList() { // make private
-        let t : Float = 0.01 // value can be changed between 0 and 1 to weight sensor fusion
+        let t : Float = 0.95 // value can be changed between 0 and 1 to weight sensor fusion
         angListG.append(deltaAngG(0))
         angListA.append(angA(0))
-        angList.append(t*angListA[0] + (1-t)*(angListG[0]))
+        //angList.append(t*angListA[0] + (1-t)*(angListG[0]))
+        angList.append(angListA[0])
         for i in 1..<len()-2 {
             angListG.append(angG(i))
             angListA.append(angA(i))
-            angList.append(t*angListA[i] + (1-t)*(angList[i-1] + deltaAngG(i)-drift))
+            angList.append(t*angListA[i] + (1-t)*(angList[i-1] + deltaAngG(i)/*-drift*/))
         }
     }
     
     func updateAngle() {
         if (len()>4) {
-            let t : Float = 0.01 // value can be changed between 0 and 1 to weight sensor fusion
+            let t : Float = 0 // value can be changed between 0 and 1 to weight sensor fusion
             let index = imus[0].getMaxLen()-3
-            angle = t*angA(index) + (1-t)*(angle + deltaAngG(index)-drift)
+            angle = t*angA(index) + (1-t)*(angle + deltaAngG(index)/*-drift*/)
             if angList.count == maxAngleArraySize
             {
                 angList.removeFirst()
             }
+            angList.append(angle)
+        }
+    }
+    
+    func calculateAccelerometerAngle()
+    {
+        if (len()>4) {
+            let index = imus[0].getMaxLen()-3
+            angle = angA(index)
             angList.append(angle)
         }
     }
@@ -257,9 +180,9 @@ class angleClass : ObservableObject, Identifiable {
         jargs = [[0.5,0.5],[0.5,0.5]] // arbitrary starting values
         j = puVecs(jargs)
         c = [[0.1,0.1,0.1],[0.1,0.1,0.1]] // arbitrary starting values
-        angListA = [Float]()
-        angListG = [Float]()
-        angList = [Float]()
+        angListA = []
+        angListG = []
+        angList = []
         for imu in imus { imu.setMaxLen(100) }
         axesCalibrated = false
         calibrated = false
@@ -286,37 +209,56 @@ class angleClass : ObservableObject, Identifiable {
         if (calibrated) {
             print("CALIBRATED CALIBRATED")
             setStoreData(false)
+            angListA = []
+            angListG = []
+            angList = []
+            for imu in imus
+            {
+                imu.clearData()
+                imu.setMaxLen(5)
+            }
+            setStoreData(true)
         }
     }
     
     
     func prepDriftCalibration() {
         setStoreData(false)
-        angListA = [Float]()
-        angListG = [Float]()
-        angList = [Float]()
+        angListA = []
+        angListG = []
+        angList = []
         for imu in imus { imu.setMaxLen(100) }
         setStoreData(true)
     }
     
+    func averageColumns(_ mat: [[Float]]) -> [Float] {
+        let matT = transpose(mat)
+        let m : Float = Float(mat.count)
+        let n = matT.count
+        var means = [Float](repeating: 0.0, count: n)
+        
+        for i in 0..<n {
+            means[i] = (1/m)*matT[i].reduce(0,+)
+        }
+        return means
+    }
+    
     func calibrateDrift() {
-        angListG.append(deltaAngG(0))
+        /*angListG.append(deltaAngG(0))
         for i in 1..<len() {
             angListG.append(angG(i))
         }
         
-        // Float($0)/8 is for a sampling rate of 8 Hz
-        drift = mmult(pinv(transpose([[Float](repeating: 1.0, count: angListG.count),Array(0..<angListG.count).map() {Float($0)/8}])),Array(angListG[0..<angListG.count]))[1]
-        //drift = mmult(pinv(transpose([[Float](repeating: 1.0, count: angListG.count),Array(0..<angListG.count).map() {Float($0)}])),Array(angListG[0..<angListG.count]))[1]
-        driftCalculated = true
-        setStoreData(false)
-        angListG = []
-        angList = []
+        drift = mmult(pinv(transpose([[Float](repeating: 1.0, count: angListG.count),Array(0..<angListG.count).map() {Float($0)/frequency}])),Array(angListG[0..<angListG.count]))[1]
+        */
+        
         for imu in imus
         {
-            imu.clearData()
-            imu.setMaxLen(5)
+            imu.gyroDrift = averageColumns(imu.g)
         }
+        
+        driftCalculated = true
+        setStoreData(false)
     }
 }
 

@@ -12,15 +12,14 @@ struct WorkoutView : View {
     @State var exercisesCompleted:Bool = false
     @State var setsCompleted = 0
     @State var repsCompleted = 0
-    
     @State var currentTime = Time(min: 0, sec: 0, hour: 0)
     @State var reciever = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
+    @State var displayAngle:Bool = false
 
-    
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
     @ObservedObject var angle: angleClass
-
+    
     var body : some View {
         ZStack{
             // create a background with a linear gradient
@@ -33,12 +32,8 @@ struct WorkoutView : View {
                     CompletedWorkoutView()
                         .onAppear{
                             self.exercise.exerciseCompleted = true
-                            /*self.bleManager.angle.clear()
-                            self.bleManager.angle.runCalibration = false
-                            self.bleManager.angle.runAngleCalculation = false
-                            self.bleManager.angle.storeData = false
-                            self.bleManager.angle.reallyRunCalibration = false
-                            self.bleManager.angle.reallyRunAngleCalculation = false*/
+                            self.bleManager.runAngleCalculation = false
+                            self.angle.setStoreData(false)
                         }
                 }
                 else
@@ -59,8 +54,6 @@ struct WorkoutView : View {
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
                     }
                     
-                    Text("\(angle.angle)")
-
                     ZStack{
                         RoundedRectangle(cornerRadius: 5, style: .circular)
                             .frame(width: 5, height: geo.size.height * 0.08)
@@ -93,9 +86,14 @@ struct WorkoutView : View {
                             Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
                         })
                     )
-                    
-                    
 
+                    if displayAngle
+                    {
+                        //Text("\(Int(angle.angle))")
+                             
+                        Text("\(180 - Int(angle.angle))")
+                    }
+                    
                     ZStack{
                         Wave(second: currentTime.sec)
                             .stroke(Color.white, lineWidth: 5)
@@ -135,21 +133,9 @@ struct WorkoutView : View {
             }
         }.onAppear
         {
-            self.angle.setStoreData(true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.bleManager.runAngleCalculation = true
-            }
-            
-            /*self.bleManager.angle.runCalibration = false
-            self.bleManager.angle.runAngleCalculation = false
-            self.bleManager.angle.storeData = true
-            self.bleManager.angle.setMaxSize(size: 5)
-            self.bleManager.angle.reallyRunCalibration = false
-            self.bleManager.angle.reallyRunAngleCalculation = true
-            // after approximately 1 second, there should be enough data collected to run angle calculations
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.bleManager.angle.runAngleCalculation = true
-            }*/
+            self.angle.calculateAccelerometerAngle()
+            self.displayAngle = true
+            self.bleManager.runAngleCalculation = true
         }
     }
 }
