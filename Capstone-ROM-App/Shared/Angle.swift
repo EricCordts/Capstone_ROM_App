@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 //let arduino1PeripheralUuid = "D386AC34-D651-4AA1-CDF8-92B767DAA27E"
-let arduino1PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212"
-let arduino2PeripheralUuid = "C662D3DE-8907-BB09-50D2-694C50719E69"
+let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
+let arduino2PeripheralUuid = "2D7F82BF-7F7F-F332-EC3E-EC75941F228F"
 
 let frequency : Float = 8.0
 
@@ -43,7 +43,7 @@ class angleClass : ObservableObject, Identifiable {
     }
     
     private func Acc(_ k: Int, _ i: Int) -> [Float] {
-        return vsub(imus[k].a[i],Gam(k,i,c[k]))
+         return vsub(imus[k].a[i],Gam(k,i,c[k]))
     }
     
     ///////////// Joint Axes
@@ -138,7 +138,7 @@ class angleClass : ObservableObject, Identifiable {
     }
     
     func calAngList() { // make private
-        let t : Float = 0.95 // value can be changed between 0 and 1 to weight sensor fusion
+        let t : Float = 0.01 // value can be changed between 0 and 1 to weight sensor fusion
         angListG.append(deltaAngG(0))
         angListA.append(angA(0))
         //angList.append(t*angListA[0] + (1-t)*(angListG[0]))

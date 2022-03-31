@@ -57,28 +57,9 @@ struct WorkoutView : View {
                     ZStack{
                         RoundedRectangle(cornerRadius: 5, style: .circular)
                             .frame(width: 5, height: geo.size.height * 0.08)
-                            .offset(x: -(geo.size.width / 2 + 2.5) + CGFloat(currentTime.sec.converting(from: 0...60, to: 0...Int(geo.size.width))), y: 0)
+                            .offset(x: -(geo.size.width / 2 + 2.5) + CGFloat(angle.angle.converting(from: 0...180, to: 0...Float(Int(geo.size.width)))), y: 0)
                             .foregroundColor(Color.purple)
                             .animation(.default, value: 1)
-                            .onAppear(perform : {
-                                let calendar = Calendar.current
-                                let sec = calendar.component(.second, from: Date())
-                                DispatchQueue.main.async {
-                                    withAnimation(Animation.linear(duration: 0.01)) {
-                                        self.currentTime = Time(min: 0, sec: sec, hour: 0)
-                                    }
-                                }
-                            })
-                            .onReceive(reciever){ (_) in
-                                
-                                let calendar = Calendar.current
-                                let sec = calendar.component(.second, from: Date())
-                                DispatchQueue.main.async {
-                                    withAnimation(Animation.linear(duration: 0.01)) {
-                                        self.currentTime = Time(min: 0, sec: sec, hour: 0)
-                                    }
-                                }
-                            }
                             
                     }
                     .background(
@@ -86,38 +67,14 @@ struct WorkoutView : View {
                             Image(systemName: "square").resizable().frame(width: topLevelImageGeo.size.width * 0.20, height: topLevelImageGeo.size.height).foregroundColor(Color.gray).position(x: topLevelImageGeo.size.width/1.6, y: topLevelImageGeo.size.height/2)
                         })
                     )
-
+                    
                     if displayAngle
                     {
-                        //Text("\(Int(angle.angle))")
+                        Text("\(Int(angle.angle))")
                              
-                        Text("\(180 - Int(angle.angle))")
+                        //Text("\(180 - Int(angle.angle))")
                     }
                     
-                    ZStack{
-                        Wave(second: currentTime.sec)
-                            .stroke(Color.white, lineWidth: 5)
-                    }
-                    .background(Color.blue)
-                    .onAppear(perform : {
-                        let calendar = Calendar.current
-                        let sec = calendar.component(.second, from: Date())
-                        DispatchQueue.main.async {
-                            withAnimation(Animation.linear(duration: 0.01)) {
-                                self.currentTime = Time(min: 0, sec: sec, hour: 0)
-                            }
-                        }
-                    })
-                    .onReceive(reciever){ (_) in
-                        
-                        let calendar = Calendar.current
-                        let sec = calendar.component(.second, from: Date())
-                        DispatchQueue.main.async {
-                            withAnimation(Animation.linear(duration: 0.01)) {
-                                self.currentTime = Time(min: 0, sec: sec, hour: 0)
-                            }
-                        }
-                    }
                     
                     // temp button to decrease reps
                     Button(
@@ -177,3 +134,18 @@ struct Time {
     var hour : Int
 }
 
+extension FloatingPoint {
+    func converting(from input: ClosedRange<Self>, to output: ClosedRange<Self>) -> Self {
+        let x = (output.upperBound - output.lowerBound) * (self - input.lowerBound)
+        let y = (input.upperBound - input.lowerBound)
+        return x / y + output.lowerBound
+    }
+}
+
+extension BinaryInteger {
+    func converting(from input: ClosedRange<Self>, to output: ClosedRange<Self>) -> Self {
+        let x = (output.upperBound - output.lowerBound) * (self - input.lowerBound)
+        let y = (input.upperBound - input.lowerBound)
+        return x / y + output.lowerBound
+    }
+}
