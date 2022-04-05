@@ -57,7 +57,7 @@ struct WorkoutView : View {
                     ZStack{
                         RoundedRectangle(cornerRadius: 5, style: .circular)
                             .frame(width: 5, height: geo.size.height * 0.08)
-                            .offset(x: -(geo.size.width / 2 + 2.5) + CGFloat(angle.angle.converting(from: 0...180, to: 0...Float(Int(geo.size.width)))), y: 0)
+                            .offset(x: -(geo.size.width / 2 + 2.5) + getSlidingBarPosn(exercise: exercise, geo: geo, angle: angle.angle), y: 0)
                             .foregroundColor(Color.purple)
                             .animation(.default, value: 1)
                             
@@ -70,9 +70,9 @@ struct WorkoutView : View {
                     
                     if displayAngle
                     {
-                        Text("\(Int(angle.angle))")
+                        //Text("\(Int(angle.angle))")
                              
-                        //Text("\(180 - Int(angle.angle))")
+                        Text("\(180 - Int(angle.angle))")
                     }
                     
                     
@@ -127,6 +127,43 @@ func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSet
     return (currentRepsCompleted, currentSetsCompleted, exercisesCompleted)
 }
 
+func getSlidingBarPosn(exercise: Exercise, geo: GeometryProxy, angle: Float) -> CGFloat {
+    
+    switch exercise.exerciseType {
+    case .EXTENSION:
+        if (160 - angle) < 160 {
+            if (160 - angle) > 0 {
+                return CGFloat(angle.converting(from: 0...160, to: 0...Float(Int(geo.size.width))))
+            } else {
+                return 0
+            }
+        } else {
+            return geo.size.width
+        }
+    case .FLEXION:
+        if angle < 180 {
+            if angle > 0 {
+                return 180 - CGFloat(angle.converting(from: 0...180, to: 0...Float(Int(geo.size.width))))
+            } else {
+                return 0
+            }
+        } else {
+            return geo.size.width
+        }
+    case .ISOMETRIC:
+        if (150 - angle) < 150 {
+            if (150 - angle) > 0 {
+                return geo.size.width - CGFloat(angle.converting(from: 0...150, to: 0...Float(Int(geo.size.width))))
+            } else {
+                return 0
+            }
+        } else {
+            return geo.size.width
+        }
+    case .UNDEF:
+        return 0
+    }
+}
 
 struct Time {
     var min : Int
