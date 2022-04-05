@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+enum exerciseClass {
+    case EXTENSION, FLEXION, ISOMETRIC, UNDEF
+}
+
 class Exercises: ObservableObject, Identifiable{
     @Published var exerciseArray : [Exercise] = exercisesData
 }
@@ -24,6 +28,7 @@ class Exercise : ObservableObject, Identifiable{
     
     @Published var numberOfSets: Int = 0
     @Published var numberOfReps: Int = 0
+    @Published var exerciseType = exerciseClass.UNDEF
     
     @Published var numberOfWearablesRequired: Int = 0
     @Published var wearableIDs = [Int]()
@@ -33,7 +38,7 @@ class Exercise : ObservableObject, Identifiable{
     @Published var peripheralUUIDStrings = [String]()
     
     init(exerciseName: String, instructions: String,
-         exerciseImageName: String, wearablePlacementImageOff: String, wearablePlacementImageOn: String, numberOfSets: Int, numberOfReps: Int, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool, wearablesPowerOn: [Bool], wearablesCalibrated: [Bool], peripheralUUIDStrings: [String])
+         exerciseImageName: String, wearablePlacementImageOff: String, wearablePlacementImageOn: String, numberOfSets: Int, numberOfReps: Int, exerciseType: exerciseClass, numberOfWearablesRequired: Int, wearableIDs: [Int], exerciseCompleted: Bool, wearablesPowerOn: [Bool], wearablesCalibrated: [Bool], peripheralUUIDStrings: [String])
     {
         self.exerciseName = exerciseName
         self.instructions = instructions
@@ -42,6 +47,7 @@ class Exercise : ObservableObject, Identifiable{
         self.wearablePlacementImageOn = wearablePlacementImageOn
         self.numberOfSets = numberOfSets
         self.numberOfReps = numberOfReps
+        self.exerciseType = exerciseType
         self.numberOfWearablesRequired = numberOfWearablesRequired
         self.wearableIDs = wearableIDs
         self.exerciseCompleted = exerciseCompleted

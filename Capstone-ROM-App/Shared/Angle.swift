@@ -10,7 +10,7 @@ import SwiftUI
 
 //let arduino1PeripheralUuid = "D386AC34-D651-4AA1-CDF8-92B767DAA27E"
 let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
-let arduino2PeripheralUuid = "2D7F82BF-7F7F-F332-EC3E-EC75941F228F"
+let arduino2PeripheralUuid = "AE4716BE-2833-2B22-E560-C5A08F0691D2"
 
 let frequency : Float = 8.0
 
