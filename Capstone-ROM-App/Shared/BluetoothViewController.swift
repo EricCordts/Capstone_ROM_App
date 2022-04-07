@@ -146,6 +146,9 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
     
     // peripheralDidUpdateValueFor
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        //let strt = DispatchTime.now()
+        //print("Time",Double(strt.uptimeNanoseconds)/1000000.0) //
+        
         if let error = error {
             print("ERROR didUpdateValue message:\(error)")
             return
@@ -157,14 +160,28 @@ class BluetoothViewController: UIViewController, ObservableObject, CBCentralMana
             
             if peripheral.identifier.uuidString == arduino1PeripheralUuid
             {
-                imu1.customAppend(myArray16)
-                imu1NewData = true
+                if imu1NewData && !imu2NewData
+                {
+                    imu1.customReplace(myArray16)
+                }
+                else
+                {
+                    imu1.customAppend(myArray16)
+                    imu1NewData = true
+                }
             }
             
             if peripheral.identifier.uuidString == arduino2PeripheralUuid
             {
-                imu2.customAppend(myArray16)
-                imu2NewData = true
+                if imu2NewData && !imu1NewData
+                {
+                    imu2.customReplace(myArray16)
+                }
+                else
+                {
+                    imu2.customAppend(myArray16)
+                    imu2NewData = true
+                }
             }
 
             if runAngleCalculation && imu1NewData && imu2NewData

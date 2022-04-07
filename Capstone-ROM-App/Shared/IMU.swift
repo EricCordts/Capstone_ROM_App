@@ -36,6 +36,35 @@ class imuClass : ObservableObject, Identifiable {
     
     func len() -> Int { return g.count }
     
+    func customReplace(_ ag: [Int16])
+    {
+        if (storeData) {
+            assert(ag.count == 6)
+            
+            a.removeLast()
+            g.removeLast()
+            if dg.count >= getMaxLen() - 2
+            {
+                dg.removeLast()
+            }
+            // "4*9.81" comes from the accelerometer range of 4g
+            //a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],4.0*9.81/32768.0)) // use eventually
+            // "500" comes from the gyroscope range of 500 dps
+            //g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],500.0/32768.0), gyroDrift)) // use eventually
+            
+            a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],9.81/100.0)) // current union requirements
+            g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],Float.pi/1800.0), gyroDrift)) // current union requirements
+            if (len()>4) {
+                dg.append(svmult(vadd(vsub(g[len()-5],g[len()-1]),svmult(vsub(g[len()-2],g[len()-4]),8)),frequency/12))
+            }
+            
+            //print("In custom replace")
+            //print(id, a)
+            //print(id, g)
+            //print(id, dg)
+        }
+    }
+    
     func customAppend(_ ag: [Int16]) {
         if (storeData) {
             assert(ag.count == 6)
@@ -46,18 +75,18 @@ class imuClass : ObservableObject, Identifiable {
             }
             // "4*9.81" comes from the accelerometer range of 4g
             //a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],4*9.81/32768.0)) // use eventually
-            // "2000" comes from the gyroscope range of 2000 dps
-            //g.append(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],2000*Float.pi/180.0/32768.0)) // use eventually
-            
+            // "500" comes from the gyroscope range of 500 dps
+            //g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],500.0/32768.0), gyroDrift)) // use eventually
+
             a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],9.81/100.0)) // current union requirements
-            g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],1/10.0), gyroDrift)) // current union requirements
+            g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],Float.pi/1800.0), gyroDrift)) // current union requirements
             if (len()>4) {
                 dg.append(svmult(vadd(vsub(g[len()-5],g[len()-1]),svmult(vsub(g[len()-2],g[len()-4]),8)),frequency/12))
             }
-            
-            print(id, a)
-            print(id, g)
-            print(id, dg)
+            //print("In custom append")
+            //print(id, a)
+            //print(id, g)
+            //print(id, dg)
         }
     }
 }

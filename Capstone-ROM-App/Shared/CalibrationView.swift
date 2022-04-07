@@ -45,7 +45,6 @@ struct CalibrationView : View {
                             Spacer().frame(width: geo.size.width * 0.06)
                         }
                     }
-                    
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 
@@ -85,8 +84,7 @@ struct CalibrationView : View {
                     ).buttonStyle(RoundedRectangleButtonStyle())
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
-                    // temp button to navigate to next page
-                    // will be replaced by automatically going to next page after all devices are calibrated
+                    
                     NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
 
                 }

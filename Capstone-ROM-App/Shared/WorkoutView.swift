@@ -10,10 +10,6 @@ import UIKit
 
 struct WorkoutView : View { 
     @State var exercisesCompleted:Bool = false
-    @State var setsCompleted = 0
-    @State var repsCompleted = 0
-    @State var currentTime = Time(min: 0, sec: 0, hour: 0)
-    @State var reciever = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     @State var displayAngle:Bool = false
 
     @ObservedObject var exercise: Exercise
@@ -33,7 +29,7 @@ struct WorkoutView : View {
                         .onAppear{
                             self.exercise.exerciseCompleted = true
                             self.bleManager.runAngleCalculation = false
-                            self.angle.setStoreData(false)
+                            self.angle.clear()
                         }
                 }
                 else
@@ -49,18 +45,19 @@ struct WorkoutView : View {
                         .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.14)
                     
                     HStack{
-                        Text("Sets left: \(exercise.numberOfSets - setsCompleted)  |  Reps left: \(exercise.numberOfReps - repsCompleted)").font(.title3)
+                        Text("Sets left: \(exercise.numberOfSets)  |  Reps left: \(exercise.numberOfReps)").font(.title3)
                             .multilineTextAlignment(.center)
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
                     }
                     
+                    Text("Current angle: \(Int(angle.averageAngle))").font(.title2)
+                    
                     ZStack{
                         RoundedRectangle(cornerRadius: 5, style: .circular)
                             .frame(width: 5, height: geo.size.height * 0.08)
-                            .offset(x: -(geo.size.width / 2 + 2.5) + getSlidingBarPosn(exercise: exercise, geo: geo, angle: angle.angle), y: 0)
+                            .offset(x: -(geo.size.width / 2 + 2.5) + getSlidingBarPosn(exercise: exercise, geo: geo, angle: angle.averageAngle), y: 0)
                             .foregroundColor(Color.purple)
                             .animation(.default, value: 1)
-                            
                     }
                     .background(
                         Image("ColorBar").resizable().frame(width: geo.size.width, height: geo.size.height * 0.10).overlay( GeometryReader { topLevelImageGeo in
@@ -68,21 +65,9 @@ struct WorkoutView : View {
                         })
                     )
                     
-                    if displayAngle
-                    {
-                        //Text("\(Int(angle.angle))")
-                             
-                        Text("\(180 - Int(angle.angle))")
-                    }
-                    
-                    
-                    // temp button to decrease reps
                     Button(
-                        "Decrease reps", action: {let result = ModifySetsReps(currentRepsCompleted: &repsCompleted, targetReps: exercise.numberOfReps, currentSetsCompleted: &setsCompleted, targetSets: exercise.numberOfSets)
-                            setsCompleted = result.setsCompleted
-                            repsCompleted = result.repsCompleted
-                            exercisesCompleted = result.exercisesCompleted
-                            
+                        "Finish exercise", action: {
+                            exercisesCompleted = true
                         }
                     ).buttonStyle(RoundedRectangleButtonStyle())
                 }
@@ -91,7 +76,6 @@ struct WorkoutView : View {
         }.onAppear
         {
             self.angle.calculateAccelerometerAngle()
-            self.displayAngle = true
             self.bleManager.runAngleCalculation = true
         }
     }
@@ -104,28 +88,6 @@ struct WorkoutView_Previews: PreviewProvider {
     }
 }
 */
-
-func ModifySetsReps(currentRepsCompleted: inout Int, targetReps: Int, currentSetsCompleted: inout Int, targetSets: Int)->(repsCompleted: Int, setsCompleted: Int, exercisesCompleted: Bool)
-{
-    var exercisesCompleted : Bool = false
-    if currentRepsCompleted < targetReps && currentSetsCompleted < targetSets
-    {
-        currentRepsCompleted += 1
-    }
-    if currentRepsCompleted == targetReps && currentSetsCompleted < targetSets - 1
-    {
-        currentRepsCompleted = 0
-        currentSetsCompleted += 1
-    }
-    
-    if currentRepsCompleted == targetReps && currentSetsCompleted == targetSets - 1
-    {
-        currentSetsCompleted = targetSets
-        exercisesCompleted = true
-    }
-
-    return (currentRepsCompleted, currentSetsCompleted, exercisesCompleted)
-}
 
 func getSlidingBarPosn(exercise: Exercise, geo: GeometryProxy, angle: Float) -> CGFloat {
     
@@ -163,12 +125,6 @@ func getSlidingBarPosn(exercise: Exercise, geo: GeometryProxy, angle: Float) -> 
     case .UNDEF:
         return 0
     }
-}
-
-struct Time {
-    var min : Int
-    var sec : Int
-    var hour : Int
 }
 
 extension FloatingPoint {

@@ -9,10 +9,27 @@ import Foundation
 import SwiftUI
 
 //let arduino1PeripheralUuid = "D386AC34-D651-4AA1-CDF8-92B767DAA27E"
-let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
-let arduino2PeripheralUuid = "AE4716BE-2833-2B22-E560-C5A08F0691D2"
+//let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
+//let arduino2PeripheralUuid = "AE4716BE-2833-2B22-E560-C5A08F0691D2"
 
-let frequency : Float = 8.0
+//let arduino1PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212"
+//let arduino1PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF"
+//let arduino2PeripheralUuid = "25DC990A-26E8-B07E-922D-27FC9A1372D8"
+
+
+let arduino1PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF" // wrist
+let arduino2PeripheralUuid = "7E5C150A-75E3-6236-1DA3-66F83B4355F8" // upper arm
+
+//let arduino1PeripheralUuid = "C662D3DE-8907-BB09-50D2-694C50719E69"
+//let arduino2PeripheralUuid = "0250AE8C-3DB4-A9E2-C97E-48F34194AE89"
+
+//let arduino2PeripheralUuidWrist = "C662D3DE-8907-BB09-50D2-694C50719E69"
+//let arduino1PeripheralUuidUpperArm = "0250AE8C-3DB4-A9E2-C97E-48F34194AE89"
+
+//let arduino1PeripheralUuid = "F0EF153D-7329-4BA7-D595-4EF33BD00533"
+//let arduino2PeripheralUuid = "0161EF07-1828-0AE7-AED6-67688ADD1E80"
+
+let frequency : Float = 15.0
 
 class angleClass : ObservableObject, Identifiable {
     var imus = [imuClass]()
@@ -23,6 +40,7 @@ class angleClass : ObservableObject, Identifiable {
     var angListG = [Float]()
     @Published var angList = [Float]()
     @Published var angle = Float()
+    @Published var averageAngle = Float()
     let maxAngleArraySize = 500
     var projx = [[Float]]() // x-axes on plane perpendicular to joint axis
     var projy = [[Float]]() // y-axes on plane perpendicular to joint axis
@@ -32,6 +50,18 @@ class angleClass : ObservableObject, Identifiable {
     @Published var driftCalculated : Bool = false
     
     func len() -> Int { return min(imus[0].len(),imus[1].len()) }
+    
+    func clear()
+    {
+        setStoreData(false)
+        angListA = []
+        angListG = []
+        angList = []
+        calibrated = false
+        driftCalculated = false
+        axesCalibrated = false
+        averageAngle = Float()
+    }
         
     func setStoreData(_ newStoreDataBool : Bool) {
         storeData = newStoreDataBool
@@ -87,9 +117,14 @@ class angleClass : ObservableObject, Identifiable {
         }
         // temporary way to figure make the axes point the same direction in space
         // relies on the fact that the z-axis should project onto the same half-plane
-        if ((j[0][2]>0 && j[1][2]<0)||(j[0][2]<0 && j[1][2]>0)) { //
+        //if ((j[0][2]>0 && j[1][2]<0)||(j[0][2]<0 && j[1][2]>0)) { //
+        if (j[0][2]*j[1][2] < 0) {
+            print("In j inversion")
             j[1] = svmult(j[1],-1)
         }
+        print("j = ",j)
+        //if (j[0][2]>0) { j[0] = svmult(j[0],-1) }
+        //if (j[1][2]>0) { j[1] = svmult(j[1],-1) }
     }
     
     ////////////// Coordinates
@@ -117,7 +152,12 @@ class angleClass : ObservableObject, Identifiable {
                 }
                 if (i==imax) { calibrated = false } // if true, c did not converge in imax iterations
             }
-            c = msub(c,smmult(j,0.5*(vdot(c[0],j[0])+vdot(c[1],j[1]))))
+            c = msub(c,smmult(j,0.45*(vdot(c[0],j[0])+vdot(c[1],j[1]))))
+            if (c[0][0]*c[1][0] > 0) { //
+                print("In c inversion")
+                c[1] = svmult(c[1],-1)
+            }
+            print("c = ",c)
         }
         else { calibrated = false }
     }
@@ -125,7 +165,7 @@ class angleClass : ObservableObject, Identifiable {
     ////////////// Angle
     
     private func deltaAngG(_ i: Int) -> Float {
-        return (vdot(imus[1].g[i],j[1]) - vdot(imus[0].g[i],j[0]))*(1/frequency)
+        return (vdot(imus[1].g[i],j[1]) - vdot(imus[0].g[i],j[0]))*(180.0/(Float.pi*frequency))
     }
     
     private func angG(_ i: Int) -> Float {
@@ -134,11 +174,14 @@ class angleClass : ObservableObject, Identifiable {
     
     private func angA(_ i: Int) -> Float {
         let nAcc = [Acc(0,i), Acc(1,i)]
-        return 180.0*acos(vdot(normv([vdot(nAcc[0],projx[0]),vdot(nAcc[0],projy[0])]),normv([vdot(nAcc[1],projx[1]),vdot(nAcc[1],projy[1])])))/Float.pi
+        let a1 = normv([vdot(nAcc[0],projx[0]),vdot(nAcc[0],projy[0])])
+        let a2 = normv([vdot(nAcc[1],projx[1]),vdot(nAcc[1],projy[1])])
+        let a3 = 180.0*atan2(a1[0]*a2[0]+a1[1]*a2[1], a1[0]*a2[1]-a1[1]*a2[0])/Float.pi
+        return mod(a3+90, 360)
     }
-    
+    /*
     func calAngList() { // make private
-        let t : Float = 0.01 // value can be changed between 0 and 1 to weight sensor fusion
+        let t : Float = 1 // value can be changed between 0 and 1 to weight sensor fusion
         angListG.append(deltaAngG(0))
         angListA.append(angA(0))
         //angList.append(t*angListA[0] + (1-t)*(angListG[0]))
@@ -149,17 +192,22 @@ class angleClass : ObservableObject, Identifiable {
             angList.append(t*angListA[i] + (1-t)*(angList[i-1] + deltaAngG(i)/*-drift*/))
         }
     }
-    
+    */
     func updateAngle() {
         if (len()>4) {
-            let t : Float = 0 // value can be changed between 0 and 1 to weight sensor fusion
+            let t : Float = 1.0 // value can be changed between 0 and 1 to weight sensor fusion
             let index = imus[0].getMaxLen()-3
-            angle = t*angA(index) + (1-t)*(angle + deltaAngG(index)/*-drift*/)
+            angle = t*angA(index) + (1-t)*(angle + deltaAngG(index))
             if angList.count == maxAngleArraySize
             {
                 angList.removeFirst()
             }
             angList.append(angle)
+            
+            if angList.count >= 5
+            {
+                averageAngle = (angList.suffix(5).reduce(0, +))/5
+            }
         }
     }
     
