@@ -10,7 +10,6 @@ import UIKit
 
 struct WorkoutView : View { 
     @State var exercisesCompleted:Bool = false
-    @State var displayAngle:Bool = false
 
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
@@ -27,6 +26,7 @@ struct WorkoutView : View {
                 {
                     CompletedWorkoutView()
                         .onAppear{
+                            self.angle.runCalibration = false
                             self.exercise.exerciseCompleted = true
                             self.bleManager.runAngleCalculation = false
                             self.angle.clear()
@@ -70,11 +70,18 @@ struct WorkoutView : View {
                             exercisesCompleted = true
                         }
                     ).buttonStyle(RoundedRectangleButtonStyle())
+                    /*
+                    Button(
+                        "Print angle list", action: {
+                            print(angle.angList)
+                        }
+                    ).buttonStyle(RoundedRectangleButtonStyle())*/
                 }
             }.transition(.slide).animation(.easeIn(duration: 1), value: exercisesCompleted)
             }
         }.onAppear
         {
+            self.angle.runCalibration = false
             self.angle.calculateAccelerometerAngle()
             self.bleManager.runAngleCalculation = true
         }
@@ -93,33 +100,47 @@ func getSlidingBarPosn(exercise: Exercise, geo: GeometryProxy, angle: Float) -> 
     
     switch exercise.exerciseType {
     case .EXTENSION:
-        if (160 - angle) < 160 {
-            if (160 - angle) > 0 {
+        if (160 - angle) < 160
+        {
+            if (160 - angle) > 0
+            {
                 return CGFloat(angle.converting(from: 0...160, to: 0...Float(Int(geo.size.width))))
-            } else {
+            }
+            else
+            {
                 return 0
             }
-        } else {
+        }
+        else
+        {
             return geo.size.width
         }
     case .FLEXION:
-        if angle < 180 {
-            if angle > 0 {
+        if angle < 180
+        {
+            if angle > 0
+            {
                 return 180 - CGFloat(angle.converting(from: 0...180, to: 0...Float(Int(geo.size.width))))
-            } else {
+            }
+            else {
                 return 0
             }
-        } else {
+        }
+        else
+        {
             return geo.size.width
         }
     case .ISOMETRIC:
-        if (150 - angle) < 150 {
+        if (150 - angle) < 150
+        {
             if (150 - angle) > 0 {
                 return geo.size.width - CGFloat(angle.converting(from: 0...150, to: 0...Float(Int(geo.size.width))))
             } else {
                 return 0
             }
-        } else {
+        }
+        else
+        {
             return geo.size.width
         }
     case .UNDEF:

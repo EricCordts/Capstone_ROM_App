@@ -26,13 +26,13 @@ struct CalibrationView : View {
                 
                     
                     HStack{
-                        ForEach(Array(zip(exercise.wearableIDs, exercise.wearablesCalibrated)), id: \.0)
+                        ForEach(exercise.wearableIDs, id: \.self)
                         {
-                            exerciseItem in
+                            wearableID in
                             Spacer().frame(width: geo.size.width * 0.06)
-                            Text("ID: \(exerciseItem.0)").font(.title2).frame(width: geo.size.width * 0.15)
+                            Text("Band: \(wearableID)").font(.title2).frame(width: geo.size.width * 0.20)
                             Spacer().frame(width: geo.size.width * 0.03)
-                            if exerciseItem.1
+                            if self.angle.calibrated
                             {
                                 Image(systemName: "checkmark.square").resizable().frame(width: geo.size.width * 0.10, height: geo.size.width * 0.10)
                                     .foregroundColor(Color.green)
@@ -52,46 +52,39 @@ struct CalibrationView : View {
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     
-                    if !self.angle.calibrated && !self.angle.driftCalculated
+                    /*if !self.angle.calibrated && !self.angle.driftCalculated
                     {
                         Button(
                             "Drift Calibration", action: {
                                 self.angle.prepDriftCalibration()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                     self.angle.calibrateDrift()
                                 }
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
                     }
-                    else if !self.angle.calibrated && self.angle.driftCalculated
+                    else*/ if !self.angle.calibrated //&& self.angle.driftCalculated
                     {
                         Button(
                             "Start Calibration", action: {
                                 self.angle.prepCalibration()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                                    print("Running calibrate")
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.angle.calibrate()
                                 }
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
                     }
-                    else
-                    {
-                        Text("DONE CALIBRATION")
-                    }
-                    Button(
-                        "Cancel Calibration", action: {self.presentationMode.wrappedValue.dismiss()}
-                    ).buttonStyle(RoundedRectangleButtonStyle())
-                
-                    Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     
-                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle())
-
+                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(!(self.angle.calibrated))// && self.angle.driftCalculated))
+                    
+                    Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 }
             }
         }.onAppear
         {
+            self.angle.clear()
             self.bleManager.runAngleCalculation = false
+            self.angle.runCalibration = true
         }
     }
 }

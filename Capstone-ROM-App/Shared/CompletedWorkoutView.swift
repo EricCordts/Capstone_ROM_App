@@ -16,30 +16,20 @@ struct CompletedWorkoutView : View {
             
         GeometryReader { geo in
             VStack{
-                /*Text("Exercise Summary:")
-                    .font(.largeTitle).bold()
-                    .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.2)
-                    .multilineTextAlignment(.center)
-                */
+                Spacer()
+                
                 Text("Great job!")
                     .font(.title)
                     .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.15)
                     .multilineTextAlignment(.center)
                 
-                //put more Text here such as average angle hit during reps
-                /*Text("Number of Total Reps: ")
-                    .font(.headline)
-                    .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.10)
-                    .multilineTextAlignment(.center)
-                
-                Text("Average % ROM: ")
-                    .font(.headline)
-                    .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.30)
-                    .multilineTextAlignment(.center)*/
+                Spacer()
                 
                 Button(
                     "Return to home", action: {NavigationUtil.popToRootView()}
                 ).buttonStyle(RoundedRectangleButtonStyle())
+                
+                Spacer()
                 }
             }
         }

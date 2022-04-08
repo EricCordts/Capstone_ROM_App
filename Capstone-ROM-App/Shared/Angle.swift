@@ -12,13 +12,12 @@ import SwiftUI
 //let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
 //let arduino2PeripheralUuid = "AE4716BE-2833-2B22-E560-C5A08F0691D2"
 
-//let arduino1PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212"
-//let arduino1PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF"
-//let arduino2PeripheralUuid = "25DC990A-26E8-B07E-922D-27FC9A1372D8"
+let arduino2PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF"
+let arduino1PeripheralUuid = "25DC990A-26E8-B07E-922D-27FC9A1372D8" // wrist
+//let arduino2PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212" // upper arm
 
-
-let arduino1PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF" // wrist
-let arduino2PeripheralUuid = "7E5C150A-75E3-6236-1DA3-66F83B4355F8" // upper arm
+//let arduino2PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF" // wrist
+//let arduino1PeripheralUuid = "7E5C150A-75E3-6236-1DA3-66F83B4355F8" // upper arm
 
 //let arduino1PeripheralUuid = "C662D3DE-8907-BB09-50D2-694C50719E69"
 //let arduino2PeripheralUuid = "0250AE8C-3DB4-A9E2-C97E-48F34194AE89"
@@ -41,13 +40,15 @@ class angleClass : ObservableObject, Identifiable {
     @Published var angList = [Float]()
     @Published var angle = Float()
     @Published var averageAngle = Float()
-    let maxAngleArraySize = 500
+    let maxAngleArraySize = 2000
     var projx = [[Float]]() // x-axes on plane perpendicular to joint axis
     var projy = [[Float]]() // y-axes on plane perpendicular to joint axis
     var storeData : Bool = false
     var axesCalibrated : Bool = false
     @Published var calibrated : Bool = false
     @Published var driftCalculated : Bool = false
+    var runCalibration : Bool = false
+    var angleOffset = Float()
     
     func len() -> Int { return min(imus[0].len(),imus[1].len()) }
     
@@ -61,6 +62,7 @@ class angleClass : ObservableObject, Identifiable {
         driftCalculated = false
         axesCalibrated = false
         averageAngle = Float()
+        angleOffset = Float()
     }
         
     func setStoreData(_ newStoreDataBool : Bool) {
@@ -177,11 +179,11 @@ class angleClass : ObservableObject, Identifiable {
         let a1 = normv([vdot(nAcc[0],projx[0]),vdot(nAcc[0],projy[0])])
         let a2 = normv([vdot(nAcc[1],projx[1]),vdot(nAcc[1],projy[1])])
         let a3 = 180.0*atan2(a1[0]*a2[0]+a1[1]*a2[1], a1[0]*a2[1]-a1[1]*a2[0])/Float.pi
-        return mod(a3+90, 360)
+        return mod(a3+90-angleOffset, 360)
     }
-    /*
+    
     func calAngList() { // make private
-        let t : Float = 1 // value can be changed between 0 and 1 to weight sensor fusion
+        let t : Float = 1.0 // value can be changed between 0 and 1 to weight sensor fusion
         angListG.append(deltaAngG(0))
         angListA.append(angA(0))
         //angList.append(t*angListA[0] + (1-t)*(angListG[0]))
@@ -192,7 +194,7 @@ class angleClass : ObservableObject, Identifiable {
             angList.append(t*angListA[i] + (1-t)*(angList[i-1] + deltaAngG(i)/*-drift*/))
         }
     }
-    */
+    
     func updateAngle() {
         if (len()>4) {
             let t : Float = 1.0 // value can be changed between 0 and 1 to weight sensor fusion
@@ -239,33 +241,26 @@ class angleClass : ObservableObject, Identifiable {
     
     // call after collecting data for calibration
     func calibrate() {
-        var strt = DispatchTime.now() //
-        calibrateJointAxes()
-        var nd = DispatchTime.now() //
-        print("Time to calibrate axes (ms):",Double(nd.uptimeNanoseconds-strt.uptimeNanoseconds)/1000000.0) //
-        
-        strt = DispatchTime.now() //
-        calibrateCoordinates()
-        nd = DispatchTime.now() //
-        print("Time to calibrate coordinates (ms):",Double(nd.uptimeNanoseconds-strt.uptimeNanoseconds)/1000000.0) //
-        /*
-         strt = DispatchTime.now() //
-         calAngList()
-         nd = DispatchTime.now() //
-         print("Time to calculate angles: (ms)",Double(nd.uptimeNanoseconds-strt.uptimeNanoseconds)/1000000.0) //
-         */
-        if (calibrated) {
-            print("CALIBRATED CALIBRATED")
-            setStoreData(false)
-            angListA = []
-            angListG = []
-            angList = []
-            for imu in imus
-            {
-                imu.clearData()
-                imu.setMaxLen(5)
+        if runCalibration
+        {
+            calibrateJointAxes()
+            calibrateCoordinates()
+             
+            if (calibrated) {
+                //print("CALIBRATED CALIBRATED")
+                calAngList()
+                angleOffset = ((angList.reduce(0, +)/Float(angList.count)) > 180) ? 180.0 : 0.0
+                setStoreData(false)
+                angListA = []
+                angListG = []
+                angList = []
+                for imu in imus
+                {
+                    imu.clearData()
+                    imu.setMaxLen(5)
+                }
+                setStoreData(true)
             }
-            setStoreData(true)
         }
     }
     

@@ -73,13 +73,13 @@ class imuClass : ObservableObject, Identifiable {
                 g.removeFirst()
                 dg.removeFirst()
             }
-            // "4*9.81" comes from the accelerometer range of 4g
-            //a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],4*9.81/32768.0)) // use eventually
-            // "500" comes from the gyroscope range of 500 dps
-            //g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],500.0/32768.0), gyroDrift)) // use eventually
-
+            // FOR DRIFT
+            //a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],9.81/100.0)) // current union requirements
+            //g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],Float.pi/1800.0), gyroDrift)) // current union requirements
+            
             a.append(svmult([Float(ag[0]),Float(ag[1]),Float(ag[2])],9.81/100.0)) // current union requirements
-            g.append(vsub(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],Float.pi/1800.0), gyroDrift)) // current union requirements
+            g.append(svmult([Float(ag[3]),Float(ag[4]),Float(ag[5])],Float.pi/1800.0)) // current union requirements
+            
             if (len()>4) {
                 dg.append(svmult(vadd(vsub(g[len()-5],g[len()-1]),svmult(vsub(g[len()-2],g[len()-4]),8)),frequency/12))
             }

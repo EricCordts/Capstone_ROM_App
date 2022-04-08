@@ -17,11 +17,16 @@ struct CustomColors {
 
 // a custom button style
 struct RoundedRectangleButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) var isEnabled
+    
   func makeBody(configuration: Configuration) -> some View {
     configuration.label.foregroundColor(.black).font(.system(size: 30, weight: .bold))
           .padding(10)
-    .background(CustomColors.BackgroundColorBlue.cornerRadius(10))
+    .background(isEnabled ? CustomColors.BackgroundColorBlue.cornerRadius(10) : Color(UIColor.lightGray).cornerRadius(10))
+    //      .background(CustomColors.BackgroundColorBlue.cornerRadius(10))
     .shadow(color: Color.white, radius: 20)
     .scaleEffect(configuration.isPressed ? 0.90 : 1)
   }
 }
+
+
