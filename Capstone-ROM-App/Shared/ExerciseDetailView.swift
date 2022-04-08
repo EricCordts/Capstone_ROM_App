@@ -4,7 +4,7 @@
 //
 //  Created by Eric Cordts on 1/29/22.
 //
-
+/*
 import Foundation
 import SwiftUI
 
@@ -65,8 +65,7 @@ struct ExerciseDetailView: View {
     }
 }
 
-/*
-struct ExerciseDetailView_Previews: PreviewProvider {
+ struct ExerciseDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseDetailView(exercise: exercisesData[0])
     }

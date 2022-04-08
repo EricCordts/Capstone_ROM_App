@@ -29,7 +29,7 @@ struct ExerciseMenuPage : View {
                         } label:{ExerciseRow(exercise: exercise)}
                     }
 
-                    BluetoothView(bleManager: bleManager)
+                    //BluetoothView(bleManager: bleManager)
                 }
             }
         }.onAppear
@@ -38,6 +38,7 @@ struct ExerciseMenuPage : View {
             self.angle.imus = [self.bleManager.imu1, self.bleManager.imu2]
             self.angle.setStoreData(false)
             self.bleManager.runAngleCalculation = false
+            self.angle.runCalibration = false
         }
     }
 }

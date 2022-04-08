@@ -23,17 +23,17 @@ struct PowerOnWearableView : View {
             GeometryReader{ geo in
                 VStack{
                 
-                    Text("Please power on the following \(exercise.numberOfWearablesRequired) wearables:")
+                    Text("Power on bands:")
                         .font(.title)
                         .fontWeight(.bold).multilineTextAlignment(.center)
-                        .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.15)
+                        .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.10)
                     
                     HStack{
                         ForEach(Array(zip(exercise.wearableIDs, exercise.peripheralUUIDStrings)), id: \.0)
                         {
                             exerciseItem in
                             Spacer().frame(width: geo.size.width * 0.06)
-                            Text("ID: \(exerciseItem.0)").font(.title2).frame(width: geo.size.width * 0.15)
+                            Text("Band: \(exerciseItem.0)").font(.title2).frame(width: geo.size.width * 0.20)
                             Spacer().frame(width: geo.size.width * 0.03)
                             if self.bleManager.isConnected.keys.contains(exerciseItem.1)
                             {
@@ -63,12 +63,30 @@ struct PowerOnWearableView : View {
                     Text("Please attach the wearables to your body in the positions shown.")
                         .font(.title3)
                         .multilineTextAlignment(.center)
-                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.15)
+                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.12)
+                    
+                    HStack{
+                        Text("Number of Sets: ")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("\(exercise.numberOfSets)")
+                            .font(.title2)
+                    }
+                    .frame(width: geo.size.width, height: geo.size.height * 0.06)
+                
+                    HStack{
+                        Text("Number of Repetitions: ")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text("\(exercise.numberOfReps)")
+                            .font(.title2)
+                    }
+                    .frame(width: geo.size.width, height: geo.size.height * 0.06)
                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                     
-                    NavigationLink(destination: ExerciseDetailView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("View Exercise Details")}.buttonStyle(RoundedRectangleButtonStyle())
-                                    
+                    NavigationLink(destination: CalibrationView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(count < exercise.numberOfWearablesRequired)
+                                                        
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 }
             }
@@ -80,6 +98,7 @@ struct PowerOnWearableView : View {
             }
             self.angle.setStoreData(false)
             self.bleManager.runAngleCalculation = false
+            self.angle.runCalibration = false
         }
     }
 }
