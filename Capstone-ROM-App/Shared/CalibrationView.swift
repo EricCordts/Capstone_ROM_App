@@ -11,8 +11,7 @@ struct CalibrationView : View {
     @ObservedObject var exercise: Exercise
     @ObservedObject var bleManager: BluetoothViewController
     @ObservedObject var angle: angleClass
-
-    @Environment(\.presentationMode) var presentationMode
+    @State var isRunningCalibration = false
     var body : some View {
         
         ZStack{
@@ -45,13 +44,13 @@ struct CalibrationView : View {
                             Spacer().frame(width: geo.size.width * 0.06)
                         }
                     }
-                
+                    
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 
                     Text("Instructions for calibration").frame(width: geo.size.width * 0.98, height: geo.size.height * 0.1)
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
-                    
+                                        
                     /*if !self.angle.calibrated && !self.angle.driftCalculated
                     {
                         Button(
@@ -63,16 +62,27 @@ struct CalibrationView : View {
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
                     }
-                    else*/ if !self.angle.calibrated //&& self.angle.driftCalculated
+                    else*/ if !self.angle.calibrated && !isRunningCalibration//&& self.angle.driftCalculated
                     {
                         Button(
                             "Start Calibration", action: {
                                 self.angle.prepCalibration()
+                                isRunningCalibration = true
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                                     self.angle.calibrate()
+                                    isRunningCalibration = false
                                 }
                             }
-                        ).buttonStyle(RoundedRectangleButtonStyle())
+                        )
+                        .buttonStyle(RoundedRectangleButtonStyle())
+                    }
+                    else if !self.angle.calibrated && isRunningCalibration
+                    {
+                        ProgressView("Calibrating...").frame(width: geo.size.width, height: geo.size.height * 0.15).scaleEffect(2).font(.system(size: 8))
+                    }
+                    else
+                    {
+                        Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                     }
                     
                     NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(!(self.angle.calibrated))// && self.angle.driftCalculated))
@@ -80,7 +90,8 @@ struct CalibrationView : View {
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 }
             }
-        }.onAppear
+        }
+        .onAppear
         {
             self.angle.clear()
             self.bleManager.runAngleCalculation = false

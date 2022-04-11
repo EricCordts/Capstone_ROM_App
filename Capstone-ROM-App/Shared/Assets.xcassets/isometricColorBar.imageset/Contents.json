@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ColorBar.jpeg",
+      "filename" : "isometricColorBar.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ColorBar-1.jpeg",
+      "filename" : "isometricColorBar-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ColorBar-2.jpeg",
+      "filename" : "isometricColorBar-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
