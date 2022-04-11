@@ -155,10 +155,10 @@ class angleClass : ObservableObject, Identifiable {
                 if (i==imax) { calibrated = false } // if true, c did not converge in imax iterations
             }
             c = msub(c,smmult(j,0.45*(vdot(c[0],j[0])+vdot(c[1],j[1]))))
-            if (c[0][0]*c[1][0] > 0) { //
+            /*if (c[0][0]*c[1][0] > 0) { //
                 print("In c inversion")
                 c[1] = svmult(c[1],-1)
-            }
+            }*/
             print("c = ",c)
         }
         else { calibrated = false }
