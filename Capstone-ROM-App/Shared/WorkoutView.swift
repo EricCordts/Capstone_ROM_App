@@ -30,15 +30,14 @@ struct WorkoutView : View {
                     
                     Image(exercise.wearablePlacementImageOn).resizable().frame(width: geo.size.width * 0.67, height: geo.size.height * 0.28)
                     
-                    ConfettiCannon(counter: $counter, num: 50, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 4, repetitionInterval: 0.85).frame(width: 0, height: 0)
-
+                    ConfettiCannon(counter: $counter, num: 100, openingAngle: Angle(degrees: 0), closingAngle: Angle(degrees: 360), radius: 200, repetitions: 2, repetitionInterval: 0.85).frame(width: 0, height: 0)
                     
                     Text("\(exercise.instructions)").font(.title3)
                         .multilineTextAlignment(.center)
                         .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.18)
                     
                     HStack{
-                        Text("Sets left: \(exercise.numberOfSets)  |  Reps left: \(exercise.numberOfReps)").font(.title3)
+                        Text("Sets: \(exercise.numberOfSets)  |  Reps: \(exercise.numberOfReps)").font(.title3)
                             .multilineTextAlignment(.center)
                             .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.07)
                     }
@@ -55,14 +54,14 @@ struct WorkoutView : View {
                     if !exerciseCompleted
                     {
                         Button(
-                            "Finish exercise", action: {
+                            "Finish Exercise", action: {
                                 exerciseCompleted = true
                             }
                         ).buttonStyle(RoundedRectangleButtonStyle())
                     }
                     else
                     {
-                        Button("Return to home", action: {NavigationUtil.popToRootView()})
+                        Button("Return to Home", action: {NavigationUtil.popToRootView()})
                         .buttonStyle(RoundedRectangleButtonStyle())
                         .onAppear
                         {
@@ -73,10 +72,11 @@ struct WorkoutView : View {
                             self.angle.clear()
                         }
                     }
+                    
                     /*
                     Button(
                         "Print angle list", action: {
-                            print(angle.angList)
+                            print(angle.averageAngleList)
                         }
                     ).buttonStyle(RoundedRectangleButtonStyle())*/
                 }

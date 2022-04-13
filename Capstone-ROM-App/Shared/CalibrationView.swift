@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct CalibrationView : View {
     @ObservedObject var exercise: Exercise
@@ -45,9 +46,13 @@ struct CalibrationView : View {
                         }
                     }
                     
-                    Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
-                
-                    Text("Instructions for calibration").frame(width: geo.size.width * 0.98, height: geo.size.height * 0.1)
+                    Text("Instructions: ").font(.title3).fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.08)
+                    Text("Flex and extend your arm within your range of motion for 10 seconds.")
+                        .font(.title3)
+                        .multilineTextAlignment(.center)
+                        .frame(width: geo.size.width * 0.95, height: geo.size.height * 0.12)
                 
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                                         
@@ -68,7 +73,7 @@ struct CalibrationView : View {
                             "Start Calibration", action: {
                                 self.angle.prepCalibration()
                                 isRunningCalibration = true
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
                                     self.angle.calibrate()
                                     isRunningCalibration = false
                                 }
@@ -78,14 +83,16 @@ struct CalibrationView : View {
                     }
                     else if !self.angle.calibrated && isRunningCalibration
                     {
-                        ProgressView("Calibrating...").frame(width: geo.size.width, height: geo.size.height * 0.15).scaleEffect(2).font(.system(size: 8))
+                        ProgressView("Calibrating...").frame(width: geo.size.width, height: geo.size.height * 0.15).scaleEffect(2).font(.system(size: 12))
                     }
                     else
                     {
-                        Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
+                        Text("Done Calibrating!").frame(width: geo.size.width, height: geo.size.height * 0.15).font(.system(size: 24))
                     }
                     
-                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's workout!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(!(self.angle.calibrated))// && self.angle.driftCalculated))
+                    Spacer()
+                    
+                    NavigationLink(destination: WorkoutView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle(exercise.exerciseName, displayMode: .inline)) {Text("Let's Workout!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(!(self.angle.calibrated))// && self.angle.driftCalculated))
                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.1)
                 }

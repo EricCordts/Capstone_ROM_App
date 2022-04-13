@@ -12,7 +12,8 @@ import SwiftUI
 //let arduino1PeripheralUuid = "71CBE43D-63A4-8FA2-CA20-BB87A5438CA7"
 //let arduino2PeripheralUuid = "AE4716BE-2833-2B22-E560-C5A08F0691D2"
 
-let arduino2PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF"
+//let arduino2PeripheralUuid = "9383B5C4-F945-4428-6DEA-A9BD10374DDF"
+let arduino2PeripheralUuid = "D386AC34-D651-4AA1-CDF8-92B767DAA27E"
 let arduino1PeripheralUuid = "25DC990A-26E8-B07E-922D-27FC9A1372D8" // wrist
 //let arduino2PeripheralUuid = "C3548FDD-A975-0482-90EA-CD9138101212" // upper arm
 
@@ -40,6 +41,7 @@ class angleClass : ObservableObject, Identifiable {
     @Published var angList = [Float]()
     @Published var angle = Float()
     @Published var averageAngle = Float()
+    @Published var averageAngleList = [Float]()
     let maxAngleArraySize = 2000
     var projx = [[Float]]() // x-axes on plane perpendicular to joint axis
     var projy = [[Float]]() // y-axes on plane perpendicular to joint axis
@@ -183,7 +185,7 @@ class angleClass : ObservableObject, Identifiable {
     }
     
     func calAngList() { // make private
-        let t : Float = 1.0 // value can be changed between 0 and 1 to weight sensor fusion
+        let t : Float = 0.90 // value can be changed between 0 and 1 to weight sensor fusion
         angListG.append(deltaAngG(0))
         angListA.append(angA(0))
         //angList.append(t*angListA[0] + (1-t)*(angListG[0]))
@@ -191,15 +193,15 @@ class angleClass : ObservableObject, Identifiable {
         for i in 1..<len()-2 {
             angListG.append(angG(i))
             angListA.append(angA(i))
-            angList.append(t*angListA[i] + (1-t)*(angList[i-1] + deltaAngG(i)/*-drift*/))
+            angList.append(t*angListA[i] + (1-t)*(angList[i-1]))// + deltaAngG(i)/*-drift*/))
         }
     }
     
     func updateAngle() {
         if (len()>4) {
-            let t : Float = 1.0 // value can be changed between 0 and 1 to weight sensor fusion
+            let t : Float = 0.90 // value can be changed between 0 and 1 to weight sensor fusion
             let index = imus[0].getMaxLen()-3
-            angle = t*angA(index) + (1-t)*(angle + deltaAngG(index))
+            angle = t*angA(index) + (1-t)*(angle) // + deltaAngG(index))
             if angList.count == maxAngleArraySize
             {
                 angList.removeFirst()
@@ -209,6 +211,11 @@ class angleClass : ObservableObject, Identifiable {
             if angList.count >= 5
             {
                 averageAngle = (angList.suffix(5).reduce(0, +))/5
+                if averageAngleList.count == maxAngleArraySize
+                {
+                    averageAngleList.removeFirst()
+                }
+                averageAngleList.append(averageAngle)
             }
         }
     }

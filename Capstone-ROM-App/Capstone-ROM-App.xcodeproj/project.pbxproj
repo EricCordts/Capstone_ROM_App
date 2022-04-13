@@ -25,7 +25,6 @@
 		36445C4127AA076800C2872F /* CalibrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C3F27AA076800C2872F /* CalibrationView.swift */; };
 		36445C4327AA12D400C2872F /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C4227AA12D300C2872F /* WorkoutView.swift */; };
 		36445C4427AA12D400C2872F /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36445C4227AA12D300C2872F /* WorkoutView.swift */; };
-		368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 368E74F027B1D3FA0069186D /* Launch Screen.storyboard */; };
 		368E74F427B341B70069186D /* CalibrationCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368E74F327B341B70069186D /* CalibrationCalculations.swift */; };
 		36D818CF280391A400A539A1 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 36D818CE280391A400A539A1 /* ConfettiSwiftUI */; };
 		36F06C3827DFFE5A005822E1 /* IMU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F06C3727DFFE5A005822E1 /* IMU.swift */; };
@@ -70,7 +69,6 @@
 		36445C3C27A89ABC00C2872F /* PowerOnWearableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerOnWearableView.swift; sourceTree = "<group>"; };
 		36445C3F27AA076800C2872F /* CalibrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationView.swift; sourceTree = "<group>"; };
 		36445C4227AA12D300C2872F /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
-		368E74F027B1D3FA0069186D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		368E74F227B1D5B70069186D /* Capstone-ROM-App--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Capstone-ROM-App--iOS--Info.plist"; sourceTree = "<group>"; };
 		368E74F327B341B70069186D /* CalibrationCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationCalculations.swift; sourceTree = "<group>"; };
 		36F06C3727DFFE5A005822E1 /* IMU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMU.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				36445C3F27AA076800C2872F /* CalibrationView.swift */,
 				36445C4227AA12D300C2872F /* WorkoutView.swift */,
 				3B4DF4B527AA14F40079A17C /* BluetoothViewController.swift */,
-				368E74F027B1D3FA0069186D /* Launch Screen.storyboard */,
 				368E74F327B341B70069186D /* CalibrationCalculations.swift */,
 				36F06C3727DFFE5A005822E1 /* IMU.swift */,
 				36F06C3927DFFF14005822E1 /* Angle.swift */,
@@ -335,7 +332,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				368E74F127B1D3FA0069186D /* Launch Screen.storyboard in Resources */,
 				3BFA8A41279A4463008FB82C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +562,6 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
-				INFOPLIST_KEY_UIMainStoryboardFile = "Launch Screen";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -577,7 +572,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM";
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
 				PRODUCT_NAME = "Capstone-ROM-App";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -602,7 +597,6 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
-				INFOPLIST_KEY_UIMainStoryboardFile = "Launch Screen";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -613,7 +607,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM";
+				PRODUCT_BUNDLE_IDENTIFIER = "northeastern.Capstone-ROM-App";
 				PRODUCT_NAME = "Capstone-ROM-App";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -23,7 +23,7 @@ struct PowerOnWearableView : View {
             GeometryReader{ geo in
                 VStack{
                 
-                    Text("Power on bands:")
+                    Text("Power on Bands:")
                         .font(.title)
                         .fontWeight(.bold).multilineTextAlignment(.center)
                         .frame(width: geo.size.width * 0.98, height: geo.size.height * 0.10)
@@ -85,7 +85,7 @@ struct PowerOnWearableView : View {
                     
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                     
-                    NavigationLink(destination: CalibrationView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap here to calibrate!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(count < exercise.numberOfWearablesRequired)
+                    NavigationLink(destination: CalibrationView(exercise: exercise, bleManager: bleManager, angle: angle).navigationBarTitle("Calibration", displayMode: .inline)) {Text("Tap Here to Calibrate!")}.buttonStyle(RoundedRectangleButtonStyle()).disabled(count < exercise.numberOfWearablesRequired)
                                                         
                     Spacer().frame(width: geo.size.width, height: geo.size.height * 0.03)
                 }
